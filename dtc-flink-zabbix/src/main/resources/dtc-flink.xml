@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!-- Put site-specific property overrides in this file. -->
+<configuration>
+
+    <property>
+        <name>dtc.bootstrap.servers</name>
+        <value>10.3.7.232:9092,10.3.7.233:9092,10.3.7.234:9092</value>
+    </property>
+    <property>
+        <!-- HDFS file pattern for MapReduce input -->
+        <name>dtc.zookeeper.connect</name>
+        <!--<value>.*\/Razor.*log\.lz4</value>-->
+        <value>10.3.7.232:2181,10.3.7.233:2181,10.3.7.234:2181</value>
+    </property>
+
+    <property>
+        <name>dtc.topic</name>
+        <value>zabbix_test</value>
+    </property>
+    <property>
+        <name>dtc.group.id</name>
+        <value>bigdata_zabbix_test</value>
+    </property>
+    <property>
+        <name>dtc.opentsdb.url</name>
+        <value>http://10.3.7.232:4399</value>
+    </property>
+    <!--窗口时间，单位为毫秒-->
+    <property>
+        <name>windowSizeMillis</name>
+        <value>50000</value>
+    </property>
+    <property>
+        <name>windowSlideMillis</name>
+        <value>50000</value>
+    </property>
+    <property>
+        <name>dtc.mysql.driver</name>
+        <value></value>
+    </property>
+    <property>
+        <name>dtc.mysql.url</name>
+        <value></value>
+    </property>
+    <property>
+        <name>dtc.mysql.user</name>
+        <value></value>
+    </property>
+    <property>
+        <name>dtc.mysql.password</name>
+        <value></value>
+    </property>
+    <property>
+        <name>dtc.mysql.sql</name>
+        <value></value>
+    </property>
+</configuration>

@@ -1,0 +1,107 @@
+<assembly
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+    <id>bin</id>
+
+    <formats>
+        <format>dir</format>
+        <format>tar.gz</format>
+    </formats>
+
+    <baseDirectory>dtc-${project.version}-bin</baseDirectory>
+
+<!--    <dependencySets>-->
+<!--        <dependencySet>-->
+<!--            <outputDirectory>lib/common</outputDirectory>-->
+<!--            <unpack>false</unpack>-->
+<!--            <useProjectArtifact>false</useProjectArtifact>-->
+<!--        </dependencySet>-->
+<!--    </dependencySets>-->
+
+    <fileSets>
+        <fileSet>
+            <!--项目整体根目录-->
+            <directory>../</directory>
+            <!--排除不需要的文件-->
+            <excludes>
+                <exclude>**/target/**</exclude>
+                <exclude>**/.classpath</exclude>
+                <exclude>**/.project</exclude>
+                <exclude>**/.settings/**</exclude>
+<!--                <exclude>lib/**</exclude>-->
+                <exclude>**/*.iml</exclude>
+                <!--<exclude>conf/**</exclude>-->
+            </excludes>
+            <!--加入所需要的文件-->
+            <includes>
+                <include>DEVNOTES</include>
+                <include>README</include>
+                <include>LICENSE</include>
+                <include>NOTICE</include>
+                <include>CHANGELOG</include>
+                <include>RELEASE-NOTES</include>
+<!--                <include>bin/**</include>-->
+                <include>conf/**</include>
+                <include>native/**</include>
+            </includes>
+        </fileSet>
+        <!--对加入的文件赋权值-->
+        <fileSet>
+            <directory>../</directory>
+            <includes>
+                <include>bin/**</include>
+            </includes>
+            <fileMode>0777</fileMode>
+            <directoryMode>0755</directoryMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>../target/site</directory>
+            <includes>
+                <include>/**</include>
+            </includes>
+            <outputDirectory>docs</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../dtc-flink-zabbix/target</directory>
+            <outputDirectory>../lib/flink/zabbix</outputDirectory>
+            <includes>
+                <include>dtc-flink-zabbix-*-jar-with-dependencies.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../dtc-flink-snmp/target</directory>
+            <outputDirectory>../lib/flink/snmp</outputDirectory>
+            <includes>
+                <include>dtc-flink-snmp-*-jar-with-dependencies.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+    <moduleSets>
+        <moduleSet>
+            <includeSubModules>false</includeSubModules>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <binaries>
+                <outputDirectory>lib/common</outputDirectory>
+                <unpack>false</unpack>
+                <dependencySets>
+                    <dependencySet>
+                        <useProjectArtifact>false</useProjectArtifact>
+                        <useTransitiveDependencies>true</useTransitiveDependencies>
+                        <unpack>false</unpack>
+                        <unpackOptions>
+                            <excludes>
+                                <exclude>**/LICENSE*</exclude>
+                            </excludes>
+                        </unpackOptions>
+                        <fileMode>0777</fileMode>
+                        <directoryMode>0755</directoryMode>
+                    </dependencySet>
+                </dependencySets>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+</assembly>

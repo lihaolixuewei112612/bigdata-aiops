@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dtc-SC/dtc-SC.iml" filepath="$PROJECT_DIR$/dtc-SC/dtc-SC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dtc-bigdata.iml" filepath="$PROJECT_DIR$/dtc-bigdata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dtc-dist/dtc-dist.iml" filepath="$PROJECT_DIR$/dtc-dist/dtc-dist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dtc-flink-snmp/dtc-flink-snmp.iml" filepath="$PROJECT_DIR$/dtc-flink-snmp/dtc-flink-snmp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dtc-flink-zabbix/dtc-flink-zabbix.iml" filepath="$PROJECT_DIR$/dtc-flink-zabbix/dtc-flink-zabbix.iml" />
+    </modules>
+  </component>
+</project>
