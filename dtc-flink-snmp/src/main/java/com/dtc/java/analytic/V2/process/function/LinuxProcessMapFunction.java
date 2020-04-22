@@ -241,7 +241,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                     if (0 == num) {
                         continue;
                     } else {
-                        if (net_drop_out.size() != num) {
+                        if (net_drop_out.size() != num-1) {
                             net_drop_out.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {

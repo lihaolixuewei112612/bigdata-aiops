@@ -28,9 +28,11 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.dtc.java.SC.ZHBB.sc_Scene_Exec</mainClass>
+                            <mainClass>com.dtc.java.SC.DP.DPComplete</mainClass>
                         </manifest>
                     </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>app_business</finalName>
                 </configuration>
                 <executions>
                     <execution>
