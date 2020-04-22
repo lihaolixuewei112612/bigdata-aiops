@@ -309,7 +309,9 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
+    <option name="x" value="47" />
+    <option name="y" value="92" />
     <option name="width" value="1920" />
     <option name="height" value="1080" />
   </component>
@@ -474,58 +476,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.DPComplete">
-    <configuration name="DPComplete" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dtc.java.SC.DP.DPComplete" />
-      <module name="dtc-SC" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dtc.java.SC.DP.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StreamToFlinkV3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dtc.java.analytic.V2.worker.StreamToFlinkV3" />
-      <module name="dtc-flink-snmp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dtc.java.analytic.V2.worker.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StreamToFlinkV5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dtc.java.analytic.V2.source.mysql.StreamToFlinkV5" />
-      <module name="dtc-flink-snmp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dtc.java.analytic.V2.source.mysql.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="demo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dtc.java.analytic.V2.demo.demo" />
-      <module name="dtc-flink-snmp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dtc.java.analytic.V2.demo.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="test1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.dtc.java.analytic.V2.source.mysql.test1" />
       <module name="dtc-flink-snmp" />
