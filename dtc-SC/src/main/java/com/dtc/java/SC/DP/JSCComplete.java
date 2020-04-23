@@ -49,11 +49,11 @@ public class JSCComplete {
         //监控大盘
         JSC_EXEC(env, windowSizeMillis);
         //管理大盘
-        env.addSource(new Lreand()).addSink(new Lwrite());
-        //我的总览
-        env.addSource(new WdzlSource()).addSink(new WdzlSink());
+//        env.addSource(new Lreand()).addSink(new Lwrite());
+//        //我的总览
+//        env.addSource(new WdzlSource()).addSink(new WdzlSink());
 
-        env.execute("com.dtc.java.SC sart");
+        env.execute("数仓-驾驶舱+我的总览");
     }
 
     public static void JSC_EXEC(StreamExecutionEnvironment env, int windowSizeMillis) {
@@ -61,26 +61,28 @@ public class JSCComplete {
         DataStreamSource<Tuple2<String, Integer>> DaPingWCLAlarm = env.addSource(new JSC_Alarm_level()).setParallelism(1);
         //(等级1数，等级2数，等级3数，等级4数，总数，flag)
         DataStream<ModelThree> ycsb_lb_modelSplitStream = getYcsb_lb_modelSplitStream(DaPingWCLAlarm, windowSizeMillis);
-        //未关闭告警
-        DataStreamSource<Tuple2<Integer, Integer>> integerDataStreamSource = env.addSource(new JSC_WGBGJ()).setParallelism(1);
         //（一般，严重，较严重，灾难，总告警数，未关闭告警,标志位）
-        DataStream<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple6DataStream = YCLB_Finally_CGroup111(ycsb_lb_modelSplitStream, integerDataStreamSource, windowSizeMillis).filter(e -> e.f0 != null);
+//        DataStream<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple6DataStream = YCLB_Finally_CGroup111(ycsb_lb_modelSplitStream, integerDataStreamSource, windowSizeMillis).filter(e -> e.f0 != null);
         //监控设备
         DataStreamSource<Tuple2<Integer, Integer>> tuple2DataStreamSource = env.addSource(new JSC_AllNum()).setParallelism(1);
         DataStreamSource<Tuple2<Integer, Integer>> tuple2DataStreamSource1 = env.addSource(new JSC_ZCAllNum()).setParallelism(1);
         DataStream<Tuple2<Integer, Integer>> tuple2DataStream = JKSB_Result_CGroup(tuple2DataStreamSource, tuple2DataStreamSource1, windowSizeMillis);
         //(总设备数，正常，异常，标志位)
         SingleOutputStreamOperator<Tuple4<Integer, Integer, Integer, Integer>> JKSB_Map = tuple2DataStream.map(new JKSB_MyMapFunctionV());
-        //（一般，严重，较严重，灾难，总告警数，未关闭告警,总设备数，正常，异常）写入msyql中
-        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple9DataStream = YCLB_Finally_CGroup222(tuple6DataStream, JKSB_Map, windowSizeMillis).filter(e -> e.f0 != null);
-        tuple9DataStream.addSink(new MysqlSinkJSC());
+        //（一般，严重，较严重，灾难，总告警数,总设备数，正常，异常）写入msyql中
+        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> tuple9DataStream = YCLB_Finally_CGroup222(ycsb_lb_modelSplitStream, JKSB_Map, windowSizeMillis).filter(e -> e.f0 != null);
+        //未关闭告警
+        DataStreamSource<Tuple2<Integer, Integer>> integerDataStreamSource = env.addSource(new JSC_WGBGJ()).setParallelism(1);
+        //（一般，严重，较严重，灾难，总告警数,总设备数，正常，异常,未关闭告警数）
+        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple9DataStream1 = YCLB_Finally_CGroup111(tuple9DataStream, integerDataStreamSource, windowSizeMillis);
+
+        tuple9DataStream1.addSink(new MysqlSinkJSC());
 
         //资产类型告警统计
         DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_YC = env.addSource(new JSC_ZCGJTJ_YC()).setParallelism(1);
         DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_ALL = env.addSource(new JSC_ZCGJTJ_ALL()).setParallelism(1);
         DataStream<Tuple3<String, Integer, Integer>> ZCLXGJTJ_Stream = ZCLXGJTJ_Result_CGroup(JSC_ZCGJTJ_YC, JSC_ZCGJTJ_ALL, windowSizeMillis);
         //（名称，异常数，总数，比值）
-        ZCLXGJTJ_Stream.print("测试: ");
         SingleOutputStreamOperator<Tuple4<String, Integer, Integer, Double>> map = ZCLXGJTJ_Stream.map(new JSC_ZCGJTJ_ALL_MAP());
 //资产分类统计
         DataStreamSource<Tuple2<String, Integer>> JSC_ZC_Used_Num_Stream = env.addSource(new JSC_ZC_Used_Num()).setParallelism(1);
@@ -102,38 +104,73 @@ public class JSCComplete {
         map2.addSink(new MysqlSinkJSC_TOP());
     }
 
-    private static DataStream<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> YCLB_Finally_CGroup111(
-            DataStream<ModelThree> grades,
+    private static DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> YCLB_Finally_CGroup111(
+            DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> grades,
             DataStream<Tuple2<Integer, Integer>> salaries,
             long windowSize) {
-        DataStream<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> apply = grades.coGroup(salaries)
+        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> apply1 = grades.coGroup(salaries)
                 .where(new First_one())
                 .equalTo(new First_two())
                 .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
-                .apply(new CoGroupFunction<ModelThree, Tuple2<Integer, Integer>, Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>>() {
-                    Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer> tuple7 = null;
-
+                .apply(new CoGroupFunction<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>, Tuple2<Integer, Integer>, Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>>() {
+//                    Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> tuple9 = null;
                     @Override
-                    public void coGroup(Iterable<ModelThree> first, Iterable<Tuple2<Integer, Integer>> second, Collector<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> collector) throws Exception {
-                        tuple7 = new Tuple7<>();
-                        for (ModelThree s : first) {
-                            tuple7.f0 = s.getLevel_one();
-                            tuple7.f1 = s.getLevel_two();
-                            tuple7.f2 = s.getLevel_three();
-                            tuple7.f3 = s.getLevel_four();
-                            tuple7.f4 = s.getZN();
+                    public void coGroup(Iterable<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> first, Iterable<Tuple2<Integer, Integer>> second, Collector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> collector) {
+                        Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> tuple9 = new Tuple9<>();
+                        for (Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> s : first) {
+                            tuple9.f0 = s.f0;
+                            tuple9.f1 = s.f1;
+                            tuple9.f2 = s.f2;
+                            tuple9.f3 = s.f3;
+                            tuple9.f4 = s.f4;
+                            tuple9.f5 = s.f5;
+                            tuple9.f6 = s.f6;
+                            tuple9.f7 = s.f7;
+
                         }
-                        for (Tuple2<Integer, Integer> s : second) {
-                            tuple7.f5 = s.f1;
-                            tuple7.f6 = 1;
+                        for (Tuple2<Integer, Integer> s1 : second) {
+                            tuple9.f8 = s1.f1;
                         }
-                        collector.collect(tuple7);
+                        if(tuple9.f0==null){
+                            tuple9.f0=0;
+                        }
+                        if(tuple9.f1==null){
+                            tuple9.f1=0;
+                        }
+                        if(tuple9.f2==null){
+                            tuple9.f2=0;
+                        }
+                        if(tuple9.f3==null){
+                            tuple9.f3=0;
+                        }
+                        if(tuple9.f4==null){
+                            tuple9.f4=0;
+                        }
+                        if(tuple9.f5==null){
+                            tuple9.f5=0;
+                        }
+                        if(tuple9.f6==null){
+                            tuple9.f6=0;
+                        }
+                        if(tuple9.f7==null){
+                            tuple9.f7=0;
+                        }
+                        if(tuple9.f8==null){
+                            tuple9.f8=0;
+                        }
+                        collector.collect(tuple9);
                     }
                 });
-        return apply;
+        return apply1;
     }
 
-    private static class First_one implements KeySelector<ModelThree, Integer> {
+    private static class First_one implements KeySelector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>, Integer> {
+        @Override
+        public Integer getKey(Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> value) {
+            return value.f8;
+        }
+    }
+    private static class First_one_copy implements KeySelector<ModelThree, Integer> {
         @Override
         public Integer getKey(ModelThree value) {
             return value.getFlag();
@@ -147,33 +184,58 @@ public class JSCComplete {
         }
     }
 
-    private static DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> YCLB_Finally_CGroup222(
-            DataStream<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> grades,
+    private static DataStream<Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> YCLB_Finally_CGroup222(
+            DataStream<ModelThree> grades,
             DataStream<Tuple4<Integer, Integer, Integer, Integer>> salaries,
             long windowSize) {
-        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> apply = grades.coGroup(salaries)
+        DataStream<Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> apply = grades.coGroup(salaries)
                 .where(new First_three())
                 .equalTo(new First_four())
                 .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
-                .apply(new CoGroupFunction<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>, Tuple4<Integer, Integer, Integer, Integer>, Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>>() {
-                    Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> tuple9 = null;
+                .apply(new CoGroupFunction<ModelThree, Tuple4<Integer, Integer, Integer, Integer>, Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>>() {
+                    Tuple9<Integer, Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer> tuple9 = null;
 
                     @Override
-                    public void coGroup(Iterable<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> first, Iterable<Tuple4<Integer, Integer, Integer, Integer>> second, Collector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> collector) throws Exception {
+                    public void coGroup(Iterable<ModelThree> first, Iterable<Tuple4<Integer, Integer, Integer, Integer>> second, Collector<Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> collector) throws Exception {
                         tuple9 = new Tuple9<>();
-                        for (Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer> s : first) {
-                            //（一般，严重，较严重，灾难，总告警数，未关闭告警,标志位）
-                            tuple9.f0 = s.f0;
-                            tuple9.f1 = s.f1;
-                            tuple9.f2 = s.f2;
-                            tuple9.f3 = s.f3;
-                            tuple9.f4 = s.f4;
-                            tuple9.f5 = s.f5;
+                        for (ModelThree s : first) {
+                            //（一般，严重，较严重，灾难，总告警数,标志位）
+                            tuple9.f0 = s.getLevel_one();
+                            tuple9.f1 = s.getLevel_two();
+                            tuple9.f2 = s.getLevel_three();
+                            tuple9.f3 = s.getLevel_four();
+                            tuple9.f4 = s.getZN();
                         }
                         for (Tuple4<Integer, Integer, Integer, Integer> s : second) {
-                            tuple9.f6 = s.f0;
-                            tuple9.f7 = s.f1;
-                            tuple9.f8 = s.f2;
+                            tuple9.f5 = s.f0;
+                            tuple9.f6 = s.f1;
+                            tuple9.f7 = s.f2;
+                            tuple9.f8 = Integer.parseInt("1");
+                        }
+                       if(tuple9.f0==null){
+                           tuple9.f0=0;
+                       }
+                        if(tuple9.f1==null){
+                            tuple9.f1=0;
+                        }
+                        if(tuple9.f2==null){
+                            tuple9.f2=0;
+                        }
+                        if(tuple9.f3==null){
+                            tuple9.f3=0;
+                        }
+                        if(tuple9.f4==null){
+                            tuple9.f4=0;
+                        }
+                        if(tuple9.f5==null){
+                            tuple9.f5=0;
+                        } if(tuple9.f6==null){
+                            tuple9.f6=0;
+                        } if(tuple9.f7==null){
+                            tuple9.f7=0;
+                        }
+                        if(tuple9.f8==null){
+                            tuple9.f8=0;
                         }
                         collector.collect(tuple9);
                     }
@@ -181,10 +243,10 @@ public class JSCComplete {
         return apply;
     }
 
-    private static class First_three implements KeySelector<Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>, Integer> {
+    private static class First_three implements KeySelector<ModelThree, Integer> {
         @Override
-        public Integer getKey(Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer> value) {
-            return value.f6;
+        public Integer getKey(ModelThree value) {
+            return value.getFlag();
         }
     }
 
@@ -223,6 +285,27 @@ public class JSCComplete {
                             tuple8.f5 = s.f2;
                             tuple8.f6 = s.f3;
                             tuple8.f7 = s.f4;
+                        }
+                        if(tuple8.f1==null){
+                            tuple8.f1=0;
+                        }
+                        if(tuple8.f2==null){
+                            tuple8.f2=0;
+                        }
+                        if(tuple8.f3==null){
+                            tuple8.f3=0d;
+                        }
+                        if(tuple8.f4==null){
+                            tuple8.f4=0;
+                        }
+                        if(tuple8.f5==null){
+                            tuple8.f5=0;
+                        }
+                        if(tuple8.f6==null){
+                            tuple8.f6=0;
+                        }
+                        if(tuple8.f7==null){
+                            tuple8.f7=0d;
                         }
                         collector.collect(tuple8);
                     }

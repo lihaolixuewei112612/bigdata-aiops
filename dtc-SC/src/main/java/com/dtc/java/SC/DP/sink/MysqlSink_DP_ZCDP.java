@@ -25,6 +25,7 @@ public class MysqlSink_DP_ZCDP extends RichSinkFunction<Tuple3<String, String, I
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
         parameterTool = (ParameterTool) (getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
+        // 加载JDBC驱动
         connection = MySQLUtil.getConnection(parameterTool);
         String sql = "replace into SC_DP_ZCDP(riqi,parent_name,child_name,num,js_time) values(?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(sql);

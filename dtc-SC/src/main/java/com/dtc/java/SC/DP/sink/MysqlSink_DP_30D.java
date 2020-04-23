@@ -18,15 +18,15 @@ import java.text.SimpleDateFormat;
 
 public class MysqlSink_DP_30D extends RichSinkFunction<Tuple3<String, String, Integer>> {
     private Connection connection;
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private PreparedStatement preparedStatement;
     private ParameterTool parameterTool;
     @Override
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
         parameterTool = (ParameterTool) (getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
+        // 加载JDBC驱动
         connection = MySQLUtil.getConnection(parameterTool);
-        String sql = "replace into `SC_DP_SJDP-30D`(riqi,name,alarm_level,num,js_time) values(?,?,?,?,?)";
+        String sql = "replace into SC_DP_SJDP_30D(riqi,`name`,alarm_level,num,js_time) values (?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(sql);
     }
 

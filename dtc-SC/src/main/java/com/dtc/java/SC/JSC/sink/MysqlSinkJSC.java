@@ -26,7 +26,7 @@ public class MysqlSinkJSC extends RichSinkFunction<Tuple9<Integer, Integer, Inte
         super.open(parameters);
         parameterTool = (ParameterTool) (getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
         connection = MySQLUtil.getConnection(parameterTool);
-        String sql = "replace into SC_JSC_JKDP(riqi,level_1,level_2,level_3,level_4,alarm_count,not_close_alarm,SB_ALL_count,SB_ZC_count,SB_YC_count,js_time) values(?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "replace into SC_JSC_JKDP(riqi,level_1,level_2,level_3,level_4,alarm_count,SB_ALL_count,SB_ZC_count,SB_YC_count,not_close_alarm,js_time) values(?,?,?,?,?,?,?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(sql);
     }
 

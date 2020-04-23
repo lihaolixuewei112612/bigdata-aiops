@@ -38,7 +38,7 @@ public class DaPingWCLAlarm extends RichSourceFunction<Tuple2<String,Integer>> {
 
         if (connection != null) {
 //            String sql = "select count(*) as AllNum from asset a where a.room is not null and a.partitions is not null and a.box is not null";
-            String sql = "select level_id,count(*) AllNum from alarm b where b.`status`!=2 group by b.level_id";
+            String sql = "select ifnull(level_id,0) as level_id,count(*) AllNum from alarm b where b.`status`!=2 group by b.level_id";
             ps = connection.prepareStatement(sql);
         }
     }

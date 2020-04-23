@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModelThree {
-    private int level_one;
-    private int level_two;
-    private int level_three;
-    private int level_four;
-    private int ZN;
-    private int flag;
+    private Integer level_one;
+    private Integer level_two;
+    private Integer level_three;
+    private Integer level_four;
+    private Integer ZN;
+    private Integer flag;
 }
