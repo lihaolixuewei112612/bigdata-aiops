@@ -39,22 +39,22 @@ import java.util.List;
  * @Description : 驾驶舱监控大盘启动类
  */
 public class JSCComplete {
-//    public static void main(String[] args) throws Exception {
-//
-//        final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
-//        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
-//        int windowSizeMillis = 6000;
-//        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
-//        env.getConfig().setGlobalJobParameters(parameterTool);
-//        //监控大盘
-//        JSC_EXEC(env, windowSizeMillis);
-//        //管理大盘
-//        env.addSource(new Lreand()).addSink(new Lwrite());
-//        //我的总览
-//        env.addSource(new WdzlSource()).addSink(new WdzlSink());
-//
-//        env.execute("com.dtc.java.SC sart");
-//    }
+    public static void main(String[] args) throws Exception {
+
+        final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
+        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
+        int windowSizeMillis = 6000;
+        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
+        env.getConfig().setGlobalJobParameters(parameterTool);
+        //监控大盘
+        JSC_EXEC(env, windowSizeMillis);
+        //管理大盘
+        env.addSource(new Lreand()).addSink(new Lwrite());
+        //我的总览
+        env.addSource(new WdzlSource()).addSink(new WdzlSink());
+
+        env.execute("com.dtc.java.SC sart");
+    }
 
     public static void JSC_EXEC(StreamExecutionEnvironment env, int windowSizeMillis) {
         //今日告警
@@ -80,6 +80,7 @@ public class JSCComplete {
         DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_ALL = env.addSource(new JSC_ZCGJTJ_ALL()).setParallelism(1);
         DataStream<Tuple3<String, Integer, Integer>> ZCLXGJTJ_Stream = ZCLXGJTJ_Result_CGroup(JSC_ZCGJTJ_YC, JSC_ZCGJTJ_ALL, windowSizeMillis);
         //（名称，异常数，总数，比值）
+        ZCLXGJTJ_Stream.print("测试: ");
         SingleOutputStreamOperator<Tuple4<String, Integer, Integer, Double>> map = ZCLXGJTJ_Stream.map(new JSC_ZCGJTJ_ALL_MAP());
 //资产分类统计
         DataStreamSource<Tuple2<String, Integer>> JSC_ZC_Used_Num_Stream = env.addSource(new JSC_ZC_Used_Num()).setParallelism(1);
@@ -545,8 +546,8 @@ public class JSCComplete {
         @Override
         public Tuple4<String, Integer, Integer, Double> map(Tuple3<String, Integer, Integer> sourceEvent) {
             String name = sourceEvent.f0;
-            Integer YC_Num = sourceEvent.f1;
-            Integer All_Num = sourceEvent.f2;
+            int YC_Num = sourceEvent.f1;
+            int All_Num = sourceEvent.f2;
             if(All_Num==0){
                 return Tuple4.of(name, YC_Num, All_Num, 0d);
             }else {
