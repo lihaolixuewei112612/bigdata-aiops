@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 #useage:flink.sh flink-log start
 export PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/java/jdk1.8.0_162/bin
-if [ -z "${LOG_DIR}" ];then
-    LOG_DIR=/Users/lixuewei/logs
-fi
-export LOG_DIR
-
 if [ -z "${FM_HOME}" ];then
     FM_HOME=$(cd `dirname $0`;cd ..; pwd)
 fi
 export FM_HOME
+if [ -z "${LOG_DIR}" ];then
+    LOG_DIR=$FM_HOME/logs
+fi
+export LOG_DIR
+
+
 
 if [ -z "${FM_CONF_DIR}" ] || [ ! -d "${FM_CONF_DIR}" ];then
     FM_CONF_DIR=${FM_HOME}/conf
@@ -28,36 +29,6 @@ function usage {
     echo "      flink-snmp   flink snmp process."
     echo "    Commands:"
     exit 1
-}
-
-# $0 classname 进程存在，返回进程号；否则返回""
-function get_pid_by_classname {
-    local class_name=$1
-    if [ -z ${class_name} ];then
-        return 1
-    fi
-#    local jpid=`jps -l | grep ${class_name} | awk '{print $1}' | sed 's/[[:space:]]//g'`
-    local jpid=$(jps -ml | grep ${class_name} | awk '{print $1}' | sed 's/[[:space:]]//g')
-    if [ -z "${jpid}" ];then
-        local pid=`ps -ef | grep ${class_name} | grep -v grep| awk '{print $2}' | sed 's/[[:space:]]//g'`
-        if [ -z "${pid}" ];then
-            return 2
-        fi
-    else
-        echo ${jpid}
-    fi
-    return 0
-}
-
-# $0 classname 进程号存在：0，不存在：1
-function is_running_by_classname {
-    local pid=$(get_pid_by_classname $1)
-    echo "pid is:" ${pid}
-    if [ -z "${pid}" ];then
-        return 1
-    else
-        return 0
-    fi
 }
 
 # $0 .+
@@ -132,8 +103,8 @@ function start_service {
     else
         local out_file=${LOG_DIR}/dtc-${service}.out
         echo -n "[`date +'%F %T'`] " >> ${out_file} 2>&1
-        start_${service}
-#        start_${service} >> ${out_file} 2>&1 &
+ #       start_${service}
+        start_${service} >> ${out_file} 2>&1 &
         echo "Launching service ${service}. see ${out_file}"
         return 0
     fi

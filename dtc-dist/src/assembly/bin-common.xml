@@ -78,6 +78,13 @@
                 <include>dtc-flink-snmp-*-jar-with-dependencies.jar</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>../dtc-SC/target</directory>
+            <outputDirectory>../lib/flink/sc</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
     </fileSets>
 
     <moduleSets>

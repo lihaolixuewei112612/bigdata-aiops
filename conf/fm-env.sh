@@ -147,12 +147,33 @@ function start_flink-snmp {
     if ! which java >/dev/null 2>&1 ; then
         return 2;
     fi
-#    if ! which scala >/dev/null 2>&1 ; then
-#        return 2;
-#    fi
-    ${FLINK_SUBMIT} run -m yarn-cluster -yn 2 -c ${FLINK_LOG_CLASS} ${FM_HOME}/lib/flink/snmp/dtc-flink-snmp-0.0.1-jar-with-dependencies.jar
+    nohup ${FLINK_SUBMIT} run ${FM_HOME}/lib/flink/snmp/dtc-flink-snmp-0.0.1-jar-with-dependencies.jar &
     local test=$?
-    echo ${test}
+    if [ ${test} -ne 0 ];then
+        echo "submit is failed!"
+    else
+        echo "submit is success!!"
+    fi
+}
+
+function start_flink-sc {
+    if ! which java >/dev/null 2>&1 ; then
+        return 2;
+    fi
+    nohup ${FLINK_SUBMIT} run ${FM_HOME}/lib/flink/sc/dtc-sc-exec.jar &
+    local test=$?
+    if [ ${test} -ne 0 ];then
+        echo "submit is failed!"
+    else
+        echo "submit is success!!"
+    fi
+}
+function start_flink-bb {
+    if ! which java >/dev/null 2>&1 ; then
+        return 2;
+    fi
+    nohup ${FLINK_SUBMIT} run -c com.dtc.java.SC.ZHBB.sc_Scene_Exec ${FM_HOME}/lib/flink/sc/dtc-sc-exec.jar &
+    local test=$?
     if [ ${test} -ne 0 ];then
         echo "submit is failed!"
     else
