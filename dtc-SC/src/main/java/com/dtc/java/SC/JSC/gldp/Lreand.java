@@ -161,13 +161,13 @@ public class Lreand extends RichSourceFunction<Map<String, String>> {
         Connection con = null;
         try {
             String sql = "SELECT\n" +
-                    "CONCAT(CAST(ROUND((sjgd/zs*100),2) AS CHAR),'%') as sjgd,\n" +
-                    "CONCAT(CAST(ROUND((bgsx/zs*100),2) AS CHAR),'%') as bgsx,\n" +
-                    "CONCAT(CAST(ROUND((fwgd/zs*100),2) AS CHAR),'%') as fwgd,\n" +
-                    "CONCAT(CAST(ROUND((gjgd/zs*100),2) AS CHAR),'%') as gjgd,\n" +
-                    "CONCAT(CAST(ROUND((zysq/zs*100),2) AS CHAR),'%') as zysq,\n" +
-                    "CONCAT(CAST(ROUND((wpgd/zs*100),2) AS CHAR),'%') as wpgd,\n" +
-                    "CONCAT(CAST(ROUND((qt/zs*100),2) AS CHAR),'%') as qt\n" +
+                    "CAST(ROUND((sjgd/zs*100),2) AS CHAR) as sjgd,\n" +
+                    "CAST(ROUND((bgsx/zs*100),2) AS CHAR) as bgsx,\n" +
+                    "CAST(ROUND((fwgd/zs*100),2) AS CHAR) as fwgd,\n" +
+                    "CAST(ROUND((gjgd/zs*100),2) AS CHAR) as gjgd,\n" +
+                    "CAST(ROUND((zysq/zs*100),2) AS CHAR) as zysq,\n" +
+                    "CAST(ROUND((wpgd/zs*100),2) AS CHAR) as wpgd,\n" +
+                    "CAST(ROUND((qt/zs*100),2) AS CHAR) as qt\n" +
                     "FROM\n" +
                     "(SELECT\n" +
                     "(SELECT COUNT(*)AS numb FROM work_order a  WHERE a.type='1' GROUP BY a.type)AS sjgd,\n" +

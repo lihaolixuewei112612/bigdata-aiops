@@ -305,3 +305,66 @@ CREATE TABLE `SC_ZHBB_SCRENE_TWO` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+CREATE TABLE `dtc_win_disk` (
+  `host_ip` varchar(10) NOT NULL,
+  `last_code` varchar(10) NOT NULL,
+  `result` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`host_ip`,`last_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+create table jifang(
+id int(8) not null primary key auto_increment,
+riqi varchar(8) not null,
+room varchar(20) not null,
+allNum int(20) not null,
+zcNum int(20) not null,
+wgbgiNum int(20) not null,
+record float(5) not null,
+js_time varchar(20) not null,
+remark varchar(50) default null,
+UNIQUE KEY `service_id` (`riqi`,room)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table jigui(
+id int(8) not null primary key auto_increment,
+riqi varchar(8) not null,
+room varchar(20) not null,
+partitions varchar(20) not null,
+box varchar(20) not null,
+allNum int(20) not null,
+zcNum int(20) not null,
+wgbgiNum int(20) not null,
+record float(5) not null,
+js_time varchar(20) not null,
+remark varchar(50) default null,
+UNIQUE KEY `service_id` (riqi,room,partitions,box)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table jfyc(
+id int(20) not null primary key auto_increment,
+asset_id varchar(20) not null,
+`name` varchar(40) not null,
+level_id varchar(2) not null,
+ip varchar(10) not null,
+num int(20) not null,
+UNIQUE key service_id (asset_id,`name`,level_id,ip)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table quyu(
+id int(8) not null primary key auto_increment,
+riqi varchar(8) not null,
+room varchar(20) not null,
+partitions varchar(20) not null,
+allNum int(20) not null,
+zcNum int(20) not null,
+wgbgiNum int(20) not null,
+record float(5) not null,
+js_time varchar(20) not null,
+remark varchar(50) default null,
+UNIQUE KEY `service_id` (riqi,room,partitions)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

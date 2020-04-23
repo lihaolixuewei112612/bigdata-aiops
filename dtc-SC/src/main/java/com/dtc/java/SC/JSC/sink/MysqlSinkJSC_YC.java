@@ -47,7 +47,7 @@ public class MysqlSinkJSC_YC extends RichSinkFunction<Tuple8<String, Integer, In
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String riqi = sdf.format(System.currentTimeMillis());
         String js_time = sdf1.format(System.currentTimeMillis());
-
+//（名称，异常数，总数，比值，总数，已使用，异常数据，异常比）
         try {
             preparedStatement.setString(1, riqi);
             preparedStatement.setString(2,value.f0);

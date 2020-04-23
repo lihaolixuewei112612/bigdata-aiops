@@ -72,11 +72,7 @@ public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, 
                     ctx.collect(Tuple9.of(asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level,asset_code,name));
                 }
             }
-<<<<<<< HEAD
             Thread.sleep(1000*6);
-=======
-            Thread.sleep(interval_time);
->>>>>>> origin/master
         }
     }
 

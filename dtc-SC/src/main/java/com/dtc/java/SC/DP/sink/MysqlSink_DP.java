@@ -26,7 +26,7 @@ public class MysqlSink_DP extends RichSinkFunction<Tuple11<Integer, Integer, Int
         parameterTool = (ParameterTool) (getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
         // 加载JDBC驱动
         connection = MySQLUtil.getConnection(parameterTool);
-        String sql = "replace into SC_DP_SJDP(riqi,wo_num,bg_num,wb_num,qy_num,jk_num,w_leve_1,w_leve_2,w_leve_3,w_leve_4,w_level_all,js_time) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "replace into SC_DP_SJDP(riqi,wo_num,bg_num,w_leve_1,w_leve_2,w_leve_3,w_leve_4,w_level_all,wb_num,qy_num,jk_num,js_time) values(?,?,?,?,?,?,?,?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(sql);
     }
 
@@ -51,6 +51,7 @@ public class MysqlSink_DP extends RichSinkFunction<Tuple11<Integer, Integer, Int
         String js_time = sdf1.format(System.currentTimeMillis());
 
         try {
+            //(标志，工单，变更，等级1，2，3，4，总和,维保，废弃，健康)
             preparedStatement.setString(1, riqi);
             preparedStatement.setInt(2,value.f1);
             preparedStatement.setInt(3,value.f2);

@@ -32,7 +32,7 @@
                         </manifest>
                     </archive>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <finalName>app_business</finalName>
+                    <finalName>dtc-sc-zhbb</finalName>
                 </configuration>
                 <executions>
                     <execution>

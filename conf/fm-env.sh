@@ -5,7 +5,7 @@ export CONF_FILE="conf.properties"
 export PLUGINS_DIRS=${FM_HOME}/plugins
 export NATIVE_DIR=${FM_HOME}/native
 #export FM_USER=hadoop
-export LOG_DIR=/Users/lixuewei/logs
+export LOG_DIR=${FM_HOME}/logs
 
 # defaults
 #export EXEC="echo"
@@ -147,7 +147,7 @@ function start_flink-snmp {
     if ! which java >/dev/null 2>&1 ; then
         return 2;
     fi
-    nohup ${FLINK_SUBMIT} run ${FM_HOME}/lib/flink/snmp/dtc-flink-snmp-0.0.1-jar-with-dependencies.jar &
+    nohup ${FLINK_SUBMIT} run ${FM_HOME}/lib/flink/snmp/dtc-flink-snmp.jar &
     local test=$?
     if [ ${test} -ne 0 ];then
         echo "submit is failed!"
@@ -160,7 +160,7 @@ function start_flink-sc {
     if ! which java >/dev/null 2>&1 ; then
         return 2;
     fi
-    nohup ${FLINK_SUBMIT} run ${FM_HOME}/lib/flink/sc/dtc-sc-exec.jar &
+    nohup ${FLINK_SUBMIT} run ${FM_HOME}/lib/flink/sc/dtc-sc-zhbb.jar &
     local test=$?
     if [ ${test} -ne 0 ];then
         echo "submit is failed!"
@@ -172,7 +172,7 @@ function start_flink-bb {
     if ! which java >/dev/null 2>&1 ; then
         return 2;
     fi
-    nohup ${FLINK_SUBMIT} run -c com.dtc.java.SC.ZHBB.sc_Scene_Exec ${FM_HOME}/lib/flink/sc/dtc-sc-exec.jar &
+    nohup ${FLINK_SUBMIT} run -c com.dtc.java.SC.ZHBB.sc_Scene_Exec ${FM_HOME}/lib/flink/sc/dtc-sc-zhbb.jar &
     local test=$?
     if [ ${test} -ne 0 ];then
         echo "submit is failed!"

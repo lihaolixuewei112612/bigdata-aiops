@@ -36,7 +36,8 @@ public class JSC_WGBGJ extends RichSourceFunction<Tuple2<Integer, Integer>> {
         connection = MySQLUtil.getConnection(parameterTool);
 
         if (connection != null) {
-            String sql = "select count(*) as num from asset a where a.id not in (select distinct asset_id from alarm b where b.`status`=2 and TO_DAYS(b.time_occur) = TO_DAYS(NOW()))";
+//            String sql = "select count(*) as num from asset a where a.id not in (select distinct asset_id from alarm b where b.`status`=2 and TO_DAYS(b.time_occur) = TO_DAYS(NOW()))";
+            String sql = "select count(*) as num from asset a where a.id not in (select distinct asset_id from alarm b where b.`status`=2)";
             ps = connection.prepareStatement(sql);
         }
     }

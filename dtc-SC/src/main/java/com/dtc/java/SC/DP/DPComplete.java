@@ -94,7 +94,9 @@ public class DPComplete {
     }
 
     private static DataStream<Tuple11<Integer,Integer, Integer,Integer,Integer,Integer, Integer,Integer,Integer,Integer, Integer>> Four_CGroup(
+            //(标志，工单，变更，等级1，2，3，4，总和)
             DataStream<Tuple8<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> grades,
+            //(标志，维保，废弃，健康)
             DataStream<Tuple4<Integer,Integer, Integer,Integer>> salaries,
             long windowSize) {
         DataStream<Tuple11<Integer,Integer, Integer,Integer,Integer,Integer, Integer,Integer,Integer,Integer, Integer>> apply = grades.coGroup(salaries)

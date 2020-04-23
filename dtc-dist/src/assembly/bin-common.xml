@@ -44,6 +44,7 @@
                 <include>RELEASE-NOTES</include>
 <!--                <include>bin/**</include>-->
                 <include>conf/**</include>
+                <include>logs/**</include>
                 <include>native/**</include>
             </includes>
         </fileSet>
@@ -75,7 +76,7 @@
             <directory>../dtc-flink-snmp/target</directory>
             <outputDirectory>../lib/flink/snmp</outputDirectory>
             <includes>
-                <include>dtc-flink-snmp-*-jar-with-dependencies.jar</include>
+                <include>dtc-flink-snmp.jar</include>
             </includes>
         </fileSet>
         <fileSet>

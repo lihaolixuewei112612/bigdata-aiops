@@ -316,6 +316,8 @@
                             <mainClass>com.dtc.java.analytic.V2.worker.StreamToFlinkV3</mainClass>
                         </manifest>
                     </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>dtc-flink-snmp</finalName>
                 </configuration>
                 <executions>
                     <execution>

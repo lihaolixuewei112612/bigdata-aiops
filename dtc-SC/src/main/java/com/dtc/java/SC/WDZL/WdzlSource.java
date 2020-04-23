@@ -188,9 +188,9 @@ public class WdzlSource extends RichSourceFunction<Map<String, List>> {
         Connection con = null;
         try {
             String sql = "SELECT\n" +
-                    "CONCAT(CAST(ROUND((szjy/zs*100),2) AS CHAR),'%') as szjy,\n" +
-                    "CONCAT(CAST(ROUND((llzs/zs*100),2) AS CHAR),'%') as llzs,\n" +
-                    "CONCAT(CAST(ROUND((pxkc/zs*100),2) AS CHAR),'%') as pxkc\n" +
+                    "CAST(ROUND((szjy/zs*100),2) AS CHAR) as szjy,\n" +
+                    "CAST(ROUND((llzs/zs*100),2) AS CHAR) as llzs,\n" +
+                    "CAST(ROUND((pxkc/zs*100),2) AS CHAR) as pxkc\n" +
                     "FROM\n" +
                     "(SELECT\n" +
                     "(SELECT COUNT(*)AS numb FROM knowledge a  WHERE a.type='1' GROUP BY a.type)AS szjy,\n" +
@@ -309,11 +309,11 @@ public class WdzlSource extends RichSourceFunction<Map<String, List>> {
         Connection con = null;
         try {
             String sql = "SELECT\n" +
-                    "CONCAT(CAST(ROUND((zhuji/zs*100),2) AS CHAR),'%') as zhuji, \n" +
-                    "CONCAT(CAST(ROUND((wlsb/zs*100),2) AS CHAR),'%') as wlsb, \n" +
-                    "CONCAT(CAST(ROUND((aqsb/zs*100),2) AS CHAR),'%') as aqsb, \n" +
-                    "CONCAT(CAST(ROUND((ccsb/zs*100),2) AS CHAR),'%') as ccsb, \n" +
-                    "CONCAT(CAST(ROUND((jcss/zs*100),2) AS CHAR),'%') as jcss \n" +
+                    "CAST(ROUND((zhuji/zs*100),2) AS CHAR) as zhuji, \n" +
+                    "CAST(ROUND((wlsb/zs*100),2) AS CHAR) as wlsb, \n" +
+                    "CAST(ROUND((aqsb/zs*100),2) AS CHAR) as aqsb, \n" +
+                    "CAST(ROUND((ccsb/zs*100),2) AS CHAR) as ccsb, \n" +
+                    "CAST(ROUND((jcss/zs*100),2) AS CHAR) as jcss \n" +
                     "FROM \n" +
                     "(SELECT \n" +
                     "(select sum(num) from \n" +

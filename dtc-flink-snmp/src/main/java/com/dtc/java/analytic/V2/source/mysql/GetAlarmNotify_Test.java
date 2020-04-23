@@ -65,11 +65,7 @@ public class GetAlarmNotify_Test extends RichSourceFunction<Tuple7<String, Strin
                     ctx.collect(Tuple7.of(asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level));
                 }
             }
-<<<<<<< HEAD
             Thread.sleep(1000*6);
-=======
-            Thread.sleep(interval_time);
->>>>>>> origin/master
         }
     }
 

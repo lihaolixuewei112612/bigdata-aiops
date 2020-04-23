@@ -60,13 +60,6 @@ public class StreamToFlinkV3 {
 
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         String opentsdb_url = parameterTool.get("dtc.opentsdb.url", "http://10.10.58.16:4399");
-        Map<String, String> stringStringMap = parameterTool.toMap();
-        Properties properties = new Properties();
-        for (String key : stringStringMap.keySet()) {
-            if (key.startsWith("mysql")) {
-                properties.setProperty(key, stringStringMap.get(key));
-            }
-        }
         int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         env.getConfig().setGlobalJobParameters(parameterTool);
@@ -118,7 +111,7 @@ public class StreamToFlinkV3 {
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess);
         alarmWindows.forEach(e -> e.print("告警收敛之后的数据："));
-        alarmWindows.forEach(e -> e.addSink(new MysqlSink(properties)));
+        alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
 
         //linux指标数据处理
         SingleOutputStreamOperator<DataStruct> linuxProcess = splitStream
@@ -133,7 +126,7 @@ public class StreamToFlinkV3 {
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess);
-        alarmLinux.forEach(e -> e.addSink(new MysqlSink(properties)));
+        alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
 
