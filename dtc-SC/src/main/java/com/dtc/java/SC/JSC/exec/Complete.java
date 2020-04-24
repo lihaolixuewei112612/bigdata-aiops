@@ -12,6 +12,7 @@ import com.dtc.java.SC.JSC.sink.MysqlSinkJSC_YC;
 import com.dtc.java.SC.JSC.source.*;
 import com.dtc.java.SC.WDZL.WdzlSink;
 import com.dtc.java.SC.WDZL.WdzlSource;
+import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.CoGroupFunction;
 import org.apache.flink.api.common.functions.JoinFunction;
@@ -43,7 +44,7 @@ public class Complete {
 
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
-        int windowSizeMillis = 6000;
+        int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         env.getConfig().setGlobalJobParameters(parameterTool);
         //监控大盘
@@ -52,7 +53,6 @@ public class Complete {
         env.addSource(new Lreand()).addSink(new Lwrite());
         //我的总览
         env.addSource(new WdzlSource()).addSink(new WdzlSink());
-
         env.execute("com.dtc.java.SC sart");
     }
 
@@ -74,6 +74,8 @@ public class Complete {
         //（一般，严重，较严重，灾难，总告警数，未关闭告警,总设备数，正常，异常）写入msyql中
         DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple9DataStream = YCLB_Finally_CGroup222(tuple6DataStream, JKSB_Map, windowSizeMillis).filter(e -> e.f0 != null);
         tuple9DataStream.addSink(new MysqlSinkJSC());
+        tuple9DataStream.print("test:");
+
 
         //资产类型告警统计
         DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_YC = env.addSource(new JSC_ZCGJTJ_YC()).setParallelism(1);
@@ -126,6 +128,27 @@ public class Complete {
                             tuple7.f5 = s.f1;
                             tuple7.f6 = 1;
                         }
+                        if(tuple7.f0==null){
+                            tuple7.f0=0;
+                        }
+                        if(tuple7.f1==null){
+                            tuple7.f1=0;
+                        }
+                        if(tuple7.f2==null){
+                            tuple7.f2=0;
+                        }
+                        if(tuple7.f3==null){
+                            tuple7.f3=0;
+                        }
+                        if(tuple7.f4==null){
+                            tuple7.f4=0;
+                        }
+                        if(tuple7.f5==null){
+                            tuple7.f5=0;
+                        }
+                        if(tuple7.f6==null){
+                            tuple7.f6=0;
+                        }
                         collector.collect(tuple7);
                     }
                 });
@@ -174,6 +197,34 @@ public class Complete {
                             tuple9.f7 = s.f1;
                             tuple9.f8 = s.f2;
                         }
+                        if(tuple9.f0==null){
+                            tuple9.f0=0;
+                        }
+                        if(tuple9.f1==null){
+                            tuple9.f1=0;
+                        }
+                        if(tuple9.f2==null){
+                            tuple9.f2=0;
+                        }
+                        if(tuple9.f3==null){
+                            tuple9.f3=0;
+                        }if(tuple9.f4==null){
+                            tuple9.f4=0;
+                        }if(tuple9.f5==null){
+                            tuple9.f5=0;
+                        }
+                        if(tuple9.f6==null){
+                            tuple9.f6=0;
+                        }
+                        if(tuple9.f7==null){
+                            tuple9.f7=0;
+                        }
+                        if(tuple9.f8==null){
+                            tuple9.f8=0;
+                        }
+
+
+
                         collector.collect(tuple9);
                     }
                 });
@@ -224,6 +275,27 @@ public class Complete {
                             tuple8.f6 = s.f3;
                             tuple8.f7 = s.f4;
                         }
+                        if(tuple8.f1==null){
+                            tuple8.f1=0;
+                        }
+                        if(tuple8.f2==null){
+                            tuple8.f2=0;
+                        }
+                        if(tuple8.f3==null){
+                            tuple8.f3=0d;
+                        }
+                        if(tuple8.f4==null){
+                            tuple8.f4=0;
+                        }
+                        if(tuple8.f5==null){
+                            tuple8.f5=0;
+                        }
+                        if(tuple8.f6==null){
+                            tuple8.f6=0;
+                        }
+                        if(tuple8.f7==null){
+                            tuple8.f7=0d;
+                        }
                         collector.collect(tuple8);
                     }
                 });
@@ -252,9 +324,13 @@ public class Complete {
             String name = sourceEvent.f1;
             Integer Num_GJ = sourceEvent.f2;
             Integer Num_ALL = sourceEvent.f3;
-            double result = Double.parseDouble(String.valueOf(Num_GJ)) / Double.parseDouble(String.valueOf(Num_ALL));
-            double v2 = Double.parseDouble(String.format("%.3f", result));
-            return Tuple5.of(id, name, Num_GJ, Num_ALL, v2);
+            if(Num_ALL==0){
+                return Tuple5.of(id, name, Num_GJ, Num_ALL, 0d);
+            }else {
+                double result = Double.parseDouble(String.valueOf(Num_GJ)) / Double.parseDouble(String.valueOf(Num_ALL));
+                double v2 = Double.parseDouble(String.format("%.3f", result));
+                return Tuple5.of(id, name, Num_GJ, Num_ALL, v2);
+            }
         }
     }
 
@@ -420,6 +496,12 @@ public class Complete {
                         for (Tuple2<Integer, Integer> s1 : second) {
                             tuple2.f1 = s1.f1;
                         }
+                        if(tuple2.f1==null){
+                            tuple2.f1=0;
+                        }
+                        if (tuple2.f0==null){
+                            tuple2.f0=0;
+                        }
                         collector.collect(tuple2);
                     }
                 });
@@ -434,10 +516,15 @@ public class Complete {
             Integer All_Num = sourceEvent.f1;
             Integer Used_Num = sourceEvent.f2;
             Integer YC_Num = sourceEvent.f3;
-            double result = Double.parseDouble(String.valueOf(YC_Num)) / Double.parseDouble(String.valueOf(All_Num));
-            double v2 = Double.parseDouble(String.format("%.3f", result));
+            if(All_Num==0){
+                return Tuple5.of(name, All_Num, Used_Num, YC_Num, 0d);
+            }
+            else {
+                double result = Double.parseDouble(String.valueOf(YC_Num)) / Double.parseDouble(String.valueOf(All_Num));
+                double v2 = Double.parseDouble(String.format("%.3f", result));
 
-            return Tuple5.of(name, All_Num, Used_Num, YC_Num, v2);
+                return Tuple5.of(name, All_Num, Used_Num, YC_Num, v2);
+            }
         }
     }
 
@@ -495,6 +582,15 @@ public class Complete {
                         }
                         for (Tuple2<String, Integer> s1 : second) {
                             tuple4.f3 = s1.f1;
+                        }
+                        if(tuple4.f1==null){
+                            tuple4.f1=0;
+                        }
+                        if(tuple4.f2==null){
+                            tuple4.f2=0;
+                        }
+                        if(tuple4.f3==null){
+                            tuple4.f3=0;
                         }
                         collector.collect(tuple4);
                     }
@@ -558,6 +654,12 @@ public class Complete {
                         }
                         for (Tuple2<String, Integer> s1 : second) {
                             tuple3.f2 = s1.f1;
+                        }
+                        if(tuple3.f1==null){
+                            tuple3.f1=0;
+                        }
+                        if(tuple3.f2==null){
+                            tuple3.f2=0;
                         }
                         collector.collect(tuple3);
                     }

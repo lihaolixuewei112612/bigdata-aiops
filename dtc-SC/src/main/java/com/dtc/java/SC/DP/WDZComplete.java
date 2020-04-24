@@ -5,6 +5,7 @@ import com.dtc.java.SC.JSC.gldp.Lreand;
 import com.dtc.java.SC.JSC.gldp.Lwrite;
 import com.dtc.java.SC.WDZL.WdzlSink;
 import com.dtc.java.SC.WDZL.WdzlSource;
+import com.dtc.java.SC.common.PropertiesConstants;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -19,7 +20,7 @@ public class WDZComplete {
 
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
-        int windowSizeMillis = 6000;
+        int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         env.getConfig().setGlobalJobParameters(parameterTool);
         env.addSource(new Lreand()).addSink(new Lwrite());

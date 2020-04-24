@@ -68,9 +68,18 @@ public class Lreand extends RichSourceFunction<Map<String, String>> {
 
     }
 
+
     @Override
     public void cancel() {
-
+        try {
+            super.close();
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            log.error("runException:{}", e);
+        }
+        isRunning = false;
     }
 
     private static Map<String, String> selectA() {

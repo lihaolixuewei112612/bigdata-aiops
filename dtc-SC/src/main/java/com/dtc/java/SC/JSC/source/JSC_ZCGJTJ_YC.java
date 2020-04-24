@@ -47,7 +47,7 @@ public class JSC_ZCGJTJ_YC extends RichSourceFunction<Tuple2<String,Integer>> {
         while (isRunning) {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                String zc_name = resultSet.getString("name");
+                String zc_name = resultSet.getString("name").trim();
                 int num = resultSet.getInt("num");
                 ctx.collect(Tuple2.of(zc_name,num));
             }

@@ -5,14 +5,12 @@ import com.dtc.java.SC.DP.sink.MysqlSink_DP_30D;
 import com.dtc.java.SC.DP.sink.MysqlSink_DP_ZCDP;
 import com.dtc.java.SC.DP.source.*;
 import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
-import com.dtc.java.SC.JSC.gldp.Lreand;
-import com.dtc.java.SC.JSC.gldp.Lwrite;
 import com.dtc.java.SC.JSC.model.ModelFirst;
-import com.dtc.java.SC.JSC.model.ModelSecond;
-import com.dtc.java.SC.JSC.model.ModelThree;
+import com.dtc.java.SC.JSC.sink.Lwrite;
+import com.dtc.java.SC.JSC.source.Lreand;
 import com.dtc.java.SC.WDZL.WdzlSink;
 import com.dtc.java.SC.WDZL.WdzlSource;
-import com.twitter.chill.Tuple2IntDoubleSerializer;
+import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.CoGroupFunction;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -46,17 +44,17 @@ public class DPComplete {
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         env.getConfig().setGlobalJobParameters(parameterTool);
-        int windowSizeMillis = 6000;
+        int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         /**各机房各区域各机柜设备总数*/
         //大盘今日监控设备数
         DP_EXEC(env, windowSizeMillis);
 //        //监控大盘
-//        JSC_EXEC(env, windowSizeMillis);
+        JSC_EXEC(env, windowSizeMillis);
 //        //管理大盘
-//        env.addSource(new Lreand()).addSink(new Lwrite());
+        env.addSource(new Lreand()).addSink(new Lwrite());
 //        //我的总览
-//        env.addSource(new WdzlSource()).addSink(new WdzlSink());
+        env.addSource(new WdzlSource()).addSink(new WdzlSink());
         env.execute("数仓-大屏");
     }
 

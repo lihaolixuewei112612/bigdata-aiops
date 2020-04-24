@@ -1,17 +1,17 @@
 package com.dtc.java.SC.DP;
 
 import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
-import com.dtc.java.SC.JSC.gldp.Lreand;
-import com.dtc.java.SC.JSC.gldp.Lwrite;
 import com.dtc.java.SC.JSC.model.ModelFirst;
 import com.dtc.java.SC.JSC.model.ModelSecond;
 import com.dtc.java.SC.JSC.model.ModelThree;
+import com.dtc.java.SC.JSC.sink.Lwrite;
 import com.dtc.java.SC.JSC.sink.MysqlSinkJSC;
 import com.dtc.java.SC.JSC.sink.MysqlSinkJSC_TOP;
 import com.dtc.java.SC.JSC.sink.MysqlSinkJSC_YC;
 import com.dtc.java.SC.JSC.source.*;
 import com.dtc.java.SC.WDZL.WdzlSink;
 import com.dtc.java.SC.WDZL.WdzlSource;
+import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.CoGroupFunction;
 import org.apache.flink.api.common.functions.JoinFunction;
@@ -43,15 +43,15 @@ public class JSCComplete {
 
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
-        int windowSizeMillis = 6000;
+        int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         env.getConfig().setGlobalJobParameters(parameterTool);
         //监控大盘
         JSC_EXEC(env, windowSizeMillis);
         //管理大盘
-//        env.addSource(new Lreand()).addSink(new Lwrite());
+        env.addSource(new Lreand()).addSink(new Lwrite());
 //        //我的总览
-//        env.addSource(new WdzlSource()).addSink(new WdzlSink());
+        env.addSource(new WdzlSource()).addSink(new WdzlSink());
 
         env.execute("数仓-驾驶舱+我的总览");
     }
@@ -77,7 +77,7 @@ public class JSCComplete {
         DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple9DataStream1 = YCLB_Finally_CGroup111(tuple9DataStream, integerDataStreamSource, windowSizeMillis);
 
         tuple9DataStream1.addSink(new MysqlSinkJSC());
-
+        tuple9DataStream1.print("test:");
         //资产类型告警统计
         DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_YC = env.addSource(new JSC_ZCGJTJ_YC()).setParallelism(1);
         DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_ALL = env.addSource(new JSC_ZCGJTJ_ALL()).setParallelism(1);
@@ -662,6 +662,9 @@ public class JSCComplete {
                         }
                         for (Tuple2<String, Integer> s1 : second) {
                             tuple3.f2 = s1.f1;
+                        }
+                        if(tuple3.f0==null){
+                            tuple3.f0="其他";
                         }
                         if(tuple3.f1==null){
                             tuple3.f1=0;

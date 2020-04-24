@@ -26,8 +26,8 @@ public class SC_Scene_ZHBB {
      * 场景一
      * */
     public static void sc_Scence_one(ExecutionEnvironment env, String driver, String url, String username, String password) {
-        String sence_one_query_sql = "SELECT ifNull(y.`name`,'其他') AS sblx,ifnull(c.`name`,'其他') AS zlx,ifnull(m.`name`,'其他') AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a left join asset b on a.asset_id=b.id \n" +
-                "left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id left join asset_category y on c.parent_id = y.id \n" +
+        String sence_one_query_sql = "SELECT ifNull(y.`id`,23) AS sblx,ifnull(c.`id`,29) AS zlx,ifnull(m.`id`,11) AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a \n" +
+                "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id left join asset_category y on c.parent_id = y.id \n" +
                 "LEFT JOIN manufacturer m ON m.id=b.manufacturer_id GROUP BY c.`name`;";
 //生产环境使用
 //        String sql = "SELECT ifNull(y.`name`,'其他') AS sblx,ifnull(c.`name`,'其他') AS zlx,ifnull(m.`name`,'其他') AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a left join asset b on a.asset_id=b.id \n" +
@@ -51,9 +51,9 @@ public class SC_Scene_ZHBB {
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String riqi = sdf.format(System.currentTimeMillis());
                 String js_time = sdf1.format(System.currentTimeMillis());
-                String sblx = (String) row.getField(0);
-                String zle = (String) row.getField(1);
-                String cs = (String) row.getField(2);
+                String sblx = String.valueOf(row.getField(0));
+                String zle =  String.valueOf(row.getField(1));
+                String cs =  String.valueOf(row.getField(2));
                 Long gasl = (Long) row.getField(3);
                 Row row1 = new Row(6);
                 row1.setField(0, riqi);

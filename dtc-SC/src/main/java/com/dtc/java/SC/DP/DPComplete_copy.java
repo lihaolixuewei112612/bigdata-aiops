@@ -8,6 +8,7 @@ import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
 import com.dtc.java.SC.JSC.model.ModelFirst;
 import com.dtc.java.SC.JSC.model.ModelSecond;
 import com.dtc.java.SC.JSC.model.ModelThree;
+import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.CoGroupFunction;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -39,7 +40,7 @@ public class DPComplete_copy {
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         env.getConfig().setGlobalJobParameters(parameterTool);
-        int windowSizeMillis = 6000;
+        int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         DataStreamSource<Tuple2<Integer, Integer>> today_DP_WO = env.addSource(new DaPingOrder()).setParallelism(1);
         today_DP_WO.print();
