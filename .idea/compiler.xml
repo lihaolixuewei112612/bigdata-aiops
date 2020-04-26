@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="dtc-flink-zabbix" />
+        <module name="dtc-dd-data" />
         <module name="dtc-dist" />
         <module name="dtc-SC" />
         <module name="dtc-flink-snmp" />
@@ -14,6 +15,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
       <module name="dtc-bigdata" target="1.5" />
+      <module name="dtc-dd-data" target="8" />
       <module name="dtc-dist" target="1.5" />
       <module name="dtc-flink-snmp" target="8" />
       <module name="dtc-flink-zabbix" target="8" />

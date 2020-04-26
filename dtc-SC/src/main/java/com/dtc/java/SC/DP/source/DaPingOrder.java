@@ -39,7 +39,7 @@ public class DaPingOrder extends RichSourceFunction<Tuple2<Integer,Integer>> {
 
         if (connection != null) {
 //            String sql = "select count(*) as AllNum from asset a where a.room is not null and a.partitions is not null and a.box is not null";
-            String sql = "SELECT count(*) as AllNum FROM work_order WHERE TO_DAYS(handle_start_time) = TO_DAYS(NOW())";
+            String sql = "SELECT count(*) as AllNum FROM work_order WHERE TO_DAYS(create_time) = TO_DAYS(NOW())";
 
             ps = connection.prepareStatement(sql);
         }

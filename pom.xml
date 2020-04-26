@@ -13,6 +13,7 @@
         <module>dtc-flink-snmp</module>
         <module>dtc-SC</module>
         <module>dtc-dist</module>
+        <module>DD-Data</module>
 
     </modules>
     <properties>

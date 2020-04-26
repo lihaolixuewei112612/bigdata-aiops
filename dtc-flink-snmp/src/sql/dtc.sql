@@ -368,3 +368,72 @@ js_time varchar(20) not null,
 remark varchar(50) default null,
 UNIQUE KEY `service_id` (riqi,room,partitions)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--  --------------------------
+--考勤
+-- -------------------------
+CREATE TABLE `SC_KQ` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `k_userid` varchar(40) NOT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `department` varchar(20) DEFAULT NULL,
+  `k_OnDuty` varchar(20) DEFAULT NULL,
+  `k_OffDuty` varchar(20) DEFAULT NULL,
+  `riqi` varchar(20) DEFAULT NULL,
+  `k_name` varchar(10) DEFAULT NULL,
+  `k_jisuan_riqi` varchar(20) NOT NULL,
+  `j_duration` varchar(10) DEFAULT NULL,
+  `j_start_time` varchar(20) DEFAULT NULL,
+  `j_end_time` varchar(20) DEFAULT NULL,
+  `q_duration` varchar(20) DEFAULT NULL,
+  `q_start_time` varchar(20) DEFAULT NULL,
+  `q_end_time` varchar(20) DEFAULT NULL,
+  `OnResult` varchar(30) DEFAULT NULL,
+  `OffResult` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`k_userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `SC_KQ_JB` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(40) NOT NULL,
+  `duration` varchar(10) DEFAULT NULL,
+  `start_time` varchar(20) DEFAULT NULL,
+  `end_time` varchar(20) DEFAULT NULL,
+  `riqi` varchar(20) NOT NULL,
+  `jisuan_riqi` varchar(20) NOT NULL,
+  PRIMARY KEY (`user_id`,`jisuan_riqi`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `SC_KQ_QJ` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(40) NOT NULL,
+  `duration` varchar(10) DEFAULT NULL,
+  `start_time` varchar(20) DEFAULT NULL,
+  `end_time` varchar(20) DEFAULT NULL,
+  `riqi` varchar(20) NOT NULL,
+  `jisuan_riqi` varchar(20) NOT NULL,
+  PRIMARY KEY (`user_id`,`jisuan_riqi`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `SC_KQ_USER` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(40) NOT NULL,
+  `unionid` varchar(50) DEFAULT NULL,
+  `openId` varchar(50) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `department` varchar(20) DEFAULT NULL,
+  `OnDuty` varchar(20) DEFAULT NULL,
+  `OffDuty` varchar(20) DEFAULT NULL,
+  `riqi` varchar(20) DEFAULT NULL,
+  `name` varchar(10) DEFAULT NULL,
+  `jisuan_riqi` varchar(20) NOT NULL,
+  `OnResult` varchar(10) DEFAULT NULL,
+  `OffResult` varchar(10) DEFAULT NULL,
+  `Z_Time` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

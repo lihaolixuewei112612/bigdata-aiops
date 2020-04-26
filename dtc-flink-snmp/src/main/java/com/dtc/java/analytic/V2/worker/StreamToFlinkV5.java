@@ -18,6 +18,7 @@
 //import org.apache.flink.api.common.state.MapStateDescriptor;
 //import org.apache.flink.api.common.state.ReadOnlyBroadcastState;
 //import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
+//import org.apache.flink.api.java.tuple.Tuple9;
 //import org.apache.flink.api.java.utils.ParameterTool;
 //import org.apache.flink.cep.CEP;
 //import org.apache.flink.cep.PatternSelectFunction;
@@ -53,7 +54,7 @@
 //            "alarm_rules",
 //            BasicTypeInfo.STRING_TYPE_INFO,
 //            BasicTypeInfo.STRING_TYPE_INFO);
-//    private static DataStreamSource<Map<String, String>> alarmDataStream = null;
+//    private static DataStream<Map<String, String>> alarmDataStream = null;
 //
 //    public static void main(String[] args) throws Exception {
 //
@@ -69,69 +70,73 @@
 //        int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
 //        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
 //        env.getConfig().setGlobalJobParameters(parameterTool);
-//        alarmDataStream = env.addSource(new ReadAlarmMessage()).setParallelism(1);
+//        DataStreamSource<Tuple9<String, String, String, String, Double, String, String, String, String>> alarmMessageMysql = env.addSource(new ReadAlarmMessage()).setParallelism(1);
+//        DataStream<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> process = alarmMessageMysql.keyBy(0, 5).timeWindow(Time.milliseconds(windowSizeMillis)).process(new StreamToFlinkV3.MySqlProcessMapFunction());
+//        alarmDataStream = process.map(new StreamToFlinkV3.MySQLFunction());
+//        alarmDataStream.print("test");
+//
 ////        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
-//        DataStreamSource<SourceEvent> streamSource = KafkaConfigUtil.buildSource(env);
+////        DataStreamSource<SourceEvent> streamSource = KafkaConfigUtil.buildSource(env);
 //
 //        /**
 //         * {"time":"1581691002687","code":"101_101_107_105_105","host":"10.3.7.234","nameCN":"磁盘剩余大小","value":"217802544","nameEN":"disk_free"}
 //         * */
 ////        DataStreamSource<String> dataStreamSource = env.socketTextStream("172.20.10.2", 8080, '\n');
 //
-//        SingleOutputStreamOperator<DataStruct> mapStream = streamSource.map(new MyMapFunctionV3());
-////        SingleOutputStreamOperator<DataStruct> timeSingleOutputStream
-////                = mapStream.assignTimestampsAndWatermarks(new DtcPeriodicAssigner());
-//
-//        SplitStream<DataStruct> splitStream
-//                = mapStream.split((OutputSelector<DataStruct>) event -> {
-//            List<String> output = new ArrayList<>();
-//            String type = event.getSystem_name();
-//            if ("101_100".equals(type)) {
-//                output.add("Win");
-//            } else if ("101_101".equals(type)) {
-//                output.add("Linux");
-//            } else if ("102_101".equals(type)) {
-//                output.add("H3C_Switch");
-//            } else if ("102_102".equals(type)) {
-//                output.add("HW_Switch");
-//            } else if ("102_103".equals(type)) {
-//                output.add("ZX_Switch");
-//            } else if ("103_102".equals(type)) {
-//                output.add("DPI");
-//            }
-//            return output;
-//        });
-//        //windows指标数据处理
-//        SingleOutputStreamOperator<DataStruct> winProcess = splitStream
-//                .select("Win")
-//                .map(new WinMapFunction())
-//                .keyBy("Host")
-//                .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-//                .process(new WinProcessMapFunction());
-//        winProcess.print("widows: ");
-//        //windows数据全量写opentsdb
-//        winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
-//
-//        //windows数据进行告警规则判断并将告警数据写入mysql
-//        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess);
-//        alarmWindows.forEach(e -> e.addSink(new MysqlSink(properties)));
-//
-//        //linux指标数据处理
-//        SingleOutputStreamOperator<DataStruct> linuxProcess = splitStream
-//                .select("Linux")
-//                .map(new LinuxMapFunction())
-//                .keyBy("Host")
-//                .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-//                .process(new LinuxProcessMapFunction());
-//        linuxProcess.print("111--:");
-//
-//        //Linux数据全量写opentsdb
-//        linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
-//
-//        //Linux数据进行告警规则判断并将告警数据写入mysql
-//        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess);
-//        alarmLinux.forEach(e->e.print("2222---:"));
-//        alarmLinux.forEach(e -> e.addSink(new MysqlSink(properties)));
+////        SingleOutputStreamOperator<DataStruct> mapStream = streamSource.map(new MyMapFunctionV3());
+//////        SingleOutputStreamOperator<DataStruct> timeSingleOutputStream
+//////                = mapStream.assignTimestampsAndWatermarks(new DtcPeriodicAssigner());
+////
+////        SplitStream<DataStruct> splitStream
+////                = mapStream.split((OutputSelector<DataStruct>) event -> {
+////            List<String> output = new ArrayList<>();
+////            String type = event.getSystem_name();
+////            if ("101_100".equals(type)) {
+////                output.add("Win");
+////            } else if ("101_101".equals(type)) {
+////                output.add("Linux");
+////            } else if ("102_101".equals(type)) {
+////                output.add("H3C_Switch");
+////            } else if ("102_102".equals(type)) {
+////                output.add("HW_Switch");
+////            } else if ("102_103".equals(type)) {
+////                output.add("ZX_Switch");
+////            } else if ("103_102".equals(type)) {
+////                output.add("DPI");
+////            }
+////            return output;
+////        });
+////        //windows指标数据处理
+////        SingleOutputStreamOperator<DataStruct> winProcess = splitStream
+////                .select("Win")
+////                .map(new WinMapFunction())
+////                .keyBy("Host")
+////                .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+////                .process(new WinProcessMapFunction());
+////        winProcess.print("widows: ");
+////        //windows数据全量写opentsdb
+////        winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
+////
+////        //windows数据进行告警规则判断并将告警数据写入mysql
+////        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess);
+////        alarmWindows.forEach(e -> e.addSink(new MysqlSink(properties)));
+////
+////        //linux指标数据处理
+////        SingleOutputStreamOperator<DataStruct> linuxProcess = splitStream
+////                .select("Linux")
+////                .map(new LinuxMapFunction())
+////                .keyBy("Host")
+////                .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+////                .process(new LinuxProcessMapFunction());
+////        linuxProcess.print("111--:");
+////
+////        //Linux数据全量写opentsdb
+////        linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
+////
+////        //Linux数据进行告警规则判断并将告警数据写入mysql
+////        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess);
+////        alarmLinux.forEach(e->e.print("2222---:"));
+////        alarmLinux.forEach(e -> e.addSink(new MysqlSink(properties)));
 //        //告警数据实时发送kafka
 //        env.execute("Dtc-Alarm-Flink-Process");
 //    }

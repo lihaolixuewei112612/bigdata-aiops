@@ -50,11 +50,11 @@ public class DPComplete {
         //大盘今日监控设备数
         DP_EXEC(env, windowSizeMillis);
 //        //监控大盘
-        JSC_EXEC(env, windowSizeMillis);
-//        //管理大盘
-        env.addSource(new Lreand()).addSink(new Lwrite());
-//        //我的总览
-        env.addSource(new WdzlSource()).addSink(new WdzlSink());
+//        JSC_EXEC(env, windowSizeMillis);
+////        //管理大盘
+//        env.addSource(new Lreand()).addSink(new Lwrite());
+////        //我的总览
+//        env.addSource(new WdzlSource()).addSink(new WdzlSink());
         env.execute("数仓-大屏");
     }
 
@@ -84,12 +84,13 @@ public class DPComplete {
         //(标志，工单，变更，等级1，2，3，4，总和,维保，废弃，健康)
         DataStream<Tuple11<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple11DataStream = Four_CGroup(tuple8DataStream, tuple4DataStream, windowSizeMillis);
         tuple11DataStream.addSink(new MysqlSink_DP());
+        tuple11DataStream.print("dapin:");
 //        //30天告警分布
         DataStreamSource<Tuple3<String, String, Integer>> tuple3DataStreamSource = env.addSource(new DaPing_ZCGJFL_30()).setParallelism(1);
-        tuple3DataStreamSource.addSink(new MysqlSink_DP_30D());
+//        tuple3DataStreamSource.addSink(new MysqlSink_DP_30D());
 //        //资产大盘
         DataStreamSource<Tuple3<String, String, Integer>> tuple3DataStreamSource1 = env.addSource(new DaPingZCDP()).setParallelism(1);
-        tuple3DataStreamSource1.addSink(new MysqlSink_DP_ZCDP());
+//        tuple3DataStreamSource1.addSink(new MysqlSink_DP_ZCDP());
     }
 
     private static DataStream<Tuple11<Integer,Integer, Integer,Integer,Integer,Integer, Integer,Integer,Integer,Integer, Integer>> Four_CGroup(
@@ -311,6 +312,9 @@ public class DPComplete {
                         for (Tuple2<Integer, Integer> s1 : second) {
                             tuple3.f2= s1.f1;
                         }
+                        if(tuple3.f0==null){
+                            tuple3.f0=1;
+                        }
                         if(tuple3.f1==null){
                             tuple3.f1=0;
                         }
@@ -333,7 +337,7 @@ public class DPComplete {
     private static DataStream<Tuple6<Integer,Integer,Integer,Integer,Integer,Integer>> getYcsb_lb_modelSplitStream(DataStreamSource<Tuple2<String, Integer>> sum, long windowSize) {
         SplitStream<Tuple2<String, Integer>> split = sum.split((OutputSelector<Tuple2<String, Integer>>) event -> {
             List<String> output = new ArrayList<>();
-            String type = event.f0;
+            String type = event.f0.trim();
             if ("1".equals(type)) {
                 output.add("level_1");
             } else if ("2".equals(type)) {
@@ -349,26 +353,26 @@ public class DPComplete {
             @Override
             public Tuple2<Integer, Integer> map(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
                 return Tuple2.of(stringIntegerTuple2.f1,1);
-            };
+            }
         });
         DataStream<Tuple2<Integer, Integer>> select_2 = split.select("level_2").map(new MapFunction<Tuple2<String, Integer>, Tuple2<Integer, Integer>>() {
             @Override
             public Tuple2<Integer, Integer> map(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
                 return Tuple2.of(stringIntegerTuple2.f1,1);
-            };
-        });;
+            }
+        });
         DataStream<Tuple2<Integer, Integer>> select_3 = split.select("level_3").map(new MapFunction<Tuple2<String, Integer>, Tuple2<Integer, Integer>>() {
             @Override
             public Tuple2<Integer, Integer> map(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
                 return Tuple2.of(stringIntegerTuple2.f1,1);
-            };
-        });;
+            }
+        });
         DataStream<Tuple2<Integer, Integer>> select_4 = split.select("level_4").map(new MapFunction<Tuple2<String, Integer>, Tuple2<Integer, Integer>>() {
             @Override
             public Tuple2<Integer, Integer> map(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
                 return Tuple2.of(stringIntegerTuple2.f1,1);
-            };
-        });;
+            }
+        });
         DataStream<Tuple3<Integer,Integer,Integer>> ycsb_lb_result_modelDataStream = YCLB_Result_CGroup(select_1, select_2, windowSize);
         DataStream<Tuple3<Integer,Integer,Integer>> ycsb_lb_result_modelDataStream1 = YCLB_Result_CGroup(select_3, select_4, windowSize);
         DataStream<Tuple5<Integer,Integer,Integer,Integer,Integer>> modelSecondDataStream = YCLB_Finally_CGroup(ycsb_lb_result_modelDataStream, ycsb_lb_result_modelDataStream1, windowSize);
@@ -403,7 +407,7 @@ public class DPComplete {
                             tuple3.f1=0;
                         }
                         if (tuple3.f2==null){
-                            tuple3.f2=0;
+                            tuple3.f2=1;
                         }
                         collector.collect(tuple3);
                     }

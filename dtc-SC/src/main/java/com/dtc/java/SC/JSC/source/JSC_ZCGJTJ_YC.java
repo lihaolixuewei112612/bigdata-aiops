@@ -3,6 +3,7 @@ import com.dtc.java.SC.common.MySQLUtil;
 import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
@@ -17,7 +18,7 @@ import java.sql.ResultSet;
  * @Description : 驾驶舱监控大盘--资产类型告警统计--异常资产总数
  */
 @Slf4j
-public class JSC_ZCGJTJ_YC extends RichSourceFunction<Tuple2<String,Integer>> {
+public class JSC_ZCGJTJ_YC extends RichSourceFunction<Tuple3<String,Integer,Integer>> {
 
     private Connection connection = null;
     private PreparedStatement ps = null;
@@ -43,13 +44,13 @@ public class JSC_ZCGJTJ_YC extends RichSourceFunction<Tuple2<String,Integer>> {
     }
 
     @Override
-    public void run(SourceContext<Tuple2<String,Integer>> ctx) throws Exception {
+    public void run(SourceContext<Tuple3<String,Integer,Integer>> ctx) throws Exception {
         while (isRunning) {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 String zc_name = resultSet.getString("name").trim();
                 int num = resultSet.getInt("num");
-                ctx.collect(Tuple2.of(zc_name,num));
+                ctx.collect(Tuple3.of(zc_name,num,1));
             }
             Thread.sleep(interval_time);
         }

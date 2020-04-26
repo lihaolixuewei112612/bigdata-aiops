@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/dtc-SC/dtc-SC.iml" filepath="$PROJECT_DIR$/dtc-SC/dtc-SC.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-bigdata.iml" filepath="$PROJECT_DIR$/dtc-bigdata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dtc-dd-data/dtc-dd-data.iml" filepath="$PROJECT_DIR$/dtc-dd-data/dtc-dd-data.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-dist/dtc-dist.iml" filepath="$PROJECT_DIR$/dtc-dist/dtc-dist.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-flink-snmp/dtc-flink-snmp.iml" filepath="$PROJECT_DIR$/dtc-flink-snmp/dtc-flink-snmp.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-flink-zabbix/dtc-flink-zabbix.iml" filepath="$PROJECT_DIR$/dtc-flink-zabbix/dtc-flink-zabbix.iml" />

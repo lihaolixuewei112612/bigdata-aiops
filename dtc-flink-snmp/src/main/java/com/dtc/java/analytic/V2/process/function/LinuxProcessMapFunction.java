@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Slf4j
 public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, DataStruct, Tuple, TimeWindow> {
-    Map<String,Integer> netCarNum = new HashMap<>();
+    Map<String, Integer> netCarNum = new HashMap<>();
 
     @Override
     public void process(Tuple tuple, Context context, Iterable<DataStruct> elements, Collector<DataStruct> collector)
@@ -68,7 +68,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                  */
                 if ("101_101_101_109_109".equals(in.getZbFourName())) {
                     netCardNumber = Integer.parseInt(in.getValue());
-                    netCarNum.put(in.getHost(),netCardNumber);
+                    netCarNum.put(in.getHost(), netCardNumber);
                     collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), in.getZbLastCode(), in.getNameCN(), in.getNameEN(), in.getTime(), in.getValue()));
                     continue;
                 }
@@ -83,11 +83,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
 
                 //网卡发送字节数(M)
                 if ("101_101_103_101_101".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
-                    }else {
-                        if (net_bytes_sent.size() != num-1) {
+                    } else {
+                        if (net_bytes_sent.size() != num - 1) {
                             net_bytes_sent.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {
@@ -96,7 +96,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                             for (String key : set) {
                                 result += Double.parseDouble(net_bytes_sent.get(key).toString());
                             }
-                            result +=Double.parseDouble(in.getValue());
+                            result += Double.parseDouble(in.getValue());
                             collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), "000", in.getNameCN(), in.getNameEN(), in.getTime(), result / 1048576 + ""));
                             net_bytes_sent.clear();
                             continue;
@@ -105,11 +105,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 }
                 //网卡收到的字节数(M)
                 if ("101_101_103_103_103".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
-                    }else {
-                        if (net_bytes_recv.size() != num-1) {
+                    } else {
+                        if (net_bytes_recv.size() != num - 1) {
                             net_bytes_recv.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {
@@ -118,7 +118,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                             for (String key : set) {
                                 result += Double.parseDouble(net_bytes_recv.get(key).toString());
                             }
-                            result +=Double.parseDouble(in.getValue());
+                            result += Double.parseDouble(in.getValue());
                             collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), "000", in.getNameCN(), in.getNameEN(), in.getTime(), result / 1048576 + ""));
                             net_bytes_recv.clear();
                             continue;
@@ -127,11 +127,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 }
                 //网卡发包总数量（个）
                 if ("101_101_103_105_105".equals(in.getZbFourName()) || "101_101_103_105_106".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
-                    }else {
-                        if (net_packets_sent.size() != num * 2-2) {
+                    } else {
+                        if (net_packets_sent.size() != num * 2 - 2) {
                             net_packets_sent.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {
@@ -140,7 +140,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                             for (String key : set) {
                                 result += Double.parseDouble(net_packets_sent.get(key).toString());
                             }
-                            result +=Double.parseDouble(in.getValue());
+                            result += Double.parseDouble(in.getValue());
                             collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_103_105_000", "000", in.getNameCN(), in.getNameEN(), in.getTime(), String.valueOf(result)));
                             net_packets_sent.clear();
                             continue;
@@ -149,11 +149,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 }
                 //网卡收包总数量（个）
                 if ("101_101_103_106_107".equals(in.getZbFourName()) || "101_101_103_106_108".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
-                    }else {
-                        if (net_packets_recv.size() != num * 2-2) {
+                    } else {
+                        if (net_packets_recv.size() != num * 2 - 2) {
                             net_packets_recv.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {
@@ -162,7 +162,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                             for (String key : set) {
                                 result += Double.parseDouble(net_packets_recv.get(key).toString());
                             }
-                            result +=Double.parseDouble(in.getValue());
+                            result += Double.parseDouble(in.getValue());
                             collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_103_106_000", "000", in.getNameCN(), in.getNameEN(), in.getTime(), String.valueOf(result)));
                             net_packets_recv.clear();
                             continue;
@@ -171,11 +171,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 }
                 //网卡收包错误数量（个）
                 if ("101_101_103_107_109".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
-                    }else {
-                        if (net_err_in.size() != num-1) {
+                    } else {
+                        if (net_err_in.size() != num - 1) {
                             net_err_in.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {
@@ -184,7 +184,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                             for (String key : set) {
                                 result += Double.parseDouble(net_err_in.get(key).toString());
                             }
-                            result +=Double.parseDouble(in.getValue());
+                            result += Double.parseDouble(in.getValue());
                             collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), "000", in.getNameCN(), in.getNameEN(), in.getTime(), String.valueOf(result)));
                             net_err_in.clear();
                             continue;
@@ -193,11 +193,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 }
                 //网卡发包错误数量（个）
                 if ("101_101_103_108_110".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
-                    }else {
-                        if (net_err_out.size() != num-1) {
+                    } else {
+                        if (net_err_out.size() != num - 1) {
                             net_err_out.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {
@@ -206,7 +206,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                             for (String key : set) {
                                 result += Double.parseDouble(net_err_out.get(key).toString());
                             }
-                            result +=Double.parseDouble(in.getValue());
+                            result += Double.parseDouble(in.getValue());
                             collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), "000", in.getNameCN(), in.getNameEN(), in.getTime(), String.valueOf(result)));
                             net_err_out.clear();
                             continue;
@@ -215,11 +215,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 }
                 //网卡收丢包数量（个）
                 if ("101_101_103_109_111".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
-                    }else {
-                        if (net_drop_in.size() != num-1) {
+                    } else {
+                        if (net_drop_in.size() != num - 1) {
                             net_drop_in.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {
@@ -228,7 +228,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                             for (String key : set) {
                                 result += Double.parseDouble(net_drop_in.get(key).toString());
                             }
-                            result +=Double.parseDouble(in.getValue());
+                            result += Double.parseDouble(in.getValue());
                             collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), "000", in.getNameCN(), in.getNameEN(), in.getTime(), String.valueOf(result)));
                             net_drop_in.clear();
                             continue;
@@ -237,11 +237,11 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 }
                 //网卡发丢包数量（个）
                 if ("101_101_103_110_112".equals(in.getZbFourName())) {
-                    int num = netCarNum.size()==0?0:Integer.parseInt(netCarNum.get(in.getHost()).toString());
+                    int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;
                     } else {
-                        if (net_drop_out.size() != num-1) {
+                        if (net_drop_out.size() != num - 1) {
                             net_drop_out.put(in.getZbFourName() + "_" + in.getZbLastCode(), in.getValue());
                             continue;
                         } else {

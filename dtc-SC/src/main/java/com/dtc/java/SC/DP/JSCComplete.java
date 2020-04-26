@@ -49,9 +49,9 @@ public class JSCComplete {
         //监控大盘
         JSC_EXEC(env, windowSizeMillis);
         //管理大盘
-        env.addSource(new Lreand()).addSink(new Lwrite());
-//        //我的总览
-        env.addSource(new WdzlSource()).addSink(new WdzlSink());
+//        env.addSource(new Lreand()).addSink(new Lwrite());
+////        //我的总览
+//        env.addSource(new WdzlSource()).addSink(new WdzlSink());
 
         env.execute("数仓-驾驶舱+我的总览");
     }
@@ -70,17 +70,17 @@ public class JSCComplete {
         //(总设备数，正常，异常，标志位)
         SingleOutputStreamOperator<Tuple4<Integer, Integer, Integer, Integer>> JKSB_Map = tuple2DataStream.map(new JKSB_MyMapFunctionV());
         //（一般，严重，较严重，灾难，总告警数,总设备数，正常，异常）写入msyql中
-        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> tuple9DataStream = YCLB_Finally_CGroup222(ycsb_lb_modelSplitStream, JKSB_Map, windowSizeMillis).filter(e -> e.f0 != null);
+        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple9DataStream = YCLB_Finally_CGroup222(ycsb_lb_modelSplitStream, JKSB_Map, windowSizeMillis).filter(e -> e.f0 != null);
         //未关闭告警
         DataStreamSource<Tuple2<Integer, Integer>> integerDataStreamSource = env.addSource(new JSC_WGBGJ()).setParallelism(1);
         //（一般，严重，较严重，灾难，总告警数,总设备数，正常，异常,未关闭告警数）
         DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> tuple9DataStream1 = YCLB_Finally_CGroup111(tuple9DataStream, integerDataStreamSource, windowSizeMillis);
 
         tuple9DataStream1.addSink(new MysqlSinkJSC());
-        tuple9DataStream1.print("test:");
         //资产类型告警统计
-        DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_YC = env.addSource(new JSC_ZCGJTJ_YC()).setParallelism(1);
-        DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_ALL = env.addSource(new JSC_ZCGJTJ_ALL()).setParallelism(1);
+        DataStreamSource<Tuple3<String, Integer, Integer>> JSC_ZCGJTJ_YC = env.addSource(new JSC_ZCGJTJ_YC()).setParallelism(1);
+        DataStreamSource<Tuple2<Integer, Integer>> JSC_ZCGJTJ_ALL = env.addSource(new JSC_ZCGJTJ_ALL_ONE()).setParallelism(1);
+        //（名称，异常数，总数）
         DataStream<Tuple3<String, Integer, Integer>> ZCLXGJTJ_Stream = ZCLXGJTJ_Result_CGroup(JSC_ZCGJTJ_YC, JSC_ZCGJTJ_ALL, windowSizeMillis);
         //（名称，异常数，总数，比值）
         SingleOutputStreamOperator<Tuple4<String, Integer, Integer, Double>> map = ZCLXGJTJ_Stream.map(new JSC_ZCGJTJ_ALL_MAP());
@@ -88,7 +88,8 @@ public class JSCComplete {
         DataStreamSource<Tuple2<String, Integer>> JSC_ZC_Used_Num_Stream = env.addSource(new JSC_ZC_Used_Num()).setParallelism(1);
 
         DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_YC_Offline_Stream = env.addSource(new JSC_ZCGJTJ_YC_Offline()).setParallelism(1);
-        DataStream<Tuple3<String, Integer, Integer>> JSC_ZCGJTJ_Stream = ZCFLTJ_Result_CGroup(JSC_ZCGJTJ_ALL, JSC_ZC_Used_Num_Stream, windowSizeMillis);
+        DataStreamSource<Tuple2<String, Integer>> JSC_ZCGJTJ_ALL_ONe = env.addSource(new JSC_ZCGJTJ_ALL()).setParallelism(1);
+        DataStream<Tuple3<String, Integer, Integer>> JSC_ZCGJTJ_Stream = ZCFLTJ_Result_CGroup(JSC_ZCGJTJ_ALL_ONe, JSC_ZC_Used_Num_Stream, windowSizeMillis);
         DataStream<Tuple4<String, Integer, Integer, Integer>> tuple4DataStream = ZCFLTJ_Finally_CGroup(JSC_ZCGJTJ_Stream, JSC_ZCGJTJ_YC_Offline_Stream, windowSizeMillis);
         //（名称，总数，已使用，异常数据，异常比）
         SingleOutputStreamOperator<Tuple5<String, Integer, Integer, Integer, Double>> map1 = tuple4DataStream.filter(e -> e.f0 != null).map(new ZCFLTJ_MapFunctionV());
@@ -97,27 +98,27 @@ public class JSCComplete {
         tuple8DataStream.addSink(new MysqlSinkJSC_YC());
 ////厂商设备top告警统计分析
 //        //(设备厂商id,厂商名，告警台数，总台数，flag)
-        DataStreamSource<Tuple5<String, String, Integer, Integer,Integer>> tuple4DataStreamSource = env.addSource(new JSC_CSSB_TOP_GJTJFX()).setParallelism(1);
-        DataStreamSource<Tuple2<Integer,Integer>> tuple4DataStreamSource1 = env.addSource(new JSC_CSSB_TOP_GJTJFX_1()).setParallelism(1);
+        DataStreamSource<Tuple5<String, String, Integer, Integer, Integer>> tuple4DataStreamSource = env.addSource(new JSC_CSSB_TOP_GJTJFX()).setParallelism(1);
+        DataStreamSource<Tuple2<Integer, Integer>> tuple4DataStreamSource1 = env.addSource(new JSC_CSSB_TOP_GJTJFX_1()).setParallelism(1);
         DataStream<Tuple5<String, String, Integer, Integer, Integer>> tuple5DataStream = JKSB_Result_Join(tuple4DataStreamSource, tuple4DataStreamSource1, windowSizeMillis);
         SingleOutputStreamOperator<Tuple5<String, String, Integer, Integer, Double>> map2 = tuple5DataStream.filter(e -> e.f0 != null).map(new TOp_CSSB_TOP_GJTJFX_Map());
         map2.addSink(new MysqlSinkJSC_TOP());
     }
 
-    private static DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> YCLB_Finally_CGroup111(
-            DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> grades,
+    private static DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> YCLB_Finally_CGroup111(
+            DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> grades,
             DataStream<Tuple2<Integer, Integer>> salaries,
             long windowSize) {
-        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> apply1 = grades.coGroup(salaries)
+        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> apply1 = grades.coGroup(salaries)
                 .where(new First_one())
                 .equalTo(new First_two())
                 .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
-                .apply(new CoGroupFunction<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>, Tuple2<Integer, Integer>, Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>>() {
-//                    Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> tuple9 = null;
+                .apply(new CoGroupFunction<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>, Tuple2<Integer, Integer>, Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>>() {
+                    //                    Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> tuple9 = null;
                     @Override
-                    public void coGroup(Iterable<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> first, Iterable<Tuple2<Integer, Integer>> second, Collector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>> collector) {
-                        Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> tuple9 = new Tuple9<>();
-                        for (Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> s : first) {
+                    public void coGroup(Iterable<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> first, Iterable<Tuple2<Integer, Integer>> second, Collector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> collector) {
+                        Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> tuple9 = new Tuple9<>();
+                        for (Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> s : first) {
                             tuple9.f0 = s.f0;
                             tuple9.f1 = s.f1;
                             tuple9.f2 = s.f2;
@@ -131,32 +132,32 @@ public class JSCComplete {
                         for (Tuple2<Integer, Integer> s1 : second) {
                             tuple9.f8 = s1.f1;
                         }
-                        if(tuple9.f0==null){
-                            tuple9.f0=0;
+                        if (tuple9.f0 == null) {
+                            tuple9.f0 = 0;
                         }
-                        if(tuple9.f1==null){
-                            tuple9.f1=0;
+                        if (tuple9.f1 == null) {
+                            tuple9.f1 = 0;
                         }
-                        if(tuple9.f2==null){
-                            tuple9.f2=0;
+                        if (tuple9.f2 == null) {
+                            tuple9.f2 = 0;
                         }
-                        if(tuple9.f3==null){
-                            tuple9.f3=0;
+                        if (tuple9.f3 == null) {
+                            tuple9.f3 = 0;
                         }
-                        if(tuple9.f4==null){
-                            tuple9.f4=0;
+                        if (tuple9.f4 == null) {
+                            tuple9.f4 = 0;
                         }
-                        if(tuple9.f5==null){
-                            tuple9.f5=0;
+                        if (tuple9.f5 == null) {
+                            tuple9.f5 = 0;
                         }
-                        if(tuple9.f6==null){
-                            tuple9.f6=0;
+                        if (tuple9.f6 == null) {
+                            tuple9.f6 = 0;
                         }
-                        if(tuple9.f7==null){
-                            tuple9.f7=0;
+                        if (tuple9.f7 == null) {
+                            tuple9.f7 = 0;
                         }
-                        if(tuple9.f8==null){
-                            tuple9.f8=0;
+                        if (tuple9.f8 == null) {
+                            tuple9.f8 = 0;
                         }
                         collector.collect(tuple9);
                     }
@@ -164,12 +165,13 @@ public class JSCComplete {
         return apply1;
     }
 
-    private static class First_one implements KeySelector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer>, Integer> {
+    private static class First_one implements KeySelector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>, Integer> {
         @Override
-        public Integer getKey(Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer,Integer> value) {
+        public Integer getKey(Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> value) {
             return value.f8;
         }
     }
+
     private static class First_one_copy implements KeySelector<ModelThree, Integer> {
         @Override
         public Integer getKey(ModelThree value) {
@@ -184,19 +186,19 @@ public class JSCComplete {
         }
     }
 
-    private static DataStream<Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> YCLB_Finally_CGroup222(
+    private static DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> YCLB_Finally_CGroup222(
             DataStream<ModelThree> grades,
             DataStream<Tuple4<Integer, Integer, Integer, Integer>> salaries,
             long windowSize) {
-        DataStream<Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> apply = grades.coGroup(salaries)
+        DataStream<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> apply = grades.coGroup(salaries)
                 .where(new First_three())
                 .equalTo(new First_four())
                 .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
-                .apply(new CoGroupFunction<ModelThree, Tuple4<Integer, Integer, Integer, Integer>, Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>>() {
-                    Tuple9<Integer, Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer> tuple9 = null;
+                .apply(new CoGroupFunction<ModelThree, Tuple4<Integer, Integer, Integer, Integer>, Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>>() {
+                    Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer> tuple9 = null;
 
                     @Override
-                    public void coGroup(Iterable<ModelThree> first, Iterable<Tuple4<Integer, Integer, Integer, Integer>> second, Collector<Tuple9<Integer,Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> collector) throws Exception {
+                    public void coGroup(Iterable<ModelThree> first, Iterable<Tuple4<Integer, Integer, Integer, Integer>> second, Collector<Tuple9<Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer>> collector) throws Exception {
                         tuple9 = new Tuple9<>();
                         for (ModelThree s : first) {
                             //（一般，严重，较严重，灾难，总告警数,标志位）
@@ -212,30 +214,32 @@ public class JSCComplete {
                             tuple9.f7 = s.f2;
                             tuple9.f8 = Integer.parseInt("1");
                         }
-                       if(tuple9.f0==null){
-                           tuple9.f0=0;
-                       }
-                        if(tuple9.f1==null){
-                            tuple9.f1=0;
+                        if (tuple9.f0 == null) {
+                            tuple9.f0 = 0;
                         }
-                        if(tuple9.f2==null){
-                            tuple9.f2=0;
+                        if (tuple9.f1 == null) {
+                            tuple9.f1 = 0;
                         }
-                        if(tuple9.f3==null){
-                            tuple9.f3=0;
+                        if (tuple9.f2 == null) {
+                            tuple9.f2 = 0;
                         }
-                        if(tuple9.f4==null){
-                            tuple9.f4=0;
+                        if (tuple9.f3 == null) {
+                            tuple9.f3 = 0;
                         }
-                        if(tuple9.f5==null){
-                            tuple9.f5=0;
-                        } if(tuple9.f6==null){
-                            tuple9.f6=0;
-                        } if(tuple9.f7==null){
-                            tuple9.f7=0;
+                        if (tuple9.f4 == null) {
+                            tuple9.f4 = 0;
                         }
-                        if(tuple9.f8==null){
-                            tuple9.f8=0;
+                        if (tuple9.f5 == null) {
+                            tuple9.f5 = 0;
+                        }
+                        if (tuple9.f6 == null) {
+                            tuple9.f6 = 0;
+                        }
+                        if (tuple9.f7 == null) {
+                            tuple9.f7 = 0;
+                        }
+                        if (tuple9.f8 == null) {
+                            tuple9.f8 = 0;
                         }
                         collector.collect(tuple9);
                     }
@@ -286,26 +290,26 @@ public class JSCComplete {
                             tuple8.f6 = s.f3;
                             tuple8.f7 = s.f4;
                         }
-                        if(tuple8.f1==null){
-                            tuple8.f1=0;
+                        if (tuple8.f1 == null) {
+                            tuple8.f1 = 0;
                         }
-                        if(tuple8.f2==null){
-                            tuple8.f2=0;
+                        if (tuple8.f2 == null) {
+                            tuple8.f2 = 0;
                         }
-                        if(tuple8.f3==null){
-                            tuple8.f3=0d;
+                        if (tuple8.f3 == null) {
+                            tuple8.f3 = 0d;
                         }
-                        if(tuple8.f4==null){
-                            tuple8.f4=0;
+                        if (tuple8.f4 == null) {
+                            tuple8.f4 = 0;
                         }
-                        if(tuple8.f5==null){
-                            tuple8.f5=0;
+                        if (tuple8.f5 == null) {
+                            tuple8.f5 = 0;
                         }
-                        if(tuple8.f6==null){
-                            tuple8.f6=0;
+                        if (tuple8.f6 == null) {
+                            tuple8.f6 = 0;
                         }
-                        if(tuple8.f7==null){
-                            tuple8.f7=0d;
+                        if (tuple8.f7 == null) {
+                            tuple8.f7 = 0d;
                         }
                         collector.collect(tuple8);
                     }
@@ -503,11 +507,11 @@ public class JSCComplete {
                         for (Tuple2<Integer, Integer> s1 : second) {
                             tuple2.f1 = s1.f1;
                         }
-                        if(tuple2.f0==null){
-                            tuple2.f0=0;
+                        if (tuple2.f0 == null) {
+                            tuple2.f0 = 0;
                         }
-                        if(tuple2.f1==null){
-                            tuple2.f1=0;
+                        if (tuple2.f1 == null) {
+                            tuple2.f1 = 0;
                         }
                         collector.collect(tuple2);
                     }
@@ -523,11 +527,11 @@ public class JSCComplete {
             Integer All_Num = sourceEvent.f1;
             Integer Used_Num = sourceEvent.f2;
             Integer YC_Num = sourceEvent.f3;
-            if(All_Num==0){
+            if (All_Num == 0) {
                 return Tuple5.of(name, All_Num, Used_Num, YC_Num, 0d);
-            }else {
+            } else {
                 double result = Double.parseDouble(String.valueOf(YC_Num)) / Double.parseDouble(String.valueOf(All_Num));
-                double v2 = Double.parseDouble(String.format("%.3f", result));
+                double v2 = Double.parseDouble(String.format("%.3f", result))*100;
                 return Tuple5.of(name, All_Num, Used_Num, YC_Num, v2);
             }
         }
@@ -554,11 +558,11 @@ public class JSCComplete {
                         for (Tuple2<String, Integer> s1 : second) {
                             tuple3.f2 = s1.f1;
                         }
-                        if(tuple3.f1==null){
-                            tuple3.f1=0;
+                        if (tuple3.f1 == null) {
+                            tuple3.f1 = 0;
                         }
-                        if(tuple3.f2==null){
-                            tuple3.f2=0;
+                        if (tuple3.f2 == null) {
+                            tuple3.f2 = 0;
                         }
                         collector.collect(tuple3);
                     }
@@ -588,14 +592,14 @@ public class JSCComplete {
                         for (Tuple2<String, Integer> s1 : second) {
                             tuple4.f3 = s1.f1;
                         }
-                        if(tuple4.f1==null){
-                            tuple4.f1=0;
+                        if (tuple4.f1 == null) {
+                            tuple4.f1 = 0;
                         }
-                        if(tuple4.f2==null){
-                            tuple4.f2=0;
+                        if (tuple4.f2 == null) {
+                            tuple4.f2 = 0;
                         }
-                        if(tuple4.f3==null){
-                            tuple4.f3=0;
+                        if (tuple4.f3 == null) {
+                            tuple4.f3 = 0;
                         }
                         collector.collect(tuple4);
                     }
@@ -631,56 +635,67 @@ public class JSCComplete {
             String name = sourceEvent.f0;
             int YC_Num = sourceEvent.f1;
             int All_Num = sourceEvent.f2;
-            if(All_Num==0){
+            if (All_Num == 0) {
                 return Tuple4.of(name, YC_Num, All_Num, 0d);
-            }else {
+            } else {
                 double result = Double.parseDouble(String.valueOf(YC_Num)) / Double.parseDouble(String.valueOf(All_Num));
-                double v2 = Double.parseDouble(String.format("%.3f", result));
+                double v2 = Double.parseDouble(String.format("%.3f", result)) * 100;
                 return Tuple4.of(name, YC_Num, All_Num, v2);
             }
         }
     }
 
     private static DataStream<Tuple3<String, Integer, Integer>> ZCLXGJTJ_Result_CGroup(
-            DataStream<Tuple2<String, Integer>> grades,
-            DataStream<Tuple2<String, Integer>> salaries,
+            DataStream<Tuple3<String, Integer, Integer>> grades,
+            DataStream<Tuple2<Integer, Integer>> salaries,
             long windowSize) {
         DataStream<Tuple3<String, Integer, Integer>> apply = grades.coGroup(salaries)
                 .where(new ZCLXGJTJ_Result_KeySelector())
-                .equalTo(new ZCLXGJTJ_Result_KeySelector())
+                .equalTo(new ZCLXGJTJ_Result_KeySelector_ONE())
                 .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
-                .apply(new CoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Integer>, Tuple3<String, Integer, Integer>>() {
+                .apply(new CoGroupFunction<Tuple3<String, Integer, Integer>, Tuple2<Integer, Integer>, Tuple3<String, Integer, Integer>>() {
                     Tuple3<String, Integer, Integer> tuple3 = null;
 
                     @Override
-                    public void coGroup(Iterable<Tuple2<String, Integer>> first, Iterable<Tuple2<String, Integer>> second, Collector<Tuple3<String, Integer, Integer>> collector) throws Exception {
+                    public void coGroup(Iterable<Tuple3<String, Integer, Integer>> first, Iterable<Tuple2<Integer, Integer>> second, Collector<Tuple3<String, Integer, Integer>> collector) throws Exception {
+                        Integer abc = null;
+
+                        for (Tuple2<Integer, Integer> s1 : second) {
+                            abc = s1.f1;
+                        }
                         tuple3 = new Tuple3<>();
-                        for (Tuple2<String, Integer> s : first) {
+                        for (Tuple3<String, Integer, Integer> s : first) {
                             tuple3.f0 = s.f0;
                             tuple3.f1 = s.f1;
+                            tuple3.f2 = abc;
+                            if (tuple3.f0 == null) {
+                                tuple3.f0 = "其他";
+                            }
+                            if (tuple3.f1 == null) {
+                                tuple3.f1 = 0;
+                            }
+                            if (tuple3.f2 == null) {
+                                tuple3.f2 = 0;
+                            }
+                            collector.collect(tuple3);
 
                         }
-                        for (Tuple2<String, Integer> s1 : second) {
-                            tuple3.f2 = s1.f1;
-                        }
-                        if(tuple3.f0==null){
-                            tuple3.f0="其他";
-                        }
-                        if(tuple3.f1==null){
-                            tuple3.f1=0;
-                        }
-                        if (tuple3.f2==null){
-                            tuple3.f2=0;
-                        }
-                        collector.collect(tuple3);
+
                     }
                 });
         return apply;
     }
 
-    private static class ZCLXGJTJ_Result_KeySelector implements KeySelector<Tuple2<String, Integer>, String> {
+    private static class ZCLXGJTJ_Result_KeySelector implements KeySelector<Tuple3<String, Integer, Integer>, Integer> {
         @Override
-        public String getKey(Tuple2<String, Integer> value) {
+        public Integer getKey(Tuple3<String, Integer, Integer> value) {
+            return value.f2;
+        }
+    }
+
+    private static class ZCLXGJTJ_Result_KeySelector_ONE implements KeySelector<Tuple2<Integer, Integer>, Integer> {
+        @Override
+        public Integer getKey(Tuple2<Integer, Integer> value) {
             return value.f0;
         }
     }
@@ -698,50 +713,53 @@ public class JSCComplete {
             return value.f0 + 1;
         }
     }
+
     @Slf4j
-    static class TOp_CSSB_TOP_GJTJFX_Map implements MapFunction<Tuple5<String, String, Integer, Integer, Integer>, Tuple5<String,String,Integer, Integer,Double>> {
+    static class TOp_CSSB_TOP_GJTJFX_Map implements MapFunction<Tuple5<String, String, Integer, Integer, Integer>, Tuple5<String, String, Integer, Integer, Double>> {
         @Override
-        public  Tuple5<String,String,Integer, Integer,Double> map(Tuple5<String, String, Integer, Integer, Integer> sourceEvent) {
-            String id= sourceEvent.f0;
+        public Tuple5<String, String, Integer, Integer, Double> map(Tuple5<String, String, Integer, Integer, Integer> sourceEvent) {
+            String id = sourceEvent.f0;
             String name = sourceEvent.f1;
-            Integer  Num_GJ= sourceEvent.f2;
+            Integer Num_GJ = sourceEvent.f2;
             Integer Num_ALL = sourceEvent.f3;
-            Integer ALL_NUMBER= sourceEvent.f4;
-            if(ALL_NUMBER==0){
-                return Tuple5.of(id,name,Num_GJ,Num_ALL,0d);
-            }else {
+            Integer ALL_NUMBER = sourceEvent.f4;
+            if (ALL_NUMBER == 0) {
+                return Tuple5.of(id, name, Num_GJ, Num_ALL, 0d);
+            } else {
                 double result = Double.parseDouble(String.valueOf(Num_GJ)) / Double.parseDouble(String.valueOf(ALL_NUMBER));
-                double v2 = Double.parseDouble(String.format("%.3f", result));
-                return Tuple5.of(id,name,Num_GJ,Num_ALL,v2);
+                double v2 = Double.parseDouble(String.format("%.3f", result))*100;
+                return Tuple5.of(id, name, Num_GJ, Num_ALL, v2);
             }
         }
     }
 
-    private static DataStream<Tuple5<String, String, Integer, Integer,Integer>> JKSB_Result_Join(
-            DataStream<Tuple5<String, String, Integer, Integer,Integer>> grades,
-            DataStream<Tuple2<Integer,Integer>> salaries,
+    private static DataStream<Tuple5<String, String, Integer, Integer, Integer>> JKSB_Result_Join(
+            DataStream<Tuple5<String, String, Integer, Integer, Integer>> grades,
+            DataStream<Tuple2<Integer, Integer>> salaries,
             long windowSize) {
-        DataStream<Tuple5<String, String, Integer, Integer,Integer>> apply = grades.join(salaries)
+        DataStream<Tuple5<String, String, Integer, Integer, Integer>> apply = grades.join(salaries)
                 .where(new TOp_Result_KeySelectorOne())
                 .equalTo(new TOP_Result_KeySelector())
                 .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
-                .apply(new JoinFunction<Tuple5<String, String, Integer, Integer, Integer>, Tuple2<Integer, Integer>,Tuple5<String, String, Integer, Integer,Integer>>() {
+                .apply(new JoinFunction<Tuple5<String, String, Integer, Integer, Integer>, Tuple2<Integer, Integer>, Tuple5<String, String, Integer, Integer, Integer>>() {
                     @Override
                     public Tuple5<String, String, Integer, Integer, Integer> join(Tuple5<String, String, Integer, Integer, Integer> first, Tuple2<Integer, Integer> second) throws Exception {
-                        return Tuple5.of(first.f0,first.f1,first.f2,first.f3,second.f0);
+                        return Tuple5.of(first.f0, first.f1, first.f2, first.f3, second.f0);
                     }
                 });
         return apply;
     }
-    private static class TOP_Result_KeySelector implements KeySelector<Tuple2<Integer,Integer>, Integer> {
+
+    private static class TOP_Result_KeySelector implements KeySelector<Tuple2<Integer, Integer>, Integer> {
         @Override
-        public Integer getKey(Tuple2<Integer,Integer> value) {
+        public Integer getKey(Tuple2<Integer, Integer> value) {
             return value.f1;
         }
     }
-    private static class TOp_Result_KeySelectorOne implements KeySelector<Tuple5<String, String, Integer, Integer,Integer>, Integer> {
+
+    private static class TOp_Result_KeySelectorOne implements KeySelector<Tuple5<String, String, Integer, Integer, Integer>, Integer> {
         @Override
-        public Integer getKey(Tuple5<String, String, Integer, Integer,Integer> value) {
+        public Integer getKey(Tuple5<String, String, Integer, Integer, Integer> value) {
             return value.f4;
         }
     }

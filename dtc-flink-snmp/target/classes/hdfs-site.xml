@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+    <property>
+        <name>dfs.nameservices</name>
+        <value>hdfscluster</value>
+        <description>指定hdfs的nameservice为hdfscluster，需要和core-site.xml中的保持一致</description>
+    </property>
+
+    <property>
+        <name>dfs.ha.namenodes.hdfscluster</name>
+        <value>nn1,nn2</value>
+        <description>hdfscluster下面有两个NameNode，分别是nn1，nn2</description>
+    </property>
+
+
+    <property>
+        <name>dfs.namenode.rpc-address.hdfscluster.nn1</name>
+        <value>node01:8020</value>
+        <description>nn1的RPC通信地址</description>
+    </property>
+
+
+    <property>
+        <name>dfs.namenode.rpc-address.hdfscluster.nn2</name>
+        <value>node02:8020</value>
+        <description>nn2的RPC通信地址</description>
+    </property>
+
+    <property>
+        <name>dfs.namenode.http-address.hdfscluster.nn1</name>
+        <value>node01:50070</value>
+        <description>nn1的http通信地址</description>
+    </property>
+    <property>
+        <name>dfs.namenode.http-address.hdfscluster.nn2</name>
+        <value>node02:50070</value>
+        <description>nn2的http通信地址</description>
+    </property>
+
+    <property>
+        <name>dfs.namenode.shared.edits.dir</name>
+        <value>qjournal://node01:8485;node02:8485;node03:8485/hdfscluster</value>
+        <description>指定NameNode的元数据在JournalNode上的存放位置</description>
+    </property>
+
+    <property>
+        <name>dfs.journalnode.edits.dir</name>
+        <value>/opt/hadoop-3.0.0/datas/journal</value>
+        <description>新建目录，用于设置journalnode节点保存本地状态的目录,指定journalnode日志文件存储的路径</description>
+    </property>
+
+    <property>
+        <name>dfs.client.failover.proxy.provider.hdfscluster</name>
+        <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+        <description>配置失败自动切换实现方式,指定HDFS客户端连接active namenode的java类</description>
+    </property>
+
+    <property>
+        <name>dfs.ha.fencing.methods</name>
+        <value>sshfence</value>
+        <description>配置隔离机制为ssh</description>
+    </property>
+
+    <property>
+        <name>dfs.ha.fencing.ssh.private-key-files</name>
+        <value>/root/.ssh/id_rsa</value>
+        <description>使用隔离机制时需要ssh免密码登陆,指定秘钥的位置</description>
+    </property>
+
+    <property>
+        <name>dfs.ha.automatic-failover.enabled</name>
+        <value>true</value>
+        <description>指定支持高可用自动切换机制,开启自动故障转移</description>
+    </property>
+
+    <property>
+        <name>ha.zookeeper.quorum</name>
+        <value>node01:2181,node02:2181,node03:2181</value>
+        <description>指定zookeeper地址</description>
+    </property>
+
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+        <description>指定数据冗余份数</description>
+    </property>
+
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///opt/hadoop-3.0.0/datas/namenode</value>
+        <description>新建name文件夹，指定namenode名称空间的存储地址</description>
+    </property>
+
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///opt/hadoop-3.0.0/datas/datanode</value>
+        <description>新建data文件夹，指定datanode数据存储地址</description>
+    </property>
+
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>ture</value>
+        <description>指定可以通过web访问hdfs目录</description>
+    </property>
+
+</configuration>

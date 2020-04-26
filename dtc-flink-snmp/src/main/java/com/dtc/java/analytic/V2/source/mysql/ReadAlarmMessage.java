@@ -14,7 +14,9 @@ import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**

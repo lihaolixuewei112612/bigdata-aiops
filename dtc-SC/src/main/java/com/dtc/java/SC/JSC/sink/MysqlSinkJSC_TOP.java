@@ -9,6 +9,7 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created on 2019-09-12

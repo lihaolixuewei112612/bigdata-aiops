@@ -15,6 +15,7 @@ import org.apache.flink.types.Row;
 import org.apache.flink.util.Collector;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * @Author : lihao
@@ -47,9 +48,12 @@ public class SC_Scene_ZHBB {
         MapOperator<Row, Row> scene_one_query_map = scene_one_query.map(new MapFunction<Row, Row>() {
             @Override
             public Row map(Row row) throws Exception {
+
+                Calendar now = Calendar.getInstance();
+                now.add(Calendar.DATE, -1);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String riqi = sdf.format(System.currentTimeMillis());
+                String riqi = sdf.format(now.getTime());
                 String js_time = sdf1.format(System.currentTimeMillis());
                 String sblx = String.valueOf(row.getField(0));
                 String zle =  String.valueOf(row.getField(1));
@@ -112,9 +116,11 @@ public class SC_Scene_ZHBB {
         MapOperator<Row, Row> map = with.map(new MapFunction<Row, Row>() {
             @Override
             public Row map(Row row) throws Exception {
+                Calendar now = Calendar.getInstance();
+                now.add(Calendar.DATE, -1);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String riqi = sdf.format(System.currentTimeMillis());
+                String riqi = sdf.format(now.getTime());
                 String js_time = sdf1.format(System.currentTimeMillis());
                 String level_id = (String) row.getField(0);
                 String type_id = (String) row.getField(1);

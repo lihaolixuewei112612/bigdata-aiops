@@ -28,10 +28,7 @@ import org.apache.flink.cep.nfa.aftermatch.AfterMatchSkipStrategy;
 import org.apache.flink.cep.pattern.Pattern;
 import org.apache.flink.cep.pattern.conditions.SimpleCondition;
 import org.apache.flink.streaming.api.collector.selector.OutputSelector;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
-import org.apache.flink.streaming.api.datastream.SplitStream;
+import org.apache.flink.streaming.api.datastream.*;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.co.BroadcastProcessFunction;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
@@ -50,14 +47,14 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class StreamToFlinkV3 {
-    final static MapStateDescriptor<String, String> ALARM_RULES = new MapStateDescriptor<>(
-            "alarm_rules",
-            BasicTypeInfo.STRING_TYPE_INFO,
-            BasicTypeInfo.STRING_TYPE_INFO);
+
     private static DataStream<Map<String, String>> alarmDataStream = null;
 
     public static void main(String[] args) throws Exception {
-
+       MapStateDescriptor<String, String> ALARM_RULES = new MapStateDescriptor<>(
+                "alarm_rules",
+                BasicTypeInfo.STRING_TYPE_INFO,
+                BasicTypeInfo.STRING_TYPE_INFO);
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         String opentsdb_url = parameterTool.get("dtc.opentsdb.url", "http://10.10.58.16:4399");
         int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
@@ -66,6 +63,7 @@ public class StreamToFlinkV3 {
         DataStreamSource<Tuple9<String, String, String, String, Double, String, String, String, String>> alarmMessageMysql = env.addSource(new ReadAlarmMessage()).setParallelism(1);
         DataStream<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> process = alarmMessageMysql.keyBy(0, 5).timeWindow(Time.milliseconds(windowSizeMillis)).process(new MySqlProcessMapFunction());
         alarmDataStream = process.map(new MySQLFunction());
+        BroadcastStream<Map<String, String>> broadcast = alarmDataStream.broadcast(ALARM_RULES);
 
 //        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
         DataStreamSource<SourceEvent> streamSource = KafkaConfigUtil.buildSource(env);
@@ -109,7 +107,7 @@ public class StreamToFlinkV3 {
         winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //windows数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess);
+        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess,broadcast);
         alarmWindows.forEach(e -> e.print("告警收敛之后的数据："));
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
 
@@ -125,15 +123,15 @@ public class StreamToFlinkV3 {
         linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess);
+        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess,broadcast);
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
 
-    private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event) {
-        SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(alarmDataStream.broadcast(ALARM_RULES))
+    private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event,BroadcastStream<Map<String, String>> broadcast) {
+
+        SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)
                 .process(getAlarmFunction());
-        alert_rule.print("告警数据：");
 
 //        AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipToFirst("begin");
         AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipPastLastEvent();
@@ -213,7 +211,6 @@ public class StreamToFlinkV3 {
                     "alarm_rules",
                     BasicTypeInfo.STRING_TYPE_INFO,
                     BasicTypeInfo.STRING_TYPE_INFO);
-
             @Override
             public void processElement(DataStruct value, ReadOnlyContext ctx, Collector<AlterStruct> out) throws Exception {
                 ReadOnlyBroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
@@ -245,11 +242,15 @@ public class StreamToFlinkV3 {
                 if (split1.length != 4) {
                     return;
                 }
+                broadcastState.clear();
                 AlarmRule(value, out, unique_id, split1, result);
             }
 
             @Override
             public void processBroadcastElement(Map<String, String> value, Context ctx, Collector<AlterStruct> out) throws Exception {
+                if (value == null || value.size() == 0) {
+                    return;
+                }
                 if (value != null) {
                     BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
                     for (Map.Entry<String, String> entry : value.entrySet()) {
@@ -259,8 +260,6 @@ public class StreamToFlinkV3 {
             }
         };
     }
-
-
     /**
      * 告警规则
      */
