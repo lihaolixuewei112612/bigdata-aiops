@@ -86,6 +86,13 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>../dtc-dd-data/target</directory>
+            <outputDirectory>../lib/flink/sc/dd</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
     </fileSets>
 
     <moduleSets>

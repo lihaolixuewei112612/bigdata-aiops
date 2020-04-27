@@ -36,9 +36,10 @@ public class JSC_ZCGJTJ_YC extends RichSourceFunction<Tuple3<String,Integer,Inte
 
         if (connection != null) {
 //            String sql = "select count(*) as AllNum from asset a where a.room is not null and a.partitions is not null and a.box is not null";
-            String sql = "select ifnull(z.`name`,'其他') as `name`,sum(num) as num from (select * from (select m.zc_name,m.parent_id as pd,count(*) as num from (select a.asset_id as a_id,c.parent_id,c.`name` as zc_name from asset_category_mapping a \n" +
-                    "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id) m where m.a_id not in (select DISTINCT asset_id \n" +
-                    "from alarm b where b.`status`=2) GROUP BY m.zc_name) x left join asset_category y on x.pd = y.id) z group by z.`name`";
+            String sql = "select ifnull(k.name,'其他') as name,ifnull(l.num,0) as num from asset_category k left join(select j.name,f.num\n" +
+                    "from (select d.asset_id,d.num,d.asset_category_id,e.parent_id\n" +
+                    "from (select b.asset_id,b.num,c.asset_category_id from (select a.asset_id,count(*) as num from alarm a where TO_DAYS(now())=to_days(a.time_occur) group by a.asset_id) b \n" +
+                    "left join asset_category_mapping c on c.asset_id=b.asset_id) d left join asset_category e on e.id = d.asset_category_id) f left join asset_category j on j.id=f.parent_id) l on k.name = l.name where k.parent_id=0";
             ps = connection.prepareStatement(sql);
         }
     }

@@ -19,11 +19,12 @@ import java.util.Set;
  */
 @Slf4j
 public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, DataStruct, Tuple, TimeWindow> {
-    Map<String, Integer> netCarNum = new HashMap<>();
+
 
     @Override
     public void process(Tuple tuple, Context context, Iterable<DataStruct> elements, Collector<DataStruct> collector)
             throws Exception {
+        Map<String, Integer> netCarNum = new HashMap<>();
         DecimalFormat df = new DecimalFormat(".0000");
 
         Map cpuMap = new HashMap<String, String>();
@@ -83,6 +84,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
 
                 //网卡发送字节数(M)
                 if ("101_101_103_101_101".equals(in.getZbFourName())) {
+
                     int num = netCarNum.size() == 0 ? 0 : Integer.parseInt(netCarNum.get(in.getHost()).toString());
                     if (0 == num) {
                         continue;

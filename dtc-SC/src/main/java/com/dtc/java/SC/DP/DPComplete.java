@@ -6,10 +6,12 @@ import com.dtc.java.SC.DP.sink.MysqlSink_DP_ZCDP;
 import com.dtc.java.SC.DP.source.*;
 import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
 import com.dtc.java.SC.JSC.model.ModelFirst;
-import com.dtc.java.SC.JSC.sink.Lwrite;
-import com.dtc.java.SC.JSC.source.Lreand;
-import com.dtc.java.SC.WDZL.WdzlSink;
-import com.dtc.java.SC.WDZL.WdzlSource;
+import com.dtc.java.SC.JSC.sink.JSC_GL_SINK;
+import com.dtc.java.SC.JSC.sink.JSC_GL_SINK_1;
+import com.dtc.java.SC.JSC.sink.JSC_GL_SINK_2;
+import com.dtc.java.SC.JSC.source.JSC_GL_SOURCE;
+import com.dtc.java.SC.JSC.source.JSC_GL_SOURCE_1;
+import com.dtc.java.SC.JSC.source.JSC_GL_SOURCE_2;
 import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.CoGroupFunction;
@@ -50,12 +52,15 @@ public class DPComplete {
         //大盘今日监控设备数
         DP_EXEC(env, windowSizeMillis);
 //        //监控大盘
-//        JSC_EXEC(env, windowSizeMillis);
-////        //管理大盘
-//        env.addSource(new Lreand()).addSink(new Lwrite());
+        JSC_EXEC(env, windowSizeMillis);
+        //管理大盘
+        env.addSource(new JSC_GL_SOURCE()).addSink(new JSC_GL_SINK());
+        env.addSource(new JSC_GL_SOURCE_1()).addSink(new JSC_GL_SINK_1());
+        env.addSource(new JSC_GL_SOURCE_2()).addSink(new JSC_GL_SINK_2());
+////
 ////        //我的总览
 //        env.addSource(new WdzlSource()).addSink(new WdzlSink());
-        env.execute("数仓-大屏");
+        env.execute("数仓");
     }
 
     private static void DP_EXEC(StreamExecutionEnvironment env, int windowSizeMillis) {
@@ -87,10 +92,10 @@ public class DPComplete {
         tuple11DataStream.print("dapin:");
 //        //30天告警分布
         DataStreamSource<Tuple3<String, String, Integer>> tuple3DataStreamSource = env.addSource(new DaPing_ZCGJFL_30()).setParallelism(1);
-//        tuple3DataStreamSource.addSink(new MysqlSink_DP_30D());
+        tuple3DataStreamSource.addSink(new MysqlSink_DP_30D());
 //        //资产大盘
         DataStreamSource<Tuple3<String, String, Integer>> tuple3DataStreamSource1 = env.addSource(new DaPingZCDP()).setParallelism(1);
-//        tuple3DataStreamSource1.addSink(new MysqlSink_DP_ZCDP());
+        tuple3DataStreamSource1.addSink(new MysqlSink_DP_ZCDP());
     }
 
     private static DataStream<Tuple11<Integer,Integer, Integer,Integer,Integer,Integer, Integer,Integer,Integer,Integer, Integer>> Four_CGroup(

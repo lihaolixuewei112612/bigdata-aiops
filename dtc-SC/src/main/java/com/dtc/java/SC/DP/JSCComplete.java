@@ -1,16 +1,12 @@
 package com.dtc.java.SC.DP;
 
 import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
+
 import com.dtc.java.SC.JSC.model.ModelFirst;
 import com.dtc.java.SC.JSC.model.ModelSecond;
 import com.dtc.java.SC.JSC.model.ModelThree;
-import com.dtc.java.SC.JSC.sink.Lwrite;
-import com.dtc.java.SC.JSC.sink.MysqlSinkJSC;
-import com.dtc.java.SC.JSC.sink.MysqlSinkJSC_TOP;
-import com.dtc.java.SC.JSC.sink.MysqlSinkJSC_YC;
+import com.dtc.java.SC.JSC.sink.*;
 import com.dtc.java.SC.JSC.source.*;
-import com.dtc.java.SC.WDZL.WdzlSink;
-import com.dtc.java.SC.WDZL.WdzlSource;
 import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.CoGroupFunction;
@@ -49,7 +45,9 @@ public class JSCComplete {
         //监控大盘
         JSC_EXEC(env, windowSizeMillis);
         //管理大盘
-//        env.addSource(new Lreand()).addSink(new Lwrite());
+        env.addSource(new JSC_GL_SOURCE()).addSink(new JSC_GL_SINK());
+        env.addSource(new JSC_GL_SOURCE_1()).addSink(new JSC_GL_SINK_1());
+        env.addSource(new JSC_GL_SOURCE_2()).addSink(new JSC_GL_SINK_2());
 ////        //我的总览
 //        env.addSource(new WdzlSource()).addSink(new WdzlSink());
 
@@ -659,7 +657,6 @@ public class JSCComplete {
                     @Override
                     public void coGroup(Iterable<Tuple3<String, Integer, Integer>> first, Iterable<Tuple2<Integer, Integer>> second, Collector<Tuple3<String, Integer, Integer>> collector) throws Exception {
                         Integer abc = null;
-
                         for (Tuple2<Integer, Integer> s1 : second) {
                             abc = s1.f1;
                         }

@@ -38,18 +38,15 @@
             <version>5.1.45</version>
         </dependency>
         <dependency>
-            <groupId>com.taobao.top</groupId>
+            <groupId>com.ganshane.specs1</groupId>
             <artifactId>lippi-oapi-encrpt</artifactId>
-            <version>dingtalk-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/lippi-oapi-encrpt.jar</systemPath>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.taobao.top</groupId>
-            <artifactId>top-api-sdk-dev</artifactId>
-            <version>ding-open-mc-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/taobao-sdk-java-auto_1479188381469-20200228.jar</systemPath>
+            <groupId>com.ganshane.specs</groupId>
+            <artifactId>taobao-sdk-java-auto-20200228</artifactId>
+            <version>1.0.0</version>
+
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -68,8 +65,75 @@
             <version>1.2.47</version>
         </dependency>
     </dependencies>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>8</source>-->
+<!--                    <target>8</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <descriptorRefs>-->
+<!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--                    </descriptorRefs>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <mainClass>com.dtc.java.SC.DP.DPComplete</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+<!--                    <appendAssemblyId>false</appendAssemblyId>-->
+<!--                    <finalName>dtc-dd-data</finalName>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>make-assembly</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>single</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
     <build>
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <version>2.6</version>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <addClasspath>true</addClasspath>-->
+<!--                            <classpathPrefix>lib/</classpathPrefix>-->
+<!--                            <mainClass>com.dtc.dingding.worker.Complete</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                <version>2.10</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-dependencies</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-dependencies</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${project.build.directory}/lib</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -86,7 +150,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.dtc.java.SC.DP.DPComplete</mainClass>
+                            <mainClass>com.dtc.dingding.worker.Complete</mainClass>
                         </manifest>
                     </archive>
                     <appendAssemblyId>false</appendAssemblyId>
@@ -102,8 +166,11 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
+
+
 
 
 </project>

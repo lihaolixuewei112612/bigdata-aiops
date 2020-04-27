@@ -51,7 +51,7 @@ public class StreamToFlinkV3 {
     private static DataStream<Map<String, String>> alarmDataStream = null;
 
     public static void main(String[] args) throws Exception {
-       MapStateDescriptor<String, String> ALARM_RULES = new MapStateDescriptor<>(
+        MapStateDescriptor<String, String> ALARM_RULES = new MapStateDescriptor<>(
                 "alarm_rules",
                 BasicTypeInfo.STRING_TYPE_INFO,
                 BasicTypeInfo.STRING_TYPE_INFO);
@@ -107,8 +107,7 @@ public class StreamToFlinkV3 {
         winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //windows数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess,broadcast);
-        alarmWindows.forEach(e -> e.print("告警收敛之后的数据："));
+        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast);
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
 
         //linux指标数据处理
@@ -123,15 +122,17 @@ public class StreamToFlinkV3 {
         linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess,broadcast);
+        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
+        alarmLinux.forEach(e-> e.print("告警写mysql"));
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
 
-    private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event,BroadcastStream<Map<String, String>> broadcast) {
+    private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast) {
 
         SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)
                 .process(getAlarmFunction());
+        alert_rule.print("告警数据:");
 
 //        AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipToFirst("begin");
         AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipPastLastEvent();
@@ -157,7 +158,7 @@ public class StreamToFlinkV3 {
                     public boolean filter(AlterStruct s) {
                         return s.getLevel().equals("4");
                     }
-                }).times(3).within(Time.seconds(10));
+                }).times(3).within(Time.seconds(20));
         Pattern<AlterStruct, ?> alarmIncream
                 = Pattern.<AlterStruct>begin("begin", skipStrategy).subtype(AlterStruct.class)
                 .where(new SimpleCondition<AlterStruct>() {
@@ -211,6 +212,7 @@ public class StreamToFlinkV3 {
                     "alarm_rules",
                     BasicTypeInfo.STRING_TYPE_INFO,
                     BasicTypeInfo.STRING_TYPE_INFO);
+
             @Override
             public void processElement(DataStruct value, ReadOnlyContext ctx, Collector<AlterStruct> out) throws Exception {
                 ReadOnlyBroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
@@ -233,7 +235,7 @@ public class StreamToFlinkV3 {
                 }
                 String asset_code = split[2].trim();
                 String asset_name = split[3].trim();
-                String result = asset_code+"("+asset_name+")";
+                String result = asset_code + "(" + asset_name + ")";
                 String r_value = split[4].trim();
                 if (unique_id.isEmpty() || code.isEmpty() || r_value.isEmpty()) {
                     return;
@@ -260,6 +262,7 @@ public class StreamToFlinkV3 {
             }
         };
     }
+
     /**
      * 告警规则
      */

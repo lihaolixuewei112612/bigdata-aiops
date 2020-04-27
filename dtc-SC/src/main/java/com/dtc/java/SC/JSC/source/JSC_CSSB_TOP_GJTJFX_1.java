@@ -36,7 +36,7 @@ public class JSC_CSSB_TOP_GJTJFX_1 extends RichSourceFunction<Tuple2<Integer,Int
         connection = MySQLUtil.getConnection(parameterTool);
 
         if (connection != null) {
-            String sql = "select sum(o.one_num) as NUM from (select manufacturer_id,`name`,one_num,num from (select c.manufacturer_id,c.num,b.`name` from (select a.manufacturer_id,count(*) as num \n" +
+            String sql = "select IFNULL(sum(o.one_num),0) as NUM from (select manufacturer_id,`name`,one_num,num from (select c.manufacturer_id,c.num,b.`name` from (select a.manufacturer_id,count(*) as num \n" +
                     "from asset a GROUP BY a.manufacturer_id having a.manufacturer_id is not null) c left join manufacturer b on  c.manufacturer_id = b.id) x right join \n" +
                     "(select c.manufacturer_id as one_id,c.num as one_num ,b.`name` as one_name from (select a.manufacturer_id,count(*) as num from asset a \n" +
                     "where a.id in(select distinct asset_id from alarm where TO_DAYS(now())=TO_DAYS(time_occur)) GROUP BY a.manufacturer_id having a.manufacturer_id!=\"\") c \n" +

@@ -180,3 +180,16 @@ function start_flink-bb {
         echo "submit is success!!"
     fi
 }
+function start_dd {
+    if ! which java >/dev/null 2>&1 ; then
+        return 2;
+    fi
+    nohup ${FLINK_SUBMIT} run -c com.dtc.java.SC.ZHBB.sc_Scene_Exec ${FM_HOME}/lib/flink/sc/dtc-sc-zhbb.jar &
+    local test=$?
+    if [ ${test} -ne 0 ];then
+        echo "submit is failed!"
+    else
+        echo "submit is success!!"
+    fi
+}
+
