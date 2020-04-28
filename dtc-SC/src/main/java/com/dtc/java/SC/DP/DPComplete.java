@@ -60,7 +60,7 @@ public class DPComplete {
 ////
 ////        //我的总览
 //        env.addSource(new WdzlSource()).addSink(new WdzlSink());
-        env.execute("数仓");
+        env.execute("dtc-数仓");
     }
 
     private static void DP_EXEC(StreamExecutionEnvironment env, int windowSizeMillis) {

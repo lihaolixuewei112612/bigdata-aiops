@@ -41,9 +41,7 @@ public class Untils {
     public static void writeMysql(String tableName, SuperModel model, Properties props) {
 
         Connection con = null;
-        Calendar calendar = Calendar.getInstance();     //当前时间
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
-        String time1 = String.valueOf(calendar.getTime().getTime());
+        String time1 = String.valueOf(System.currentTimeMillis());
         String time = String.valueOf(System.currentTimeMillis());
         String jisuan_riqi = timeStamp2Date(time1, "yyyyMMdd");
         String system_riqi = timeStamp2Date(time, "yyyyMMdd HH:mm:ss");

@@ -363,8 +363,12 @@ public class JSCComplete {
         DataStream<Tuple2<String, Integer>> select_3 = split.select("level_3");
         DataStream<Tuple2<String, Integer>> select_4 = split.select("level_4");
         DataStream<ModelFirst> ycsb_lb_result_modelDataStream = YCLB_Result_CGroup(select_1, select_2, windowSize);
+        ycsb_lb_result_modelDataStream.print("告警1和2：");
+
         DataStream<ModelFirst> ycsb_lb_result_modelDataStream1 = YCLB_Result_CGroup(select_3, select_4, windowSize);
+        ycsb_lb_result_modelDataStream1.print("告警3和4：");
         DataStream<ModelSecond> modelSecondDataStream = YCLB_Finally_CGroup(ycsb_lb_result_modelDataStream, ycsb_lb_result_modelDataStream1, windowSize);
+        modelSecondDataStream.print("总告警数:");
         SingleOutputStreamOperator<ModelThree> map = modelSecondDataStream.map(new MyMapFunctionV3());
         return map;
     }
@@ -436,6 +440,18 @@ public class JSCComplete {
                             ms.setLevel_three(s.getLevel_one());
                             ms.setLevel_4(s.getLevel_2());
                             ms.setLevel_four(s.getLevel_two());
+                        }
+                        if(ms.getLevel_1()==null){
+                            ms.setLevel_1("1");
+                        }
+                        if(ms.getLevel_2()==null){
+                            ms.setLevel_2("2");
+                        }
+                        if(ms.getLevel_3()==null){
+                            ms.setLevel_3("3");
+                        }
+                        if(ms.getLevel_4()==null){
+                            ms.setLevel_4("4");
                         }
                         collector.collect(ms);
                     }

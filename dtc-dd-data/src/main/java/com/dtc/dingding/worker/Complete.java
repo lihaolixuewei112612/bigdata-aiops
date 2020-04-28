@@ -44,7 +44,7 @@ public class Complete {
     }
     public void fixedPeriodSchedule() {
         // 设定可以循环执行的runnable,初始延迟为0，这里设置的任务的间隔为4秒
-        se.scheduleAtFixedRate(new FixedSchedule(), 0, 60, TimeUnit.MINUTES);
+        se.scheduleAtFixedRate(new FixedSchedule(), 0, 30, TimeUnit.MINUTES);
     }
 
     public Complete() {
