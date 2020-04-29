@@ -1,7 +1,6 @@
 package com.dtc.java.SC.DP;
 
 import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
-
 import com.dtc.java.SC.JSC.model.ModelFirst;
 import com.dtc.java.SC.JSC.model.ModelSecond;
 import com.dtc.java.SC.JSC.model.ModelThree;
@@ -34,20 +33,21 @@ import java.util.List;
  * Created on : 2020-03-31
  * @Description : 驾驶舱监控大盘启动类
  */
-public class JSCComplete {
+public class JSCComplete_2 {
     public static void main(String[] args) throws Exception {
-
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         env.getConfig().setGlobalJobParameters(parameterTool);
-        //监控大盘
-        JSC_EXEC(env, windowSizeMillis);
+        //管理大盘
+        env.addSource(new JSC_GL_SOURCE()).addSink(new JSC_GL_SINK());
+        env.addSource(new JSC_GL_SOURCE_1()).addSink(new JSC_GL_SINK_1());
+        env.addSource(new JSC_GL_SOURCE_2()).addSink(new JSC_GL_SINK_2());
 ////        //我的总览
 //        env.addSource(new WdzlSource()).addSink(new WdzlSink());
 
-        env.execute("数仓-驾驶舱监控大盘");
+        env.execute("数仓-驾驶舱管理大盘");
     }
 
     public static void JSC_EXEC(StreamExecutionEnvironment env, int windowSizeMillis) {
@@ -361,7 +361,7 @@ public class JSCComplete {
         DataStream<ModelFirst> ycsb_lb_result_modelDataStream = YCLB_Result_CGroup(select_1, select_2, windowSize);
         ycsb_lb_result_modelDataStream.print("告警1和2：");
 
-        DataStream<ModelFirst> ycsb_lb_result_modelDataStream1 = YCLB_Result_CGroup_34(select_3, select_4, windowSize);
+        DataStream<ModelFirst> ycsb_lb_result_modelDataStream1 = YCLB_Result_CGroup(select_3, select_4, windowSize);
         ycsb_lb_result_modelDataStream1.print("告警3和4：");
         DataStream<ModelSecond> modelSecondDataStream = YCLB_Finally_CGroup(ycsb_lb_result_modelDataStream, ycsb_lb_result_modelDataStream1, windowSize);
         modelSecondDataStream.print("总告警数:");
@@ -390,33 +390,6 @@ public class JSCComplete {
         DataStream<ModelFirst> apply = grades.coGroup(salaries)
                 .where(new YCFB_Result_KeySelectorOne())
                 .equalTo(new YCFB_Result_KeySelector())
-                .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
-                .apply(new CoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Integer>, ModelFirst>() {
-                    ModelFirst mf = null;
-
-                    @Override
-                    public void coGroup(Iterable<Tuple2<String, Integer>> first, Iterable<Tuple2<String, Integer>> second, Collector<ModelFirst> collector) throws Exception {
-                        mf = new ModelFirst();
-                        for (Tuple2<String, Integer> s : first) {
-                            mf.setLevel_1(s.f0);
-                            mf.setLevel_one(s.f1);
-                        }
-                        for (Tuple2<String, Integer> s1 : second) {
-                            mf.setLevel_2(s1.f0);
-                            mf.setLevel_two(s1.f1);
-                        }
-                        collector.collect(mf);
-                    }
-                });
-        return apply;
-    }
-    private static DataStream<ModelFirst> YCLB_Result_CGroup_34(
-            DataStream<Tuple2<String, Integer>> grades,
-            DataStream<Tuple2<String, Integer>> salaries,
-            long windowSize) {
-        DataStream<ModelFirst> apply = grades.coGroup(salaries)
-                .where(new YCFB_Result_KeySelectorOne_34())
-                .equalTo(new YCFB_Result_KeySelector_34())
                 .window(TumblingProcessingTimeWindows.of(Time.milliseconds(windowSize)))
                 .apply(new CoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Integer>, ModelFirst>() {
                     ModelFirst mf = null;
@@ -486,65 +459,28 @@ public class JSCComplete {
     private static class YCFB_Result_KeySelector implements KeySelector<Tuple2<String, Integer>, Integer> {
         @Override
         public Integer getKey(Tuple2<String, Integer> value) {
-            if(value.f0==null){
-                return 1;
-            }else {
-                return Integer.parseInt(value.f0);
-            }
-        }
-    }
-
-
-    private static class YCFB_Result_KeySelectorOne implements KeySelector<Tuple2<String, Integer>, Integer> {
-        @Override
-        public Integer getKey(Tuple2<String, Integer> value) {
-            if(value==null){
-                return 2;
-            }else {
-                return Integer.parseInt(value.f0) + 1;
-            }
-        }
-    }
-
-    private static class YCFB_Result_KeySelectorOne_34 implements KeySelector<Tuple2<String, Integer>, Integer> {
-        @Override
-        public Integer getKey(Tuple2<String, Integer> value) {
-            if(value==null){
-                return 4;
-            }else {
-                return Integer.parseInt(value.f0) + 1;
-            }
-        }
-    }
-    private static class YCFB_Result_KeySelector_34 implements KeySelector<Tuple2<String, Integer>, Integer> {
-        @Override
-        public Integer getKey(Tuple2<String, Integer> value) {
-            if(value.f0==null){
-                return 3;
-            }
             return Integer.parseInt(value.f0);
         }
     }
 
-    private static class YCFB_Finall_KeySelector implements KeySelector<ModelFirst, Integer> {//todo
+    private static class YCFB_Result_KeySelectorOne implements KeySelector<Tuple2<String, Integer>, Integer> {
         @Override
-        public Integer getKey(ModelFirst value) {
-            if(value.getLevel_1()==null){
-                return 3;
-            }else {
-                return Integer.parseInt(value.getLevel_1()) + 2;
-            }
+        public Integer getKey(Tuple2<String, Integer> value) {
+            return Integer.parseInt(value.f0) + 1;
         }
     }
 
-    private static class YCFB_Finall_KeySelectorOne implements KeySelector<ModelFirst, Integer> {//todo
+    private static class YCFB_Finall_KeySelector implements KeySelector<ModelFirst, Integer> {
         @Override
         public Integer getKey(ModelFirst value) {
-            if(value.getLevel_1()==null){
-                return 1;
-            }else {
-                return Integer.parseInt(value.getLevel_1());
-            }
+            return Integer.parseInt(value.getLevel_1()) + 2;
+        }
+    }
+
+    private static class YCFB_Finall_KeySelectorOne implements KeySelector<ModelFirst, Integer> {
+        @Override
+        public Integer getKey(ModelFirst value) {
+            return Integer.parseInt(value.getLevel_1());
         }
     }
 

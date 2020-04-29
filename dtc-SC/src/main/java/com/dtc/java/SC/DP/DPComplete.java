@@ -16,15 +16,18 @@ import com.dtc.java.SC.common.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.CoGroupFunction;
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.collector.selector.OutputSelector;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.datastream.SplitStream;
+import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
@@ -48,19 +51,30 @@ public class DPComplete {
         env.getConfig().setGlobalJobParameters(parameterTool);
         int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
+        env.setParallelism(parameterTool.getInt(PropertiesConstants.STREAM_PARALLELISM, 2));
+        env.getConfig().disableSysoutLogging();
+        env.getConfig().setRestartStrategy(RestartStrategies.fixedDelayRestart(3, 10000));
+        //每隔50s进行启动一个检查点
+        if (parameterTool.getBoolean(PropertiesConstants.STREAM_CHECKPOINT_ENABLE, true)) {
+            env.enableCheckpointing(parameterTool.getInt(PropertiesConstants.STREAM_CHECKPOINT_INTERVAL, 60000)); // create a checkpoint every 5 seconds
+        }
+        env.getConfig().setGlobalJobParameters(parameterTool); // make parameters available in the web interface
+        // 确保检查点之间有进行1s的进度
+        env.getCheckpointConfig().setMinPauseBetweenCheckpoints(10000);
+        // 检查点必须在一分钟内完成，或者被丢弃
+        env.getCheckpointConfig().setCheckpointTimeout(60000);
+        // 同一时间只允许进行一个检查点
+        env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
+        //开启checkpoints的外部持久化，但是在job失败的时候不会自动清理，需要自己手工清理state
+        env.getCheckpointConfig().enableExternalizedCheckpoints(CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
         /**各机房各区域各机柜设备总数*/
         //大盘今日监控设备数
         DP_EXEC(env, windowSizeMillis);
-//        //监控大盘
-        JSC_EXEC(env, windowSizeMillis);
-        //管理大盘
-        env.addSource(new JSC_GL_SOURCE()).addSink(new JSC_GL_SINK());
-        env.addSource(new JSC_GL_SOURCE_1()).addSink(new JSC_GL_SINK_1());
-        env.addSource(new JSC_GL_SOURCE_2()).addSink(new JSC_GL_SINK_2());
+
 ////
 ////        //我的总览
 //        env.addSource(new WdzlSource()).addSink(new WdzlSink());
-        env.execute("dtc-数仓");
+        env.execute("dtc-数仓大屏");
     }
 
     private static void DP_EXEC(StreamExecutionEnvironment env, int windowSizeMillis) {

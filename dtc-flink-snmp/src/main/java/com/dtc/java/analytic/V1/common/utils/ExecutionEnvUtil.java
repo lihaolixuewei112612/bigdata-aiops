@@ -51,11 +51,11 @@ public class ExecutionEnvUtil {
         env.getConfig().setRestartStrategy(RestartStrategies.fixedDelayRestart(3, 10000));
         //每隔50s进行启动一个检查点
         if (parameterTool.getBoolean(PropertiesConstants.STREAM_CHECKPOINT_ENABLE, true)) {
-            env.enableCheckpointing(parameterTool.getInt(PropertiesConstants.STREAM_CHECKPOINT_INTERVAL, 10000)); // create a checkpoint every 5 seconds
+            env.enableCheckpointing(parameterTool.getInt(PropertiesConstants.STREAM_CHECKPOINT_INTERVAL, 60000)); // create a checkpoint every 5 seconds
         }
         env.getConfig().setGlobalJobParameters(parameterTool); // make parameters available in the web interface
         // 确保检查点之间有进行1s的进度
-        env.getCheckpointConfig().setMinPauseBetweenCheckpoints(1000);
+        env.getCheckpointConfig().setMinPauseBetweenCheckpoints(10000);
         // 检查点必须在一分钟内完成，或者被丢弃
         env.getCheckpointConfig().setCheckpointTimeout(60000);
         // 同一时间只允许进行一个检查点
