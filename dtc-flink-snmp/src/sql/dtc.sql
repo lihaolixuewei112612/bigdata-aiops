@@ -305,7 +305,9 @@ CREATE TABLE `SC_ZHBB_SCRENE_TWO` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
+-- ----------------------------
+-- window磁盘
+-- ----------------------------
 CREATE TABLE `dtc_win_disk` (
   `host_ip` varchar(10) NOT NULL,
   `last_code` varchar(10) NOT NULL,
