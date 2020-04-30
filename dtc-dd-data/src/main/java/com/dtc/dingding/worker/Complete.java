@@ -218,7 +218,7 @@ public class Complete {
     private static Map<String, String> getRecord(String userID, Properties props) throws ApiException {
         DingTalkClient client = new DefaultDingTalkClient(props.get(PropertiesConstants.DD_DAKA).toString().trim());
         OapiAttendanceListRecordRequest request = new OapiAttendanceListRecordRequest();
-        Map<String, String> time = getTime();
+        Map<String, String> time = getTime_1();
         String stattime = time.get("starttime");
         String endtime = time.get("endtime");
         String start = timeStamp2Date(stattime, "yyyy-MM-dd HH:mm:ss");

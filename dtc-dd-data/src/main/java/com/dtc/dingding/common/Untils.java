@@ -16,11 +16,28 @@ import java.util.*;
  * @Description : TODO描述类作用
  */
 public class Untils {
+    public static void main(String[] args) {
+        Map<String, String> time = getTime_1();
+        System.out.println(time);
+    }
     public static Map<String, String> getTime() {
         Map<String, String> map = new HashMap<>();
         long timeStamp = System.currentTimeMillis();
         long yzero = timeStamp / (1000 * 3600 * 24) * (1000 * 3600 * 24) - TimeZone.getDefault().getRawOffset() - 24 * 60 * 60 * 1000;
         long zero = timeStamp / (1000 * 3600 * 24) * (1000 * 3600 * 24) - TimeZone.getDefault().getRawOffset();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        String end = String.valueOf(calendar.getTime().getTime());
+        map.put("starttime", String.valueOf(yzero));
+        map.put("endtime", String.valueOf(zero));
+        return map;
+    }
+
+    public static Map<String, String> getTime_1() {
+        Map<String, String> map = new HashMap<>();
+        long timeStamp = System.currentTimeMillis();
+        long zero = timeStamp / (1000 * 3600 * 24) * (1000 * 3600 * 24) - TimeZone.getDefault().getRawOffset() + 24 * 60 * 60 * 1000;
+        long yzero = timeStamp / (1000 * 3600 * 24) * (1000 * 3600 * 24) - TimeZone.getDefault().getRawOffset();
         Calendar calendar = Calendar.getInstance();
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
         String end = String.valueOf(calendar.getTime().getTime());
