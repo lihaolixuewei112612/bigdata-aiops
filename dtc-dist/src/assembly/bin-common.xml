@@ -44,7 +44,6 @@
                 <include>RELEASE-NOTES</include>
 <!--                <include>bin/**</include>-->
                 <include>conf/**</include>
-                <include>logs/**</include>
                 <include>native/**</include>
             </includes>
         </fileSet>

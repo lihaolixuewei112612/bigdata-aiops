@@ -10,7 +10,9 @@ if [ -z "${LOG_DIR}" ];then
 fi
 export LOG_DIR
 
-
+if [ -z "${LOG_DIR}" ];then
+    LOG_DIR=$FM_HOME/logs
+fi
 
 if [ -z "${FM_CONF_DIR}" ] || [ ! -d "${FM_CONF_DIR}" ];then
     FM_CONF_DIR=${FM_HOME}/conf
