@@ -12,7 +12,7 @@ public class DtcPeriodicAssigner implements AssignerWithPeriodicWatermarks<DataS
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DtcPeriodicAssigner.class);
 
-    private long maxOutOfOrderness = 2000; // 2 seconds
+    private long maxOutOfOrderness = 6000; // 2 seconds
 
     private long currentMaxTimestamp = 0L;
 
