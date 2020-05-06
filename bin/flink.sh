@@ -10,7 +10,9 @@ if [ -z "${LOG_DIR}" ];then
 fi
 export LOG_DIR
 
-
+if [ ! -d "${FM_HOME}/logs" ]; then
+  mkdir /myfolder
+fi
 
 if [ -z "${FM_CONF_DIR}" ] || [ ! -d "${FM_CONF_DIR}" ];then
     FM_CONF_DIR=${FM_HOME}/conf
@@ -20,6 +22,7 @@ export FM_CONF_DIRF
 if [ -f ${FM_CONF_DIR}/fm-env.sh ];then
     source ${FM_CONF_DIR}/fm-env.sh
 fi
+
 
 function usage {
     echo "Usage: `basename $0` <service> (status|start|stop|restart) [-f] [-w 10]"

@@ -125,7 +125,7 @@ public class StreamToFlinkV3 {
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
         alarmLinux.forEach(e-> e.print("告警写mysql"));
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
-        env.execute("Dtc-Alarm-Flink-Process");
+        env.execute("prd-Dtc-Alarm-Flink-Process");
     }
 
     private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast) {
