@@ -1,6 +1,6 @@
 //package com.dtc.java.SC.JSC.exec;
 //
-//import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
+//import com.dtc.java.SC.JKZL.ExecutionEnvUtil_Batch;
 //import com.dtc.java.SC.JSC.source.JSC_ZCGJTJ_ALL;
 //import com.dtc.java.SC.JSC.source.JSC_ZCGJTJ_YC;
 //import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@
 // */
 //public class ZCLXGJTJ_Main {
 //    public static void main(String[] args) throws Exception {
-//        final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
+//        final ParameterTool parameterTool = ExecutionEnvUtil_Batch.createParameterTool(args);
 //        Map<String, String> stringStringMap = parameterTool.toMap();
 //        Properties properties = new Properties();
 //        for (String key : stringStringMap.keySet()) {
@@ -37,7 +37,7 @@
 //                properties.setProperty(key, stringStringMap.get(key));
 //            }
 //        }
-//        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
+//        StreamExecutionEnvironment env = ExecutionEnvUtil_Batch.prepare(parameterTool);
 //        int windowSizeMillis = 6000;
 //        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
 //        /**各机房各区域各机柜设备总数*/

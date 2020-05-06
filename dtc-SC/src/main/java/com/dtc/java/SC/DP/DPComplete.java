@@ -70,6 +70,10 @@ public class DPComplete {
         /**各机房各区域各机柜设备总数*/
         //大盘今日监控设备数
         DP_EXEC(env, windowSizeMillis);
+        JSC_EXEC(env, windowSizeMillis);
+        env.addSource(new JSC_GL_SOURCE()).addSink(new JSC_GL_SINK());
+        env.addSource(new JSC_GL_SOURCE_1()).addSink(new JSC_GL_SINK_1());
+        env.addSource(new JSC_GL_SOURCE_2()).addSink(new JSC_GL_SINK_2());
 
 ////
 ////        //我的总览

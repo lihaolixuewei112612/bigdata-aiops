@@ -104,7 +104,7 @@ public class StreamToFlinkV3 {
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new WinProcessMapFunction());
         //windows数据全量写opentsdb
-        winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
+//        winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast);
@@ -119,7 +119,7 @@ public class StreamToFlinkV3 {
                 .process(new LinuxProcessMapFunction());
 
         //Linux数据全量写opentsdb
-        linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
+//        linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);

@@ -34,7 +34,7 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
         // 加载JDBC驱动
         connection = MySQLUtil.getConnection(parameterTool);
         // 加载JDBC驱动
-        preparedStatement = connection.prepareStatement(parameterTool.get(PropertiesConstants.SQL).toString());//insert sql在配置文件中
+        preparedStatement = connection.prepareStatement(parameterTool.get(PropertiesConstants.SQL));//insert sql在配置文件中
         super.open(parameters);
     }
 

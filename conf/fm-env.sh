@@ -1,10 +1,7 @@
 #! /bin/bash
 
-export HADOOP_USER_NAME="dtc"
-export CONF_FILE="conf.properties"
 export PLUGINS_DIRS=${FM_HOME}/plugins
 export NATIVE_DIR=${FM_HOME}/native
-#export FM_USER=hadoop
 export LOG_DIR=${FM_HOME}/logs
 
 # defaults
@@ -172,7 +169,7 @@ function start_flink-bb {
     if ! which java >/dev/null 2>&1 ; then
         return 2;
     fi
-    nohup ${FLINK_SUBMIT} run -c com.dtc.java.SC.ZHBB.sc_Scene_Exec ${FM_HOME}/lib/flink/sc/dtc-sc-zhbb.jar &
+    flink run -c com.dtc.java.SC.ZHBB.sc_Scene_Exec ${FM_HOME}/lib/flink/sc/dtc-sc-zhbb.jar
     local test=$?
     if [ ${test} -ne 0 ];then
         echo "submit is failed!"

@@ -1,6 +1,6 @@
 package com.dtc.java.SC.JSC;//package com.dtc.java.shucang.JaShiCang;
 //
-//import com.dtc.java.shucang.JFSBWGBGJ.ExecutionEnvUtil;
+//import com.dtc.java.shucang.JFSBWGBGJ.ExecutionEnvUtil_Batch;
 //import com.dtc.java.shucang.daping.source.*;
 //import org.apache.flink.api.java.tuple.Tuple2;
 //import org.apache.flink.api.java.utils.ParameterTool;
@@ -21,7 +21,7 @@ package com.dtc.java.SC.JSC;//package com.dtc.java.shucang.JaShiCang;
 //
 //    public static void main(String[] args) throws Exception {
 //
-//        final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
+//        final ParameterTool parameterTool = ExecutionEnvUtil_Batch.createParameterTool(args);
 //        Map<String, String> stringStringMap = parameterTool.toMap();
 //        Properties properties = new Properties();
 //        for (String key : stringStringMap.keySet()) {
@@ -29,7 +29,7 @@ package com.dtc.java.SC.JSC;//package com.dtc.java.shucang.JaShiCang;
 //                properties.setProperty(key, stringStringMap.get(key));
 //            }
 //        }
-//        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
+//        StreamExecutionEnvironment env = ExecutionEnvUtil_Batch.prepare(parameterTool);
 //        int windowSizeMillis = 6000;
 //        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
 //        /**各机房各区域各机柜设备总数*/

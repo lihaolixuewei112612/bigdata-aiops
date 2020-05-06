@@ -1,6 +1,6 @@
 package com.dtc.java.SC.JSC.exec;//package com.dtc.java.shucang.JaShiCang.exec;
 //
-//import com.dtc.java.shucang.JFSBWGBGJ.ExecutionEnvUtil;
+//import com.dtc.java.shucang.JFSBWGBGJ.ExecutionEnvUtil_Batch;
 //import com.dtc.java.shucang.JaShiCang.model.ModelFirst;
 //import com.dtc.java.shucang.JaShiCang.model.ModelSecond;
 //import com.dtc.java.shucang.JaShiCang.model.ModelThree;
@@ -35,7 +35,7 @@ package com.dtc.java.SC.JSC.exec;//package com.dtc.java.shucang.JaShiCang.exec;
 //public class Alarm_level_Main {
 //    public static void main(String[] args) throws Exception {
 //
-//        final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
+//        final ParameterTool parameterTool = ExecutionEnvUtil_Batch.createParameterTool(args);
 //        Map<String, String> stringStringMap = parameterTool.toMap();
 //        Properties properties = new Properties();
 //        for (String key : stringStringMap.keySet()) {
@@ -43,7 +43,7 @@ package com.dtc.java.SC.JSC.exec;//package com.dtc.java.shucang.JaShiCang.exec;
 //                properties.setProperty(key, stringStringMap.get(key));
 //            }
 //        }
-//        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
+//        StreamExecutionEnvironment env = ExecutionEnvUtil_Batch.prepare(parameterTool);
 //        int windowSizeMillis = 6000;
 //        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
 //        /**各机房各区域各机柜设备总数*/

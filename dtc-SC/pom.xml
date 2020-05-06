@@ -28,11 +28,11 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.dtc.java.SC.DP.DPComplete</mainClass>
+                            <mainClass>com.dtc.java.SC.ZHBB.sc_Scene_Exec</mainClass>
                         </manifest>
                     </archive>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <finalName>dtc-sc-zhbb</finalName>
+                    <finalName>dtc-sc-zhbb_1</finalName>
                 </configuration>
                 <executions>
                     <execution>

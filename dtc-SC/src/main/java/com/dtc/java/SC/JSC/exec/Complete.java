@@ -1,6 +1,6 @@
 //package com.dtc.java.SC.JSC.exec;
 //
-//import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
+//import com.dtc.java.SC.JKZL.ExecutionEnvUtil_Batch;
 //import com.dtc.java.SC.JSC.gldp.Lreand;
 //import com.dtc.java.SC.JSC.gldp.Lwrite;
 //import com.dtc.java.SC.JSC.model.ModelFirst;
@@ -42,8 +42,8 @@
 //public class Complete {
 //    public static void main(String[] args) throws Exception {
 //
-//        final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
-//        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
+//        final ParameterTool parameterTool = ExecutionEnvUtil_Batch.createParameterTool(args);
+//        StreamExecutionEnvironment env = ExecutionEnvUtil_Batch.prepare(parameterTool);
 //        int windowSizeMillis = Integer.parseInt(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
 //        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
 //        env.getConfig().setGlobalJobParameters(parameterTool);

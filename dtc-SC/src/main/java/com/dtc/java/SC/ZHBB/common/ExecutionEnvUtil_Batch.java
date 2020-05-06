@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author :hao.li
  */
-public class ExecutionEnvUtil {
+public class ExecutionEnvUtil_Batch {
     private static final String EXACTLY_ONCE_MODE = "exactly_once";
     private static final String EVENT_TIME = "EventTime";
     private static final String INGESTION_TIME = "IngestionTime";
@@ -23,7 +23,7 @@ public class ExecutionEnvUtil {
 
     public static ParameterTool createParameterTool(final String[] args) throws Exception {
         return ParameterTool
-                .fromPropertiesFile(ExecutionEnvUtil.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
+                .fromPropertiesFile(ExecutionEnvUtil_Batch.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
                 .mergeWith(ParameterTool.fromArgs(args))
                 .mergeWith(ParameterTool.fromSystemProperties())
                 .mergeWith(ParameterTool.fromMap(getenv()));
@@ -34,7 +34,7 @@ public class ExecutionEnvUtil {
     private static ParameterTool createParameterTool() {
         try {
             return ParameterTool
-                    .fromPropertiesFile(ExecutionEnvUtil.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
+                    .fromPropertiesFile(ExecutionEnvUtil_Batch.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
                     .mergeWith(ParameterTool.fromSystemProperties())
                     .mergeWith(ParameterTool.fromMap(getenv()));
         } catch (IOException e) {
@@ -52,7 +52,6 @@ public class ExecutionEnvUtil {
         env.getConfig().disableSysoutLogging();
         env.getConfig().setRestartStrategy(RestartStrategies.fixedDelayRestart(3, 10000));
         env.getConfig().setGlobalJobParameters(parameterTool); // make parameters available in the web interface
-        // 确保检查点之间有进行1s的进度
         return env;
     }
 
