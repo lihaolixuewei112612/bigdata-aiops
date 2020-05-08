@@ -1,9 +1,13 @@
 package com.dtc.java.analytic.V1.snmp;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dtc.java.analytic.V1.configuration.Configuration;
 import com.dtc.java.analytic.V1.configuration.NumberTest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import org.apache.commons.lang.StringUtils;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.tuple.*;
@@ -45,10 +49,10 @@ public class StreamToFlink {
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         //Flink Streaming检查点（Checkpointing）设置
         env.enableCheckpointing(60000);
-        env.setParallelism(2);
+        env.setParallelism(6);
 
         //读取kafka数据源的配置文件
-        Properties prop = Configuration.getConf("kafka-flink_test.properties");
+        Properties prop = Configuration.getConf("kafka-flink.properties");
         String TOPIC = prop.get("topic").toString();
         //从kafka消费并获取数据流
         FlinkKafkaConsumer myConsumer = new FlinkKafkaConsumer(TOPIC, new SimpleStringSchema(), prop);
@@ -57,18 +61,29 @@ public class StreamToFlink {
         //设置水印
         myConsumer.assignTimestampsAndWatermarks(new DtcPeriodicAssigner());
         DataStreamSource<String> dataStreamSource = env.addSource(myConsumer);
+        SingleOutputStreamOperator<String> filter = dataStreamSource.filter(str -> {
+                    if (StringUtils.isBlank(str)) {
+                        return false;
+                    }
+                    try {
+                        new JsonParser().parse(str);
+                        return true;
+                    } catch (JsonParseException e) {
+                        return false;
+                    }
+                });
         WindowedStream<Tuple5<Tuple2<String, String>, String, String, String, String>, Tuple, TimeWindow>
-                tuple5TupleTimeWindowWindowedStream = dataStreamSource
+                tuple5TupleTimeWindowWindowedStream = filter
                 .map(new MyMapFunction())
                 .keyBy(0)
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS));
         SingleOutputStreamOperator<Tuple6<String, String, String, String, String, String>> process
                 = tuple5TupleTimeWindowWindowedStream.process(new myProcessWindowFunction());
         //process.print();
-        String str = "http://10.3.7.232:4399";
+        String str = "http://10.10.58.16:4399";
 
         process.addSink(new SinkToOpentsdb(str));
-        env.execute("Test-start");
+        env.execute("dtc_v1.0-Flink-data-process");
 
     }
 }
