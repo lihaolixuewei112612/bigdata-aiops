@@ -275,6 +275,8 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                 if (error_out_num == net_num) {
                     collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), wc.getZbFourName(), "", wc.getNameCN(), wc.getNameEN(), wc.getTime(), String.valueOf(error_out_count)));
                 }
+            }else if("107_107_101_101_101".equals(wc.getZbFourName())){
+                collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), wc.getZbFourName(), wc.getZbLastCode(), wc.getNameCN(), wc.getNameEN(), wc.getTime(), wc.getValue()));
             }
         }
     }

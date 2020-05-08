@@ -74,6 +74,7 @@ public class StreamToFlinkV3 {
 //        DataStreamSource<String> dataStreamSource = env.socketTextStream("172.20.10.2", 8080, '\n');
 
         SingleOutputStreamOperator<DataStruct> mapStream = streamSource.map(new MyMapFunctionV3());
+        mapStream.filter(e -> e.getZbFourName().equals("107_107_101_101")).print("ping tong");
 //        SingleOutputStreamOperator<DataStruct> timeSingleOutputStream
 //                = mapStream.assignTimestampsAndWatermarks(new DtcPeriodicAssigner());
 
@@ -81,7 +82,7 @@ public class StreamToFlinkV3 {
                 = mapStream.split((OutputSelector<DataStruct>) event -> {
             List<String> output = new ArrayList<>();
             String type = event.getSystem_name();
-            if ("101_100".equals(type)) {
+            if ("101_100".equals(type) | "107_107".equals(type)) {
                 output.add("Win");
             } else if ("101_101".equals(type)) {
                 output.add("Linux");
@@ -123,7 +124,6 @@ public class StreamToFlinkV3 {
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
-        alarmLinux.forEach(e-> e.print("告警写mysql"));
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
@@ -132,7 +132,6 @@ public class StreamToFlinkV3 {
 
         SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)
                 .process(getAlarmFunction());
-        alert_rule.print("告警数据:");
 
 //        AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipToFirst("begin");
         AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipPastLastEvent();
