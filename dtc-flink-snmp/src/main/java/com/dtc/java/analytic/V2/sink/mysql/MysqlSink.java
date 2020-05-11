@@ -9,12 +9,11 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 
 import java.security.SecureRandom;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 import java.util.Random;
+
 
 /**
  * Created on 2019-09-12
@@ -34,7 +33,7 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
         // 加载JDBC驱动
         connection = MySQLUtil.getConnection(parameterTool);
         // 加载JDBC驱动
-        preparedStatement = connection.prepareStatement(parameterTool.get(PropertiesConstants.SQL).toString());//insert sql在配置文件中
+        preparedStatement = connection.prepareStatement(parameterTool.get(PropertiesConstants.SQL));//insert sql在配置文件中
         super.open(parameters);
     }
 

@@ -10,7 +10,7 @@ export LOG_DIR=${FM_HOME}/logs
 # defaults
 #export EXEC="echo"
 export EXEC="exec"
-export FLINK_SUBMIT='/opt/flink-1.7.2/bin/flink'
+export FLINK_SUBMIT='/home/flink/flink-1.7.2/bin/flink'
 export HOURLY_CLASS=com.dtc.analytics.works.Hourly
 export FLINK_LOG_ZABBIX_CLASS=com.dtc.java.analytic.zabbix.PrometheusToFlink
 export FLINK_LOG_SNMP_CLASS=com.dtc.java.analytic.snmp.StreamToFlink

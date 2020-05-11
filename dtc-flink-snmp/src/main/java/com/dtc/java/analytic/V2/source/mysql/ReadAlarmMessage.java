@@ -12,6 +12,7 @@ import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -37,13 +38,12 @@ public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, 
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
         parameterTool = (ParameterTool) (getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
-        String database = parameterTool.get(PropertiesConstants.MYSQL_DATABASE);
-        String host = parameterTool.get(PropertiesConstants.MYSQL_HOST);
-        String password = parameterTool.get(PropertiesConstants.MYSQL_PASSWORD);
-        String port = parameterTool.get(PropertiesConstants.MYSQL_PORT);
-        String username = parameterTool.get(PropertiesConstants.MYSQL_USERNAME);
-
         String driver = "com.mysql.jdbc.Driver";
+        String host = parameterTool.get(PropertiesConstants.MYSQL_HOST).trim();
+        String port = parameterTool.get(PropertiesConstants.MYSQL_PORT).trim();
+        String database = parameterTool.get(PropertiesConstants.MYSQL_DATABASE).trim();
+        String username = parameterTool.get(PropertiesConstants.MYSQL_USERNAME).trim();
+        String password = parameterTool.get(PropertiesConstants.MYSQL_PASSWORD).trim();
         String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=UTF-8";
         connection = MySQLUtil.getConnection(driver, url, username, password);
 

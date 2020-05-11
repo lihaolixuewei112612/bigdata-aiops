@@ -45,6 +45,7 @@
 <!--                <include>bin/**</include>-->
                 <include>conf/**</include>
                 <include>native/**</include>
+                <include>logs/**</include>
             </includes>
         </fileSet>
         <!--对加入的文件赋权值-->
