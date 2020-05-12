@@ -9,11 +9,9 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 
 import java.security.SecureRandom;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 import java.util.Random;
 
 /**
@@ -34,7 +32,7 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
         // 加载JDBC驱动
         connection = MySQLUtil.getConnection(parameterTool);
         // 加载JDBC驱动
-        preparedStatement = connection.prepareStatement(parameterTool.get(PropertiesConstants.SQL).toString());//insert sql在配置文件中
+        preparedStatement = connection.prepareStatement(parameterTool.get(PropertiesConstants.SQL));//insert sql在配置文件中
         super.open(parameters);
     }
 
@@ -61,10 +59,12 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
             boolean contains = Unique_id.contains("|");
             String asset_id = null;
             String index_id = null;
+            String strategy_id =null;
             if (contains) {
                 String[] split = Unique_id.split("\\|");
                 asset_id = split[0];
                 index_id = split[1];
+                strategy_id=split[2];
             }
             String real_value = value.getValue();
             String alarm_garde = value.getLevel();
@@ -82,6 +82,7 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
             preparedStatement.setString(7, s);
             preparedStatement.setString(8, rule);
             preparedStatement.setString(9, index_id);
+            preparedStatement.setString(10,strategy_id);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

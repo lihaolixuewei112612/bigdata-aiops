@@ -22,11 +22,11 @@ public class MySQLUtil {
         try {
             Class.forName(JDBC_DRIVER);
         // 获取数据库连接
-        String userName = parameterTool.get(PropertiesConstants.MYSQL_USERNAME);
-        String passWord = parameterTool.get(PropertiesConstants.MYSQL_PASSWORD);
-        String host = parameterTool.get(PropertiesConstants.MYSQL_HOST);
-        String port = parameterTool.get(PropertiesConstants.MYSQL_PORT);
-        String database = parameterTool.get(PropertiesConstants.MYSQL_DATABASE);
+        String userName = parameterTool.get(PropertiesConstants.MYSQL_USERNAME).trim();
+        String passWord = parameterTool.get(PropertiesConstants.MYSQL_PASSWORD).trim();
+        String host = parameterTool.get(PropertiesConstants.MYSQL_HOST).trim();
+        String port = parameterTool.get(PropertiesConstants.MYSQL_PORT).trim();
+        String database = parameterTool.get(PropertiesConstants.MYSQL_DATABASE).trim();
         String mysqlUrl = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=UTF-8";
         connection = DriverManager.getConnection(mysqlUrl, userName, passWord);//写入mysql数据库
         } catch (ClassNotFoundException e) {

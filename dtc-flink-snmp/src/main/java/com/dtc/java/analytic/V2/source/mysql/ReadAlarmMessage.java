@@ -25,7 +25,7 @@ import java.util.Map;
  * @author :hao.li
  */
 @Slf4j
-public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, String, String, Double, String, String,String, String>> {
+public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, String, String, Double, String, String, String, String>> {
 
     private Connection connection = null;
     private PreparedStatement ps = null;
@@ -57,12 +57,12 @@ public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, 
     }
 
     @Override
-    public void run(SourceContext<Tuple9<String, String, String, String, Double, String, String,String, String>> ctx) throws Exception {
+    public void run(SourceContext<Tuple9<String, String, String, String, Double, String, String, String, String>> ctx) throws Exception {
         while (isRunning) {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 if ("1".equals(resultSet.getString("is_enable"))) {
-                    String asset_id = resultSet.getString("asset_id")+"|"+resultSet.getString("id");
+                    String asset_id = resultSet.getString("asset_id") + "|" + resultSet.getString("id") + "|" + resultSet.getString("strategy_id");
                     String ipv4 = resultSet.getString("ipv4");
                     String strategy_kind = resultSet.getString("trigger_kind");
                     String triger_name = resultSet.getString("trigger_name");
@@ -71,10 +71,10 @@ public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, 
                     String alarm_level = resultSet.getString("alarm_level");
                     String asset_code = resultSet.getString("asset_code");
                     String name = resultSet.getString("name");
-                    ctx.collect(Tuple9.of(asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level,asset_code,name));
+                    ctx.collect(Tuple9.of(asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level, asset_code, name));
                 }
             }
-            Thread.sleep(1000*6);
+            Thread.sleep(1000 * 6);
         }
     }
 

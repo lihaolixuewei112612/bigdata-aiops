@@ -74,7 +74,6 @@ public class StreamToFlinkV3 {
 //        DataStreamSource<String> dataStreamSource = env.socketTextStream("172.20.10.2", 8080, '\n');
 
         SingleOutputStreamOperator<DataStruct> mapStream = streamSource.map(new MyMapFunctionV3());
-        mapStream.filter(e -> e.getZbFourName().equals("107_107_101_101")).print("ping tong");
 //        SingleOutputStreamOperator<DataStruct> timeSingleOutputStream
 //                = mapStream.assignTimestampsAndWatermarks(new DtcPeriodicAssigner());
 
