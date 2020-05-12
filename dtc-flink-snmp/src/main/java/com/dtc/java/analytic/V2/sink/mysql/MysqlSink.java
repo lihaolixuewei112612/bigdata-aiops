@@ -60,10 +60,12 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
             boolean contains = Unique_id.contains("|");
             String asset_id = null;
             String index_id = null;
+            String strategy_id = null;
             if (contains) {
                 String[] split = Unique_id.split("\\|");
                 asset_id = split[0];
                 index_id = split[1];
+                strategy_id = split[2];
             }
             String real_value = value.getValue();
             String alarm_garde = value.getLevel();
@@ -81,6 +83,7 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
             preparedStatement.setString(7, s);
             preparedStatement.setString(8, rule);
             preparedStatement.setString(9, index_id);
+            preparedStatement.setString(10,strategy_id);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
