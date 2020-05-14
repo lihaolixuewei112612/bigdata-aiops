@@ -37,11 +37,11 @@ public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, 
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
         parameterTool = (ParameterTool) (getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
-        String database = parameterTool.get(PropertiesConstants.MYSQL_DATABASE);
-        String host = parameterTool.get(PropertiesConstants.MYSQL_HOST);
-        String password = parameterTool.get(PropertiesConstants.MYSQL_PASSWORD);
-        String port = parameterTool.get(PropertiesConstants.MYSQL_PORT);
-        String username = parameterTool.get(PropertiesConstants.MYSQL_USERNAME);
+        String database = parameterTool.get(PropertiesConstants.MYSQL_DATABASE).trim();
+        String host = parameterTool.get(PropertiesConstants.MYSQL_HOST).trim();
+        String password = parameterTool.get(PropertiesConstants.MYSQL_PASSWORD).trim();
+        String port = parameterTool.get(PropertiesConstants.MYSQL_PORT).trim();
+        String username = parameterTool.get(PropertiesConstants.MYSQL_USERNAME).trim();
 
         String driver = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=UTF-8";
@@ -74,7 +74,7 @@ public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, 
                     ctx.collect(Tuple9.of(asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level, asset_code, name));
                 }
             }
-            Thread.sleep(1000 * 6);
+            Thread.sleep(100 * 6);
         }
     }
 
