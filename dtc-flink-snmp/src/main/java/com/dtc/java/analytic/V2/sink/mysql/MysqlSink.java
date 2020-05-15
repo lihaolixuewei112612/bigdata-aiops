@@ -3,9 +3,12 @@ package com.dtc.java.analytic.V2.sink.mysql;
 import com.dtc.java.analytic.V2.common.constant.MySQLUtil;
 import com.dtc.java.analytic.V2.common.constant.PropertiesConstants;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
+import com.dtc.java.analytic.V2.worker.StreamToFlinkV3;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 import java.sql.Connection;
@@ -22,6 +25,7 @@ import java.util.Random;
  */
 
 public class MysqlSink extends RichSinkFunction<AlterStruct> {
+    private static final Logger logger = LoggerFactory.getLogger(MysqlSink.class);
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ParameterTool parameterTool;
@@ -85,6 +89,8 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
             preparedStatement.setString(9, index_id);
             preparedStatement.setString(10,strategy_id);
             preparedStatement.executeUpdate();
+            logger.info("{} 告警数据写入到msyql中,策略id是{}",description,strategy_id);
+            System.out.println(description+" 打印告警数据写入到msyql中,策略id是 "+ strategy_id);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,8 +1,6 @@
 package com.dtc.java.analytic.V2.common.constant;
 
 /**
- * Created on 2020-02-15
- *
  * @author :hao.li
  */
 public class PropertiesConstants {
@@ -55,7 +53,7 @@ public class PropertiesConstants {
 
     public static final String JDBC_URL = "mysql.url";
 
-
+    public static final String SQL = "mysql.sql";
 
     public static final String DTC_USERNAME = "dtc.mysql.user";
 
@@ -131,6 +129,7 @@ public class PropertiesConstants {
     public static final String MYSQL_PASSWORD = "mysql.password";
     public static final String MYSQL_PORT = "mysql.port";
     public static final String MYSQL_USERNAME = "mysql.username";
-    public static final String SQL = "mysql.sql";
+    public static final String MYSQL_ALAEM_TABLE = "mysql.alarm_rule_table";
+    public static final String MYSQL_WINDOWS_TABLE = "mysql.windows_disk_sql";
 
 }

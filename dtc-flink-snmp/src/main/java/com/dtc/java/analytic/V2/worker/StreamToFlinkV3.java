@@ -35,6 +35,8 @@ import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -45,9 +47,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author :ren
  */
-@Slf4j
 public class StreamToFlinkV3 {
-
+    private static final Logger logger = LoggerFactory.getLogger(StreamToFlinkV3.class);
     private static DataStream<Map<String, String>> alarmDataStream = null;
 
     public static void main(String[] args) throws Exception {
@@ -63,6 +64,7 @@ public class StreamToFlinkV3 {
         DataStreamSource<Tuple9<String, String, String, String, Double, String, String, String, String>> alarmMessageMysql = env.addSource(new ReadAlarmMessage()).setParallelism(1);
         DataStream<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> process = alarmMessageMysql.keyBy(0, 5).timeWindow(Time.milliseconds(windowSizeMillis)).process(new MySqlProcessMapFunction());
         alarmDataStream = process.map(new MySQLFunction());
+        alarmDataStream.print("告警规则：");
         BroadcastStream<Map<String, String>> broadcast = alarmDataStream.broadcast(ALARM_RULES);
 
 //        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
@@ -108,6 +110,7 @@ public class StreamToFlinkV3 {
 
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast);
+        alarmWindows.forEach(e->logger.info("windows告警："+e));
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
 
         //linux指标数据处理
@@ -123,6 +126,9 @@ public class StreamToFlinkV3 {
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
+        alarmLinux.forEach(e->e.print("linux打印告警:"));
+        alarmLinux.forEach(e->logger.info("linux日志告警：{}",e));
+
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
