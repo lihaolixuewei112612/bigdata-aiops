@@ -64,11 +64,11 @@
         <artifactId>flink-cep_2.11</artifactId>
         <version>${flink.version}</version>
     </dependency>
-    <dependency>
-        <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-common</artifactId>
-        <version>${hadoop.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--        <groupId>org.apache.hadoop</groupId>-->
+<!--        <artifactId>hadoop-common</artifactId>-->
+<!--        <version>${hadoop.version}</version>-->
+<!--    </dependency>-->
     <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>

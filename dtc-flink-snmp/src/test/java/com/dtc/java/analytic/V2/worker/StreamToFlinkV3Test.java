@@ -256,11 +256,9 @@ public class StreamToFlinkV3Test {
                 if (value == null || value.size() == 0) {
                     return;
                 }
-                if (value != null) {
-                    BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
-                    for (Map.Entry<String, String> entry : value.entrySet()) {
-                        broadcastState.put(entry.getKey(), entry.getValue());
-                    }
+                BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
+                for (Map.Entry<String, String> entry : value.entrySet()) {
+                    broadcastState.put(entry.getKey(), entry.getValue());
                 }
             }
         };
@@ -272,6 +270,7 @@ public class StreamToFlinkV3Test {
     private static void AlarmRule(DataStruct value, Collector<AlterStruct> out, String unique_id, String[] split1, String str1) {
         double data_value = Double.parseDouble(value.getValue());
         String code_name = str1;
+        System.out.println("数据进入具体判断阶段：");
         String level_1 = split1[0];
         String level_2 = split1[1];
         String level_3 = split1[2];

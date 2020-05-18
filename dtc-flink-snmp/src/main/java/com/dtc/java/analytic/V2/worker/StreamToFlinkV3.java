@@ -3,6 +3,7 @@ package com.dtc.java.analytic.V2.worker;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;
+import com.dtc.java.analytic.V2.common.model.TimesConstats;
 import com.dtc.java.analytic.V2.common.utils.ExecutionEnvUtil;
 import com.dtc.java.analytic.V2.common.utils.KafkaConfigUtil;
 import com.dtc.java.analytic.V2.map.function.LinuxMapFunction;
@@ -50,6 +51,7 @@ import java.util.concurrent.TimeUnit;
 public class StreamToFlinkV3 {
     private static final Logger logger = LoggerFactory.getLogger(StreamToFlinkV3.class);
     private static DataStream<Map<String, String>> alarmDataStream = null;
+    static TimesConstats build =null;
 
     public static void main(String[] args) throws Exception {
         MapStateDescriptor<String, String> ALARM_RULES = new MapStateDescriptor<>(
@@ -59,12 +61,17 @@ public class StreamToFlinkV3 {
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         String opentsdb_url = parameterTool.get("dtc.opentsdb.url", "http://10.10.58.16:4399");
         int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
+        int anInt_one = parameterTool.getInt("dtc.alarm.times.one", 1);
+        int anInt1_one = parameterTool.getInt("dtc.alarm.time.long.one", 60000);
+        int anInt_two = parameterTool.getInt("dtc.alarm.times.two", 1);
+        int anInt1_two = parameterTool.getInt("dtc.alarm.time.long.two", 60000);
+        build = TimesConstats.builder().one(anInt_one).two(anInt1_one).three(anInt_two).four(anInt1_two).build();
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         env.getConfig().setGlobalJobParameters(parameterTool);
+        //asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level, asset_code, name
         DataStreamSource<Tuple9<String, String, String, String, Double, String, String, String, String>> alarmMessageMysql = env.addSource(new ReadAlarmMessage()).setParallelism(1);
         DataStream<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> process = alarmMessageMysql.keyBy(0, 5).timeWindow(Time.milliseconds(windowSizeMillis)).process(new MySqlProcessMapFunction());
         alarmDataStream = process.map(new MySQLFunction());
-        alarmDataStream.print("告警规则：");
         BroadcastStream<Map<String, String>> broadcast = alarmDataStream.broadcast(ALARM_RULES);
 
 //        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
@@ -109,8 +116,7 @@ public class StreamToFlinkV3 {
         winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //windows数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast);
-        alarmWindows.forEach(e->logger.info("windows告警："+e));
+        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast,build);
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
 
         //linux指标数据处理
@@ -125,15 +131,13 @@ public class StreamToFlinkV3 {
         linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
-        alarmLinux.forEach(e->e.print("linux打印告警:"));
-        alarmLinux.forEach(e->logger.info("linux日志告警：{}",e));
+        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast,build);
 
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
 
-    private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast) {
+    private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast,TimesConstats test) {
 
         SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)
                 .process(getAlarmFunction());
@@ -162,7 +166,7 @@ public class StreamToFlinkV3 {
                     public boolean filter(AlterStruct s) {
                         return s.getLevel().equals("4");
                     }
-                }).times(3).within(Time.seconds(20));
+                }).times(test.getOne()).within(Time.seconds(test.getTwo()));
         Pattern<AlterStruct, ?> alarmIncream
                 = Pattern.<AlterStruct>begin("begin", skipStrategy).subtype(AlterStruct.class)
                 .where(new SimpleCondition<AlterStruct>() {
@@ -185,7 +189,7 @@ public class StreamToFlinkV3 {
                     public boolean filter(AlterStruct alterStruct) {
                         return alterStruct.getLevel().equals("4");
                     }
-                }).times(2).within(Time.seconds(20));
+                }).times(test.getThree()).within(Time.seconds(test.getFour()));
         PatternStream<AlterStruct> patternStream =
                 CEP.pattern(alert_rule.keyBy(AlterStruct::getGaojing), alarmGrade);
         PatternStream<AlterStruct> alarmIncreamStream =
@@ -219,22 +223,30 @@ public class StreamToFlinkV3 {
 
             @Override
             public void processElement(DataStruct value, ReadOnlyContext ctx, Collector<AlterStruct> out) throws Exception {
+                System.out.println("对每条数据进行判断：");
                 ReadOnlyBroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
                 String host_ip = value.getHost();
+                System.out.println("数据ip为：" + host_ip);
                 String code = value.getZbFourName().replace("_", ".");
                 String weiyi = host_ip + "." + code;
+                System.out.println("唯一值是:" + weiyi);
                 if (!broadcastState.contains(weiyi)) {
+                    System.out.println("值不存在！");
                     return;
                 }
+                System.out.println("唯一值存在:" + weiyi);
                 //asset_id + ":" + code + ":"+ asset_code + ":" +asset_name+":"+ alarm
                 String targetId = broadcastState.get(weiyi).trim();
+                System.out.println("目标id是: "+targetId);
                 String[] split = targetId.split(":");
                 if (split.length != 5) {
+                    System.out.println("11111");
                     return;
                 }
                 String unique_id = split[0].trim();
                 String r_code = split[1].trim();
                 if (!r_code.equals(value.getZbFourName())) {
+                    System.out.println("22222");
                     return;
                 }
                 String asset_code = split[2].trim();
@@ -242,13 +254,16 @@ public class StreamToFlinkV3 {
                 String result = asset_code + "(" + asset_name + ")";
                 String r_value = split[4].trim();
                 if (unique_id.isEmpty() || code.isEmpty() || r_value.isEmpty()) {
+                    System.out.println("3333333");
                     return;
                 }
                 String[] split1 = r_value.split("\\|");
                 if (split1.length != 4) {
+                    System.out.println("444444");
                     return;
                 }
                 broadcastState.clear();
+                System.out.println("进入alarmRule方法：");
                 AlarmRule(value, out, unique_id, split1, result);
             }
 
@@ -260,6 +275,7 @@ public class StreamToFlinkV3 {
                 if (value != null) {
                     BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
                     for (Map.Entry<String, String> entry : value.entrySet()) {
+                        System.out.println("msysl数据进入到状态值中3："+entry.getKey());
                         broadcastState.put(entry.getKey(), entry.getValue());
                     }
                 }
@@ -272,6 +288,7 @@ public class StreamToFlinkV3 {
      */
     private static void AlarmRule(DataStruct value, Collector<AlterStruct> out, String unique_id, String[] split1, String str1) {
         double data_value = Double.parseDouble(value.getValue());
+        System.out.println("每条数据是aaaaa:" + value);
         String code_name = str1;
         String level_1 = split1[0];
         String level_2 = split1[1];
@@ -506,6 +523,7 @@ public class StreamToFlinkV3 {
     static class MySqlProcessMapFunction extends ProcessWindowFunction<Tuple9<String, String, String, String, Double, String, String, String, String>, Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Tuple, TimeWindow> {
         @Override
         public void process(Tuple tuple, Context context, Iterable<Tuple9<String, String, String, String, Double, String, String, String, String>> iterable, Collector<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> collector) throws Exception {
+            //asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level, asset_code, name
             Tuple9<String, String, String, Double, Double, Double, Double, String, String> tuple9 = new Tuple9<>();
             Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> map = new HashMap<>();
             for (Tuple9<String, String, String, String, Double, String, String, String, String> sourceEvent : iterable) {
