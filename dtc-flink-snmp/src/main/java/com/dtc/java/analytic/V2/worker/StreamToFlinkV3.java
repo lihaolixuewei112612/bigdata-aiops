@@ -132,12 +132,14 @@ public class StreamToFlinkV3 {
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast,build);
+        alarmLinux.forEach(e -> e.print("linux打印告警:"));
+        alarmLinux.forEach(e -> logger.info("linux日志告警：{}", e));
 
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
 
-    private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast,TimesConstats test) {
+    public static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast, TimesConstats test) {
 
         SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)
                 .process(getAlarmFunction());

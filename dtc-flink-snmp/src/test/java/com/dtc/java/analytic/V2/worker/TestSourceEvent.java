@@ -30,7 +30,7 @@ public class TestSourceEvent extends RichSourceFunction<Tuple9<String, String, S
         while (running && count < numElements) {
             Tuple9<String, String, String, String, Double, String, String, String, String> s = generateEvent();
             ctx.collect(s);
-            Thread.sleep(100);
+            Thread.sleep(60000);
         }
 
     }

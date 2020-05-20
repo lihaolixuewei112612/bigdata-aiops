@@ -86,7 +86,7 @@ public class KafkaConfigUtil {
             Map<KafkaTopicPartition, Long> partitionOffset = buildOffsetByTime(props, parameterTool, time);
             consumer.setStartFromSpecificOffsets(partitionOffset);
         }
-        return env.addSource(consumer).setParallelism(10);
+        return env.addSource(consumer).setParallelism(1);
     }
 
     private static Map<KafkaTopicPartition, Long> buildOffsetByTime(Properties props, ParameterTool parameterTool, Long time) {
