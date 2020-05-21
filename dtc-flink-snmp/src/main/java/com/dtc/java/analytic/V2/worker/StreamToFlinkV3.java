@@ -6,8 +6,10 @@ import com.dtc.java.analytic.V2.common.model.SourceEvent;
 import com.dtc.java.analytic.V2.common.model.TimesConstats;
 import com.dtc.java.analytic.V2.common.utils.ExecutionEnvUtil;
 import com.dtc.java.analytic.V2.common.utils.KafkaConfigUtil;
+import com.dtc.java.analytic.V2.map.function.H3cMapFunction;
 import com.dtc.java.analytic.V2.map.function.LinuxMapFunction;
 import com.dtc.java.analytic.V2.map.function.WinMapFunction;
+import com.dtc.java.analytic.V2.process.function.H3CSwitchProcessMapFunction;
 import com.dtc.java.analytic.V2.process.function.LinuxProcessMapFunction;
 import com.dtc.java.analytic.V2.process.function.WinProcessMapFunction;
 import com.dtc.java.analytic.V2.sink.mysql.MysqlSink;
@@ -129,11 +131,24 @@ public class StreamToFlinkV3 {
 
         //Linux数据全量写opentsdb
         linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
-
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast,build);
-
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
+
+
+        //交换机指标数据处理
+        SingleOutputStreamOperator<DataStruct> H3C_Switch = splitStream
+                .select("H3C_Switch")
+                .map(new H3cMapFunction())
+                .keyBy("Host")
+                .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+                .process(new H3CSwitchProcessMapFunction());
+
+        //Linux数据全量写opentsdb
+        H3C_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
+        //Linux数据进行告警规则判断并将告警数据写入mysql
+        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast,build);
+        H3C_Switch_1.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
 
