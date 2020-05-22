@@ -1,5 +1,7 @@
 package com.dtc.java.analytic.V2.worker;
 
+import com.dtc.java.analytic.V1.hbase.hbase.constant.HBaseConstant;
+import com.dtc.java.analytic.V2.common.constant.HBaseConstant;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;
@@ -16,6 +18,7 @@ import com.dtc.java.analytic.V2.sink.mysql.MysqlSink;
 import com.dtc.java.analytic.V2.sink.opentsdb.PSinkToOpentsdb;
 import com.dtc.java.analytic.V2.source.mysql.ReadAlarmMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.net.ntp.TimeStamp;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
@@ -29,13 +32,17 @@ import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.dtc.java.analytic.V2.alarm.AlarmUntils.getAlarm;
@@ -49,7 +56,7 @@ import static com.dtc.java.analytic.V2.alarm.AlarmUntils.getAlarm;
 public class StreamToFlinkV3 {
     private static final Logger logger = LoggerFactory.getLogger(StreamToFlinkV3.class);
     private static DataStream<Map<String, String>> alarmDataStream = null;
-    static TimesConstats build =null;
+    static TimesConstats build = null;
 
     public static void main(String[] args) throws Exception {
         MapStateDescriptor<String, String> ALARM_RULES = new MapStateDescriptor<>(
@@ -123,7 +130,7 @@ public class StreamToFlinkV3 {
         winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //windows数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast,build);
+        List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast, build);
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
     }
 
@@ -138,7 +145,7 @@ public class StreamToFlinkV3 {
         //Linux数据全量写opentsdb
         linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
         //Linux数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast,build);
+        List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast, build);
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
     }
 
@@ -150,16 +157,46 @@ public class StreamToFlinkV3 {
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new H3CSwitchProcessMapFunction());
+        H3C_Switch.map(new MapFunction<String, Object>() {
+            ParameterTool parameterTool = getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
 
+            @Override
+            public Object map(String string) throws Exception {
+
+                writeEventToHbase(string, parameterTool);
+                return string;
+            }
+        });
         //Linux数据全量写opentsdb
         H3C_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
         //Linux数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast,build);
+        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast, build);
         H3C_Switch_1.forEach(e -> e.addSink(new MysqlSink()));
     }
 
 
+    private static void writeEventToHbase(String string, ParameterTool parameterTool) throws IOException {
+        Configuration configuration = HBaseConfiguration.create();
+        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_QUORUM, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_QUORUM));
+        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT));
+        configuration.set(HBaseConstant.HBASE_RPC_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_RPC_TIMEOUT));
+        configuration.set(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT));
+        configuration.set(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD, parameterTool.get(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD));
 
+        Connection connect = ConnectionFactory.createConnection(configuration);
+        Admin admin = connect.getAdmin();
+        if (!admin.tableExists(HBASE_TABLE_NAME)) { //检查是否有该表，如果没有，创建
+            admin.createTable(new HTableDescriptor(HBASE_TABLE_NAME).addFamily(new HColumnDescriptor(INFO_STREAM)));
+        }
+        Table table = connect.getTable(HBASE_TABLE_NAME);
+        TimeStamp ts = new TimeStamp(new Date());
+        Date date = ts.getDate();
+        Put put = new Put(Bytes.toBytes(date.getTime()));
+        put.addColumn(Bytes.toBytes(INFO_STREAM), Bytes.toBytes("test"), Bytes.toBytes(string));
+        table.put(put);
+        table.close();
+        connect.close();
+    }
 
 
     static class MySQLFunction implements MapFunction<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Map<String, String>> {
