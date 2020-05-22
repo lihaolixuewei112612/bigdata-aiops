@@ -238,30 +238,22 @@ public class StreamToFlinkV3 {
 
             @Override
             public void processElement(DataStruct value, ReadOnlyContext ctx, Collector<AlterStruct> out) throws Exception {
-                System.out.println("对每条数据进行判断：");
                 ReadOnlyBroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
                 String host_ip = value.getHost();
-                System.out.println("数据ip为：" + host_ip);
                 String code = value.getZbFourName().replace("_", ".");
                 String weiyi = host_ip + "." + code;
-                System.out.println("唯一值是:" + weiyi);
                 if (!broadcastState.contains(weiyi)) {
-                    System.out.println("值不存在！");
                     return;
                 }
-                System.out.println("唯一值存在:" + weiyi);
                 //asset_id + ":" + code + ":"+ asset_code + ":" +asset_name+":"+ alarm
                 String targetId = broadcastState.get(weiyi).trim();
-                System.out.println("目标id是: "+targetId);
                 String[] split = targetId.split(":");
                 if (split.length != 5) {
-                    System.out.println("11111");
                     return;
                 }
                 String unique_id = split[0].trim();
                 String r_code = split[1].trim();
                 if (!r_code.equals(value.getZbFourName())) {
-                    System.out.println("22222");
                     return;
                 }
                 String asset_code = split[2].trim();
@@ -269,16 +261,13 @@ public class StreamToFlinkV3 {
                 String result = asset_code + "(" + asset_name + ")";
                 String r_value = split[4].trim();
                 if (unique_id.isEmpty() || code.isEmpty() || r_value.isEmpty()) {
-                    System.out.println("3333333");
                     return;
                 }
                 String[] split1 = r_value.split("\\|");
                 if (split1.length != 4) {
-                    System.out.println("444444");
                     return;
                 }
                 broadcastState.clear();
-                System.out.println("进入alarmRule方法：");
                 AlarmRule(value, out, unique_id, split1, result);
             }
 
@@ -290,7 +279,6 @@ public class StreamToFlinkV3 {
                 if (value != null) {
                     BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
                     for (Map.Entry<String, String> entry : value.entrySet()) {
-                        System.out.println("msysl数据进入到状态值中3："+entry.getKey());
                         broadcastState.put(entry.getKey(), entry.getValue());
                     }
                 }
@@ -303,7 +291,6 @@ public class StreamToFlinkV3 {
      */
     private static void AlarmRule(DataStruct value, Collector<AlterStruct> out, String unique_id, String[] split1, String str1) {
         double data_value = Double.parseDouble(value.getValue());
-        System.out.println("每条数据是aaaaa:" + value);
         String code_name = str1;
         String level_1 = split1[0];
         String level_2 = split1[1];
