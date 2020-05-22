@@ -13,74 +13,33 @@
   limitations under the License. See accompanying LICENSE file.
 -->
 <configuration>
-
-    <!-- Site specific YARN configuration properties -->
     <property>
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle</value>
-        <description>NodeManager上运行的附属服务，需配置成mapreduce_shuffle才可运行MapReduce</description>
     </property>
-
     <property>
-        <name>yarn.resourcemanager.ha.enabled</name>
-        <value>true</value>
-        <description>开启YARN HA</description>
+        <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
     </property>
-
     <property>
-        <name>yarn.resourcemanager.ha.automatic-failover.enabled</name>
-        <value>true</value>
-        <description>启用自动故障转移</description>
+        <name>yarn.resourcemanager.address</name>
+        <value>node01:8032</value>
     </property>
-
     <property>
-        <name>yarn.resourcemanager.cluster-id</name>
-        <value>yarncluster</value>
-        <description>指定YARN HA的名称</description>
+        <name>yarn.resourcemanager.scheduler.address</name>
+        <value>node01:8030</value>
     </property>
-
     <property>
-        <name>yarn.resourcemanager.ha.rm-ids</name>
-        <value>rm1,rm2</value>
-        <description>指定两个resourcemanager的名称</description>
+        <name>yarn.resourcemanager.resource-tracker.address</name>
+        <value>node01:8031</value>
     </property>
-
     <property>
-        <name>yarn.resourcemanager.hostname.rm1</name>
-        <value>node01</value>
-        <description>配置rm1的主机</description>
+        <name>yarn.resourcemanager.admin.address</name>
+        <value>node01:8033</value>
     </property>
-
     <property>
-        <name>yarn.resourcemanager.hostname.rm2</name>
-        <value>node02</value>
-        <description>配置rm2的主机</description>
-    </property>
-
-    <property>
-        <name>yarn.resourcemanager.ha.id</name>
-        <value>rm1</value>
-        <description>namenode1上配置rm1,在namenode2上配置rm2</description>
-    </property>
-
-    <property>
-        <name>yarn.resourcemanager.zk-address</name>
-        <value>node01:2181,node02:2181,node03:2181</value>
-        <description>配置zookeeper的地址</description>
-    </property>
-
-    <property>
-        <name>yarn.resourcemanager.store.class</name>
-        <value>org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore</value>
-        <description>配置resourcemanager的状态存储到zookeeper中</description>
-    </property>
-
-    <property>
-        <name>yarn.resourcemanager.webapp.address.rm1</name>
+        <name>yarn.resourcemanager.webapp.address</name>
         <value>node01:8088</value>
     </property>
-    <property>
-        <name>yarn.resourcemanager.webapp.address.rm2</name>
-        <value>node02:8088</value>
-    </property>
+
 </configuration>

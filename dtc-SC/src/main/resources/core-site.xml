@@ -18,12 +18,17 @@
 
 <configuration>
     <property>
-        <name>fs.defaultFS</name>
-        <value>hdfs://hdfscluster</value>
+        <name>hadoop.tmp.dir</name>
+        <value>file:/home/hadoop/hadoop/data/tmp</value>
+        <description>Abase for other temporary directories.</description>
     </property>
     <property>
-        <name>hadoop.tmp.dir</name>
-        <value>/home/hadoop/hadoop-3.0.0/tmp</value>
+        <name>fs.defaultFS</name>
+        <value>hdfs://node01:9000</value>
+    </property>
+    <property>
+    <name>io.file.buffer.size</name>
+    <value>131072</value>
     </property>
     <property>
         <name>fs.trash.interval</name>

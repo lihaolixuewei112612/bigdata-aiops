@@ -32,9 +32,9 @@
 
 jobmanager.rpc.address: node03
 
-# The RPC port where the JobManager is reachable.
+  # The RPC port where the JobManager is reachable.
 
-# The RPC port where the Jo#  Licensed to the Apache Software Foundation (ASF) under one
+  # The RPC port where the Jo#  Licensed to the Apache Software Foundation (ASF) under one
   ##  or more contributor license agreements.  See the NOTICE file
   ##  distributed with this work for additional information
   ##  regarding copyright ownership.  The ASF licenses this file
@@ -274,7 +274,7 @@ jobmanager.rpc.address: node03
   #
   ## Comma separated list of directories to monitor for completed jobs.
   ##historyserver.archive.fs.dir: hdfs:///completed-jobs/
-  #
+#
 ## Interval in milliseconds for refreshing the monitored directories.
 ##historyserver.archive.fs.refresh-interval: 10000bManager is reachable.
 
@@ -324,13 +324,13 @@ high-availability: zookeeper
 # Must be a durable file system that is accessible from all nodes
 # (like HDFS, S3, Ceph, nfs, ...)
 #
-high-availability.storageDir: hdfs://hdfscluster:8020/DTC/flink/ha/
+high-availability.storageDir: hdfs://node01:9000/user/flink/ha/
 
 # The list of ZooKeeper quorum peers that coordinate the high-availability
 # setup. This must be a list of the form:
 # "host1:clientPort,host2:clientPort,..." (default clientPort: 2181)
 #
-high-availability.zookeeper.quorum: 10.3.7.232:2181,10.3.7.233:2181,10.3.7.234:2181
+high-availability.zookeeper.quorum: node01:2181,node02:2181,node03:2181
 
 
 # ACL options are based on https://zookeeper.apache.org/doc/r3.1.2/zookeeperProgrammers.html#sc_BuiltinACLSchemes
@@ -354,11 +354,11 @@ high-availability.zookeeper.quorum: 10.3.7.232:2181,10.3.7.233:2181,10.3.7.234:2
 # Directory for checkpoints filesystem, when using any of the default bundled
 # state backends.
 #
-state.checkpoints.dir: hdfs://hdfscluster:8020/DTC/flink/flink-checkpoints
+state.checkpoints.dir: hdfs://node01:9000/user/flink/flink-checkpoints
 
 # Default target directory for savepoints, optional.
 #
-state.savepoints.dir: hdfs://hdfscluster:8020/DTC/flink/flink-checkpoints
+state.savepoints.dir: hdfs://node01:9000/user/flink/flink-checkpoints
 
 # Flag to enable/disable incremental checkpoints for backends that
 # support incremental checkpoints (like the RocksDB state backend).
