@@ -11,6 +11,15 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8.0_201" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-cep_2.11:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-scala_2.11:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-core:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-metrics-core:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-java:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-runtime_2.11:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: com.typesafe.akka:akka-actor_2.11:2.4.20" level="project" />
+    <orderEntry type="library" name="Maven: com.typesafe.akka:akka-slf4j_2.11:2.4.20" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-clients_2.11:1.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.flink:flink-cep_2.11:1.7.2" level="project" />
