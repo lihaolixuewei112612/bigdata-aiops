@@ -76,6 +76,7 @@ public class StreamToFlinkV3 {
 
 //        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
         DataStreamSource<SourceEvent> streamSource = KafkaConfigUtil.buildSource(env);
+        streamSource.print("tgest:");
 
         /**
          * {"time":"1581691002687","code":"101_101_107_105_105","host":"10.3.7.234","nameCN":"磁盘剩余大小","value":"217802544","nameEN":"disk_free"}
@@ -83,6 +84,7 @@ public class StreamToFlinkV3 {
 //        DataStreamSource<String> dataStreamSource = env.socketTextStream("172.20.10.2", 8080, '\n');
 
         SingleOutputStreamOperator<DataStruct> mapStream = streamSource.map(new MyMapFunctionV3());
+        mapStream.print("1111:");
 //        SingleOutputStreamOperator<DataStruct> timeSingleOutputStream
 //                = mapStream.assignTimestampsAndWatermarks(new DtcPeriodicAssigner());
 
@@ -128,6 +130,7 @@ public class StreamToFlinkV3 {
                 .process(new LinuxProcessMapFunction());
 
         //Linux数据全量写opentsdb
+        linuxProcess.print("ceshi:::");
         linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
