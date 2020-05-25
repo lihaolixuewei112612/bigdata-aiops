@@ -7,9 +7,11 @@ import com.dtc.java.analytic.V2.common.model.SourceEvent;
 import com.dtc.java.analytic.V2.common.model.TimesConstats;
 import com.dtc.java.analytic.V2.common.utils.ExecutionEnvUtil;
 import com.dtc.java.analytic.V2.common.utils.KafkaConfigUtil;
+import com.dtc.java.analytic.V2.map.function.DPIMapFunction;
 import com.dtc.java.analytic.V2.map.function.H3cMapFunction;
 import com.dtc.java.analytic.V2.map.function.LinuxMapFunction;
 import com.dtc.java.analytic.V2.map.function.WinMapFunction;
+import com.dtc.java.analytic.V2.process.function.DPISwitchProcessMapFunction;
 import com.dtc.java.analytic.V2.process.function.H3CSwitchProcessMapFunction;
 import com.dtc.java.analytic.V2.process.function.LinuxProcessMapFunction;
 import com.dtc.java.analytic.V2.process.function.WinProcessMapFunction;
@@ -64,7 +66,7 @@ import static com.dtc.java.analytic.V2.alarm.AlarmUntils.getAlarm;
  * @author :ren
  */
 public class StreamToFlinkV3 {
-    static BloomFilter<String> bf = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 10000000, 0.001);
+    static BloomFilter<String> bf = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 1000000, 0.001);
     private static final Logger logger = LoggerFactory.getLogger(StreamToFlinkV3.class);
     private static DataStream<Map<String, String>> alarmDataStream = null;
     static TimesConstats build = null;
@@ -173,11 +175,44 @@ public class StreamToFlinkV3 {
             public Object map(DataStruct string) throws Exception {
                 String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
                 if (!bf.mightContain(demo)) {
-                    bf.put(demo);
                     if ("102_101_101_101_101".equals(string.getZbFourName())) {
+                        bf.put(demo);
                         writeEventToHbase(string, parameterTool, "1");
                     }
                     if ("102_101_103_107_108".equals(string.getZbFourName())) {
+                        bf.put(demo);
+                        writeEventToHbase(string, parameterTool, "2");
+                    }
+                }
+                return string;
+            }
+        });
+        //Linux数据全量写opentsdb
+        H3C_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
+        //Linux数据进行告警规则判断并将告警数据写入mysql
+        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast, build);
+        H3C_Switch_1.forEach(e -> e.addSink(new MysqlSink()));
+    }
+
+    private static void DPI_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream, ParameterTool parameterTool) {
+        //交换机指标数据处理
+        SingleOutputStreamOperator<DataStruct> H3C_Switch = splitStream
+                .select("DPI")
+                .map(new DPIMapFunction())
+                .keyBy("Host")
+                .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+                .process(new DPISwitchProcessMapFunction());
+        H3C_Switch.map(new MapFunction<DataStruct, Object>() {
+            @Override
+            public Object map(DataStruct string) throws Exception {
+                String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
+                if (!bf.mightContain(demo)) {
+                    if ("103_102_101_101_101".equals(string.getZbFourName())) {
+                        bf.put(demo);
+                        writeEventToHbase(string, parameterTool, "1");
+                    }
+                    if ("103_102_103_107_107_1".equals(string.getZbFourName())) {
+                        bf.put(demo);
                         writeEventToHbase(string, parameterTool, "2");
                     }
                 }
