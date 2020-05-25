@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="dtc-dd-data" />
         <module name="dtc-flink-zabbix" />
+        <module name="dtc-dd-data" />
         <module name="dtc-dist" />
         <module name="dtc-SC" />
         <module name="dtc-flink-snmp" />

@@ -1,6 +1,5 @@
 package com.dtc.java.analytic.V2.worker;
 
-import com.dtc.java.analytic.V1.hbase.hbase.constant.HBaseConstant;
 import com.dtc.java.analytic.V2.common.constant.HBaseConstant;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
@@ -41,6 +40,13 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -63,7 +69,7 @@ public class StreamToFlinkV3 {
                 "alarm_rules",
                 BasicTypeInfo.STRING_TYPE_INFO,
                 BasicTypeInfo.STRING_TYPE_INFO);
-        final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
+        ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         String opentsdb_url = parameterTool.get("dtc.opentsdb.url", "http://10.10.58.16:4399");
         int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
         int anInt_one = parameterTool.getInt("dtc.alarm.times.one", 1);
@@ -81,6 +87,7 @@ public class StreamToFlinkV3 {
 
 //        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
         DataStreamSource<SourceEvent> streamSource = KafkaConfigUtil.buildSource(env);
+        streamSource.print("11111");
 
         /**
          * {"time":"1581691002687","code":"101_101_107_105_105","host":"10.3.7.234","nameCN":"磁盘剩余大小","value":"217802544","nameEN":"disk_free"}
@@ -110,12 +117,13 @@ public class StreamToFlinkV3 {
             }
             return output;
         });
+        splitStream.print("数据");
         //windows指标数据处理
         Win_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream);
         //linux指标数据处理
         Linux_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream);
         //h3c交换机处理
-        H3c_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream);
+        H3c_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream,parameterTool);
         env.execute("Dtc-Alarm-Flink-Process");
     }
 
@@ -149,7 +157,7 @@ public class StreamToFlinkV3 {
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
     }
 
-    private static void H3c_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream) {
+    private static void H3c_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream,ParameterTool parameterTool) {
         //交换机指标数据处理
         SingleOutputStreamOperator<DataStruct> H3C_Switch = splitStream
                 .select("H3C_Switch")
@@ -157,13 +165,17 @@ public class StreamToFlinkV3 {
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new H3CSwitchProcessMapFunction());
-        H3C_Switch.map(new MapFunction<String, Object>() {
-            ParameterTool parameterTool = getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
+        H3C_Switch.map(new MapFunction<DataStruct, Object>() {
 
             @Override
-            public Object map(String string) throws Exception {
-
-                writeEventToHbase(string, parameterTool);
+            public Object map(DataStruct string) throws Exception {
+                if("102_101_101_101_101".equals(string.getZbFourName())) {
+                    writeEventToHbase(string, parameterTool,"1");
+                }
+                if("102_101_103_106_107".equals(string.getZbFourName()))
+                {
+                    writeEventToHbase(string, parameterTool,"2");
+                }
                 return string;
             }
         });
@@ -175,14 +187,35 @@ public class StreamToFlinkV3 {
     }
 
 
-    private static void writeEventToHbase(String string, ParameterTool parameterTool) throws IOException {
+    private static void writeEventToHbase(DataStruct string, ParameterTool parameterTool,String str) throws IOException {
+        TableName HBASE_TABLE_NAME=null;
+        String INFO_STREAM=null;
+        String BAR_STREAM=null;
+        if("1"==str) {
+            HBASE_TABLE_NAME = TableName.valueOf("switch_1");
+           //列族
+           INFO_STREAM = "banka";
+           //列名
+          BAR_STREAM = "bk";
+       }
+        if("2"==str){
+            HBASE_TABLE_NAME = TableName.valueOf("switch_2");
+            //列族
+            INFO_STREAM = "jiekou";
+            //列名
+            BAR_STREAM = "jk";
+        }
         Configuration configuration = HBaseConfiguration.create();
-        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_QUORUM, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_QUORUM));
-        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT));
-        configuration.set(HBaseConstant.HBASE_RPC_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_RPC_TIMEOUT));
-        configuration.set(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT));
-        configuration.set(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD, parameterTool.get(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD));
+//        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_QUORUM, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_QUORUM));
+//        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT));
+//        configuration.set(HBaseConstant.HBASE_RPC_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_RPC_TIMEOUT));
+//        configuration.set(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT));
+//        configuration.set(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD, parameterTool.get(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD));
+        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_QUORUM, "10.3.7.232,10.3.7.233,10.3.6.20");
+        configuration.set(HBaseConstant.HBASE_MASTER_INFO_PORT, "2181");
 
+        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT, "3");
+        configuration.set(HBaseConstant.HBASE_RPC_TIMEOUT, "20000");
         Connection connect = ConnectionFactory.createConnection(configuration);
         Admin admin = connect.getAdmin();
         if (!admin.tableExists(HBASE_TABLE_NAME)) { //检查是否有该表，如果没有，创建
@@ -191,8 +224,10 @@ public class StreamToFlinkV3 {
         Table table = connect.getTable(HBASE_TABLE_NAME);
         TimeStamp ts = new TimeStamp(new Date());
         Date date = ts.getDate();
-        Put put = new Put(Bytes.toBytes(date.getTime()));
-        put.addColumn(Bytes.toBytes(INFO_STREAM), Bytes.toBytes("test"), Bytes.toBytes(string));
+        String host = string.getHost();
+        String zbLastCode = string.getZbLastCode();
+        Put put = new Put(Bytes.toBytes(date.getTime()+"_"+host));
+        put.addColumn(Bytes.toBytes(INFO_STREAM), Bytes.toBytes(BAR_STREAM), Bytes.toBytes(zbLastCode));
         table.put(put);
         table.close();
         connect.close();

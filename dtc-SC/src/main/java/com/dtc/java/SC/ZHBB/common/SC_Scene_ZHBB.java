@@ -28,12 +28,8 @@ public class SC_Scene_ZHBB {
      * */
     public static void sc_Scence_one(ExecutionEnvironment env, String driver, String url, String username, String password) {
         String sence_one_query_sql = "SELECT ifNull(y.`id`,23) AS sblx,ifnull(c.`id`,29) AS zlx,ifnull(m.`id`,11) AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a \n" +
-                "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id left join asset_category y on c.parent_id = y.id \n" +
-                "LEFT JOIN manufacturer m ON m.id=b.manufacturer_id GROUP BY c.`name`;";
-//生产环境使用
-//        String sql = "SELECT ifNull(y.`name`,'其他') AS sblx,ifnull(c.`name`,'其他') AS zlx,ifnull(m.`name`,'其他') AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a left join asset b on a.asset_id=b.id \n" +
-//                "left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id and TO_DAYS(now())-TO_DAYS(l.time_occur) =1 left join asset_category y on c.parent_id = y.id \n" +
-//                "LEFT JOIN manufacturer m ON m.id=b.manufacturer_id GROUP BY c.`name`";
+                "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id and TO_DAYS(now())-TO_DAYS(l.time_occur) =1 left join asset_category y on c.parent_id = y.id \n" +
+                "LEFT JOIN manufacturer m ON m.id=b.manufacturer_id GROUP BY c.`name`";
 
         String sence_one_insert_sql = "replace INTO SC_ZHBB_ZYZC(riqi,`sblx`,`zlx`,`cs`,`gjsl`,`js_time`) VALUES (?,?,?,?,?,?)";
         DataSource<Row> scene_one_query = env.createInput(JDBCInputFormat.buildJDBCInputFormat()
@@ -85,13 +81,13 @@ public class SC_Scene_ZHBB {
     public static void sc_Scence_Two(ExecutionEnvironment env, String driver, String url, String username, String password)
     {
         //测试环境使用
-        String sql = "select d.level_id,d.type_id,IFNULL(d.xzNum,0) as m ,IFNULL(d.wclNum,0) as n,(IFNULL(d.xzNum,0)-IFNULL(d.wclNum,0)) as f from (select b.level_id,b.type_id,b.xzNum,c.wclNum from (select a.level_id,a.type_id,count(*) as xzNum from alarm a group by a.level_id,a.type_id) b \n" +
-                "left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`!=2 group by a.level_id,a.type_id ) c on b.level_id= c.level_id) d ";
+//        String sql = "select d.level_id,d.type_id,IFNULL(d.xzNum,0) as m ,IFNULL(d.wclNum,0) as n,(IFNULL(d.xzNum,0)-IFNULL(d.wclNum,0)) as f from (select b.level_id,b.type_id,b.xzNum,c.wclNum from (select a.level_id,a.type_id,count(*) as xzNum from alarm a group by a.level_id,a.type_id) b \n" +
+//                "left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`!=2 group by a.level_id,a.type_id ) c on b.level_id= c.level_id) d ";
 
         //正式生产环境使用
-//        String sql = "select d.level_id,d.type_id,IFNULL(d.xzNum,0) as m ,IFNULL(d.wclNum,0) as n,(IFNULL(d.xzNum,0)-IFNULL(d.wclNum,0)) as f from (select b.level_id,b.type_id,b.xzNum,c.wclNum from (select a.level_id,a.type_id,count(*) as xzNum from alarm a \n" +
-//                "where TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by a.level_id,a.type_id) b left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`!=2 and TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by \n" +
-//                "a.level_id,a.type_id ) c on b.level_id= c.level_id) d";
+        String sql = "select d.level_id,d.type_id,IFNULL(d.xzNum,0) as m ,IFNULL(d.wclNum,0) as n,(IFNULL(d.xzNum,0)-IFNULL(d.wclNum,0)) as f from (select b.level_id,b.type_id,b.xzNum,c.wclNum from (select a.level_id,a.type_id,count(*) as xzNum from alarm a \n" +
+                "where TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by a.level_id,a.type_id) b left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`!=2 and TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by \n" +
+                "a.level_id,a.type_id ) c on b.level_id= c.level_id) d";
 
         String insert_sql = "replace into SC_ZHBB_SCRENE_TWO(riqi,level_id,type_id,zs_Num,old_Num,wcl_Num,ycl_Num,js_time) values(?,?,?,?,?,?,?,?)";
         String sql_second = "select level_id,type_id,zs_Num,old_Num,wcl_Num,ycl_Num from SC_ZHBB_SCRENE_TWO where TO_DAYS(now())-TO_DAYS(riqi) =1";

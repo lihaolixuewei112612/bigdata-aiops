@@ -8,7 +8,7 @@ public class PropertiesConstants {
     /**
      * key
      */
-    public static final String PROPERTIES_FILE_NAME = "/kafka-flink_V2.properties";
+    public static final String PROPERTIES_FILE_NAME = "/kafka-flink_test.properties";
 
     public static final String BOOTSTRAP_SERVERS = "bootstrap.servers";
 
