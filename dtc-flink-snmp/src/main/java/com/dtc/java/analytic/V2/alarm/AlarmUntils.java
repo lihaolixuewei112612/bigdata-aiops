@@ -32,7 +32,7 @@ import java.util.Map;
 public class AlarmUntils {
     public static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast, TimesConstats test) {
 
-        SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)
+        SingleOutputStreamOperator<AlterStruct> alert_rule = event.filter(e->!("107_107_101_101_101".equals(e.getZbFourName()))).connect(broadcast)
                 .process(getAlarmFunction());
 
 //        AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipToFirst("begin");

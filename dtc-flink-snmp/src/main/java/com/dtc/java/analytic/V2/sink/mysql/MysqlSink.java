@@ -89,7 +89,6 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
             preparedStatement.setString(9, index_id);
             preparedStatement.setString(10,strategy_id);
             preparedStatement.executeUpdate();
-            logger.info("{} 告警数据写入到msyql中,策略id是{}",description,strategy_id);
             System.out.println(description+" 打印告警数据写入到msyql中,策略id是 "+ strategy_id);
         } catch (Exception e) {
             e.printStackTrace();
