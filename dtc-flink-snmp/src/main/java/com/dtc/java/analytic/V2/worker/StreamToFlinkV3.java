@@ -246,14 +246,7 @@ public class StreamToFlinkV3 {
             BAR_STREAM = "jk";
         }
         Configuration configuration = HBaseConfiguration.create();
-//        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_QUORUM, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_QUORUM));
-//        configuration.set(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT, parameterTool.get(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT));
-//        configuration.set(HBaseConstant.HBASE_RPC_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_RPC_TIMEOUT));
-//        configuration.set(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT, parameterTool.get(HBaseConstant.HBASE_CLIENT_OPERATION_TIMEOUT));
-//        configuration.set(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD, parameterTool.get(HBaseConstant.HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD));
         configuration.set(HBaseConstant.HBASE_ZOOKEEPER_QUORUM, "10.3.7.232,10.3.7.233,10.3.6.20");
-        configuration.set(HBaseConstant.HBASE_MASTER_INFO_PORT, "2181");
-
         configuration.set(HBaseConstant.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT, "2181");
         configuration.set(HBaseConstant.HBASE_RPC_TIMEOUT, "20000");
         Connection connect = ConnectionFactory.createConnection(configuration);
