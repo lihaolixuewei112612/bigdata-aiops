@@ -30,7 +30,7 @@ public class MySQLUtil {
         String mysqlUrl = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=UTF-8";
         connection = DriverManager.getConnection(mysqlUrl, userName, passWord);//写入mysql数据库
         } catch (ClassNotFoundException e) {
-         log.error("msyql连接出现问题,{}",e);
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

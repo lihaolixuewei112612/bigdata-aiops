@@ -58,6 +58,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.dtc.java.analytic.V2.alarm.AlarmUntils.getAlarm;
+import static com.dtc.java.analytic.V2.alarm.PingAlarmUntils.getAlarmPing;
 
 
 /**
@@ -79,11 +80,7 @@ public class StreamToFlinkV3 {
         ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
         String opentsdb_url = parameterTool.get("dtc.opentsdb.url", "http://10.10.58.16:4399");
         int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
-        int anInt_one = parameterTool.getInt("dtc.alarm.times.one", 1);
-        int anInt1_one = parameterTool.getInt("dtc.alarm.time.long.one", 60000);
-        int anInt_two = parameterTool.getInt("dtc.alarm.times.two", 1);
-        int anInt1_two = parameterTool.getInt("dtc.alarm.time.long.two", 60000);
-        build = TimesConstats.builder().one(anInt_one).two(anInt1_one).three(anInt_two).four(anInt1_two).build();
+        getSize(parameterTool);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         env.getConfig().setGlobalJobParameters(parameterTool);
         //asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level, asset_code, name
@@ -129,7 +126,30 @@ public class StreamToFlinkV3 {
         Linux_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream);
         //h3c交换机处理
         H3c_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool);
+        DPI_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool);
         env.execute("Dtc-Alarm-Flink-Process");
+    }
+
+    private static void getSize(ParameterTool parameterTool) {
+        int anInt_one = parameterTool.getInt("dtc.alarm.times.one", 1);
+        int anInt1_one = parameterTool.getInt("dtc.alarm.time.long.one", 60000);
+        int anInt_two = parameterTool.getInt("dtc.alarm.times.two", 1);
+        int anInt1_two = parameterTool.getInt("dtc.alarm.time.long.two", 60000);
+        build = TimesConstats.builder().one(anInt_one).two(anInt1_one).three(anInt_two).four(anInt1_two).build();
+    }
+
+    public static class WindowsAlarm implements MapFunction<DataStruct, AlterStruct> {
+
+        @Override
+        public AlterStruct map(DataStruct event) throws Exception {
+            String value = event.getValue();
+            AlterStruct as = null;
+            if ("0" == value) {
+                as = new AlterStruct(event.getSystem_name(), event.getHost(), event.getZbFourName(), event.getZbLastCode(), event.getNameCN(),
+                        event.getNameEN(), event.getTime(), event.getSystem_name(), event.getValue(), "1", "1", "1", "1");
+            }
+            return as;
+        }
     }
 
     private static void Win_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream) {
@@ -139,6 +159,10 @@ public class StreamToFlinkV3 {
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new WinProcessMapFunction());
+        winProcess.print("windows数据:");
+        DataStream<AlterStruct> alarmPing = getAlarmPing(winProcess, broadcast, build);
+        alarmPing.print("test:lihao:");
+        alarmPing.addSink(new MysqlSink());
         //windows数据全量写opentsdb
         winProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
@@ -260,7 +284,7 @@ public class StreamToFlinkV3 {
         String host = string.getHost();
         String code = string.getZbFourName();
         String zbLastCode = string.getZbLastCode();
-        Put put = new Put(Bytes.toBytes(host+"_"+code+"_"+zbLastCode));
+        Put put = new Put(Bytes.toBytes(host + "_" + code + "_" + zbLastCode));
         put.addColumn(Bytes.toBytes(INFO_STREAM), Bytes.toBytes(BAR_STREAM), Bytes.toBytes(zbLastCode));
         table.put(put);
         table.close();
