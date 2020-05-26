@@ -81,7 +81,7 @@ public class DPISwitchProcessMapFunction extends ProcessWindowFunction<DataStruc
                         } catch (ArithmeticException exc) {
                             log.error("dpi端口出速率计算时，时间差为0.", exc);
                         }
-                        collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "103_102_103_107_107_2", in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),String.valueOf(result)));
+                        collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "103_102_103_108_108_1", in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),String.valueOf(result)));
                         mapSwitch.put(in.getHost() + "." + in.getZbFourName(),new_value);
                     } else {
                         mapSwitch.put(in.getHost() + "." + in.getZbFourName(),new_value);
