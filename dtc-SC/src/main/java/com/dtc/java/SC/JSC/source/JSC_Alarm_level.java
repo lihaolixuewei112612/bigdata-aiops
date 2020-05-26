@@ -32,7 +32,7 @@ public class JSC_Alarm_level extends RichSourceFunction<Tuple2<String,Integer>> 
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
         parameterTool = (ParameterTool) (getRuntimeContext().getExecutionConfig().getGlobalJobParameters());
-        interval_time = Long.parseLong(parameterTool.get(PropertiesConstants.INTERVAL_TIME));
+        interval_time = Long.parseLong(parameterTool.get(PropertiesConstants.INTERVAL_TIME).trim());
         connection = MySQLUtil.getConnection(parameterTool);
         if (connection != null) {
             String sql = "SELECT a.level_id,count(*) as AllNum FROM alarm a where TO_DAYS(a.time_occur) = TO_DAYS(NOW()) group by a.level_id having a.level_id!=\"\"";

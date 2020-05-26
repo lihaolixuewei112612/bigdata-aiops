@@ -1,11 +1,20 @@
 package com.dtc.java.analytic.V2.process.function;
 
-import com.dtc.java.analytic.V1.common.constant.PropertiesConstants;
+import com.dtc.java.analytic.V2.common.constant.PropertiesConstants;
+import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
+import com.dtc.java.analytic.V2.map.function.WinMapFunction;
+import com.dtc.java.analytic.V2.sink.mysql.MysqlSink;
+import com.dtc.java.analytic.V2.sink.opentsdb.PSinkToOpentsdb;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.streaming.api.datastream.BroadcastStream;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.datastream.SplitStream;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
+import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
@@ -18,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created on 2020-02-21
@@ -113,7 +123,7 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                         continue;
                     } else {
                         if (count < 1) {
-                            double result = cpu_sum / list.size();
+                            double result = (cpu_sum / list.size())*100;
                             collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), wc.getZbFourName(), "", wc.getNameCN(), wc.getNameEN(), wc.getTime(), String.valueOf(result)));
                             count += 1;
                             continue;
@@ -202,7 +212,7 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                 if (diskUsedCapacity == 0) {
                     collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), "101_100_103_107_107", wc.getZbLastCode(), wc.getNameCN(), wc.getNameEN(), wc.getTime(), String.valueOf(0)));
                 }else {
-                    double rato_used_disk = used_disk / diskUsedCapacity;
+                    double rato_used_disk = (used_disk / diskUsedCapacity)*100;
                     collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), "101_100_103_107_107", wc.getZbLastCode(), wc.getNameCN(), wc.getNameEN(), wc.getTime(), String.valueOf(rato_used_disk)));
                 }
                 usedDiskMap.put(keyValue, wc.getValue());
@@ -219,7 +229,7 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                     if(res==0){
                         collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), "101_100_103_108_108", "", wc.getNameCN(), wc.getNameEN(), wc.getTime(), String.valueOf(0)));
                     }else {
-                        double zonghe_disk_rate = re / res;
+                        double zonghe_disk_rate = (re / res)*100;
                         BigDecimal db = new BigDecimal(zonghe_disk_rate);
                         String result = db.toPlainString();
                         collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), "101_100_103_108_108", "", wc.getNameCN(), wc.getNameEN(), wc.getTime(), result));

@@ -301,6 +301,12 @@
             <artifactId>flink-jdbc_2.11</artifactId>
             <version>1.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>1.27.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

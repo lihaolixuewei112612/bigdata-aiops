@@ -28,12 +28,8 @@ public class SC_Scene_ZHBB {
      * */
     public static void sc_Scence_one(ExecutionEnvironment env, String driver, String url, String username, String password) {
         String sence_one_query_sql = "SELECT ifNull(y.`id`,23) AS sblx,ifnull(c.`id`,29) AS zlx,ifnull(m.`id`,11) AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a \n" +
-                "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id left join asset_category y on c.parent_id = y.id \n" +
+                "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id and TO_DAYS(now())-TO_DAYS(l.time_occur) =1 left join asset_category y on c.parent_id = y.id \n" +
                 "LEFT JOIN manufacturer m ON m.id=b.manufacturer_id GROUP BY c.`name`";
-//生产环境使用
-//        String sql = "SELECT ifNull(y.`name`,'其他') AS sblx,ifnull(c.`name`,'其他') AS zlx,ifnull(m.`name`,'其他') AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a left join asset b on a.asset_id=b.id \n" +
-//                "left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id and TO_DAYS(now())-TO_DAYS(l.time_occur) =1 left join asset_category y on c.parent_id = y.id \n" +
-//                "LEFT JOIN manufacturer m ON m.id=b.manufacturer_id GROUP BY c.`name`";
 
         String sence_one_insert_sql = "replace INTO SC_ZHBB_ZYZC(riqi,`sblx`,`zlx`,`cs`,`gjsl`,`js_time`) VALUES (?,?,?,?,?,?)";
         DataSource<Row> scene_one_query = env.createInput(JDBCInputFormat.buildJDBCInputFormat()
