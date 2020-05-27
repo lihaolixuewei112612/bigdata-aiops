@@ -1,8 +1,8 @@
 package com.dtc.java.SC.ZHBB;
 
 import com.dtc.java.SC.JKZL.ExecutionEnvUtil;
-import com.dtc.java.SC.common.PropertiesConstants;
 import com.dtc.java.SC.ZHBB.common.SC_Scene_ZHBB;
+import com.dtc.java.SC.common.PropertiesConstants;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.utils.ParameterTool;
 
@@ -24,7 +24,6 @@ public class sc_Scene_Exec {
         String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=UTF-8";
         SC_Scene_ZHBB.sc_Scence_one(env,driver,url,username,password);
         SC_Scene_ZHBB.sc_Scence_Two(env,driver,url,username,password);
-
         env.execute("dtc-自助报表");
 
     }

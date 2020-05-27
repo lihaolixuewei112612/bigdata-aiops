@@ -22,13 +22,13 @@ import java.util.Calendar;
  * Created on : 2020-04-15
  * @Description : 综合表报
  */
-public class SC_Scene_ZHBB {
+public class SC_Scene_ZHBB_bak {
     /**
      * 场景一
      * */
     public static void sc_Scence_one(ExecutionEnvironment env, String driver, String url, String username, String password) {
-        String sence_one_query_sql = "SELECT ifNull(y.`id`,23) AS sblx,ifnull(c.`id`,29) AS zlx,ifnull(m.`id`,11) AS cs,COUNT(c.`name`) AS sbNum from asset_category_mapping a \n" +
-                "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id left join asset_category y on c.parent_id = y.id \n" +
+        String sence_one_query_sql = "SELECT ifNull(y.`id`,23) AS sblx,ifnull(c.`id`,29) AS zlx,ifnull(m.`id`,11) AS cs,COUNT(l.`name`) AS gjsl from asset_category_mapping a \n" +
+                "left join asset b on a.asset_id=b.id left join asset_category c on c.id = a.asset_category_id LEFT JOIN alarm l ON a.asset_id=l.asset_id and TO_DAYS(now())-TO_DAYS(l.time_occur) =1 left join asset_category y on c.parent_id = y.id \n" +
                 "LEFT JOIN manufacturer m ON m.id=b.manufacturer_id GROUP BY c.`name`";
 
         String sence_one_insert_sql = "replace INTO SC_ZHBB_ZYZC(riqi,`sblx`,`zlx`,`cs`,`gjsl`,`js_time`) VALUES (?,?,?,?,?,?)";
@@ -54,13 +54,13 @@ public class SC_Scene_ZHBB {
                 String sblx = String.valueOf(row.getField(0));
                 String zle =  String.valueOf(row.getField(1));
                 String cs =  String.valueOf(row.getField(2));
-                Long sbNum = (Long) row.getField(3);
+                Long gasl = (Long) row.getField(3);
                 Row row1 = new Row(6);
                 row1.setField(0, riqi);
                 row1.setField(1, sblx);
                 row1.setField(2, zle);
                 row1.setField(3, cs);
-                row1.setField(4, sbNum);
+                row1.setField(4, gasl);
                 row1.setField(5, js_time);
                 return row1;
             }
@@ -85,13 +85,9 @@ public class SC_Scene_ZHBB {
 //                "left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`!=2 group by a.level_id,a.type_id ) c on b.level_id= c.level_id) d ";
 
         //正式生产环境使用
-        String sql = "select ifnull(e.level_id,f.level_id) as level_id,ifnull(e.type_id,f.type_id) as type_id,ifnull(e.m,0) as xz,ifnull(e.n,0) as wcl,ifnull(ifnull(e.n,0)+f.old_Num,0) as old,ifnull(e.f,0) as ycl from (select d.level_id,d.type_id,IFNULL(d.xzNum,0) as m ,IFNULL(d.wclNum,0) as n,(IFNULL(d.xzNum,0)-IFNULL(d.wclNum,0)) as f from (select b.level_id,b.type_id,b.xzNum,c.wclNum from (select a.level_id,a.type_id,count(*) as xzNum from alarm a \n" +
-                "where TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by a.level_id,a.type_id) b left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`=0 and TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by \n" +
-                "a.level_id,a.type_id ) c on b.level_id= c.level_id) d) e left join (select level_id,type_id,zs_Num,old_Num,wcl_Num,ycl_Num from SC_ZHBB_SCRENE_TWO where TO_DAYS(now())-TO_DAYS(riqi)=2) f on f.level_id=e.level_id and f.type_id= e.type_id\n" +
-                "union \n" +
-                "select ifnull(e.level_id,f.level_id) as level_id,ifnull(e.type_id,f.type_id) as type_id,ifnull(e.m,0) as xz,ifnull(e.n,0) as wcl,ifnull(ifnull(e.n,0)+f.old_Num,0) as old,ifnull(e.f,0) as ycl from (select d.level_id,d.type_id,IFNULL(d.xzNum,0) as m ,IFNULL(d.wclNum,0) as n,(IFNULL(d.xzNum,0)-IFNULL(d.wclNum,0)) as f from (select b.level_id,b.type_id,b.xzNum,c.wclNum from (select a.level_id,a.type_id,count(*) as xzNum from alarm a \n" +
-                "where TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by a.level_id,a.type_id) b left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`=0 and TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by \n" +
-                "a.level_id,a.type_id ) c on b.level_id= c.level_id) d) e right join (select level_id,type_id,zs_Num,old_Num,wcl_Num,ycl_Num from SC_ZHBB_SCRENE_TWO where TO_DAYS(now())-TO_DAYS(riqi)=2) f on f.level_id=e.level_id and f.type_id= e.type_id";
+        String sql = "select d.level_id,d.type_id,IFNULL(d.xzNum,0) as m ,IFNULL(d.wclNum,0) as n,(IFNULL(d.xzNum,0)-IFNULL(d.wclNum,0)) as f from (select b.level_id,b.type_id,b.xzNum,c.wclNum from (select a.level_id,a.type_id,count(*) as xzNum from alarm a \n" +
+                "where TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by a.level_id,a.type_id) b left join (select a.level_id,a.type_id,count(*) as wclNum from alarm a where a.`status`!=2 and TO_DAYS(now())-TO_DAYS(a.time_occur) =1 group by \n" +
+                "a.level_id,a.type_id ) c on b.level_id= c.level_id) d";
         String sql_second = "select level_id,type_id,zs_Num,old_Num,wcl_Num,ycl_Num from SC_ZHBB_SCRENE_TWO where TO_DAYS(now())-TO_DAYS(riqi) =1";
         String insert_sql = "replace into SC_ZHBB_SCRENE_TWO(riqi,level_id,type_id,zs_Num,old_Num,wcl_Num,ycl_Num,js_time) values(?,?,?,?,?,?,?,?)";
 
@@ -101,19 +97,19 @@ public class SC_Scene_ZHBB {
                 .setUsername(username)
                 .setPassword(password)
                 .setQuery(sql)
-                .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO,BasicTypeInfo.LONG_TYPE_INFO))
+                .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO))
                 .finish());
 
-//        DataSource<Row> input1 = env.createInput(JDBCInputFormat.buildJDBCInputFormat()
-//                .setDrivername(driver)
-//                .setDBUrl(url)
-//                .setUsername(username)
-//                .setPassword(password)
-//                .setQuery(sql_second)
-//                .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO))
-//                .finish());
-//        CoGroupOperator<Row, Row, Row> with = input.coGroup(input1).where(new First_one()).equalTo(new First_one()).with(new MyCoGrouper());
-        MapOperator<Row, Row> map = input.map(new MapFunction<Row, Row>() {
+        DataSource<Row> input1 = env.createInput(JDBCInputFormat.buildJDBCInputFormat()
+                .setDrivername(driver)
+                .setDBUrl(url)
+                .setUsername(username)
+                .setPassword(password)
+                .setQuery(sql_second)
+                .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO))
+                .finish());
+        CoGroupOperator<Row, Row, Row> with = input.coGroup(input1).where(new First_one()).equalTo(new First_one()).with(new MyCoGrouper());
+        MapOperator<Row, Row> map = with.map(new MapFunction<Row, Row>() {
             @Override
             public Row map(Row row) throws Exception {
                 Calendar now = Calendar.getInstance();
@@ -124,10 +120,10 @@ public class SC_Scene_ZHBB {
                 String js_time = sdf1.format(System.currentTimeMillis());
                 String level_id = (String) row.getField(0);
                 String type_id = (String) row.getField(1);
-                long xz_num = (long) row.getField(2);
-                long old_num = (long) row.getField(3);
-                long wcl_num = (long) row.getField(4);
-                long ycl_num = (long) row.getField(5);
+                String xz_num = (String) row.getField(2);
+                String old_num = (String) row.getField(3);
+                String wcl_num = (String) row.getField(4);
+                String ycl_num = (String) row.getField(5);
                 Row row1 = new Row(8);
                 row1.setField(0, riqi);
                 row1.setField(1, level_id);
