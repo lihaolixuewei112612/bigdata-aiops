@@ -1,10 +1,5 @@
 package com.dtc.java.analytic.V2.alarm;
 
-/**
- * @Author : lihao
- * Created on : 2020-05-26
- * @Description : TODO描述类作用
- */
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.TimesConstats;
@@ -378,4 +373,3 @@ public class AlarmUntils {
         }
     }
 }
-

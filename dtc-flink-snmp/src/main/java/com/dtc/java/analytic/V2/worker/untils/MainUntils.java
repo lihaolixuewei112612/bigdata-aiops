@@ -1,4 +1,4 @@
-package com.dtc.java.analytic.V2.worker;
+package com.dtc.java.analytic.V2.worker.untils;
 
 import com.dtc.java.analytic.V2.common.constant.HBaseConstant;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
@@ -35,7 +35,7 @@ import java.util.*;
  */
 public class MainUntils {
 
-    protected static SplitStream<DataStruct> getSplit(SingleOutputStreamOperator<DataStruct> mapStream) {
+    public static SplitStream<DataStruct> getSplit(SingleOutputStreamOperator<DataStruct> mapStream) {
         return mapStream.split((OutputSelector<DataStruct>) event -> {
             List<String> output = new ArrayList<>();
             String type = event.getSystem_name();
@@ -56,7 +56,7 @@ public class MainUntils {
         });
     }
 
-    protected static TimesConstats getSize(ParameterTool parameterTool) {
+    public static TimesConstats getSize(ParameterTool parameterTool) {
         int anInt_one = parameterTool.getInt("dtc.alarm.times.one", 1);
         int anInt1_one = parameterTool.getInt("dtc.alarm.time.long.one", 60000);
         int anInt_two = parameterTool.getInt("dtc.alarm.times.two", 1);
@@ -65,7 +65,7 @@ public class MainUntils {
         return build;
     }
 
-    protected static void writeEventToHbase(DataStruct string, ParameterTool parameterTool, String str) throws IOException {
+    public static void writeEventToHbase(DataStruct string, ParameterTool parameterTool, String str) throws IOException {
         TableName HBASE_TABLE_NAME = null;
         String INFO_STREAM = null;
         String BAR_STREAM = null;
@@ -106,7 +106,7 @@ public class MainUntils {
     }
 
     @Slf4j
-    static class MySqlProcessMapFunction extends ProcessWindowFunction<Tuple9<String, String, String, String, Double, String, String, String, String>, Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Tuple, TimeWindow> {
+    public static class MySqlProcessMapFunction extends ProcessWindowFunction<Tuple9<String, String, String, String, Double, String, String, String, String>, Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Tuple, TimeWindow> {
         @Override
         public void process(Tuple tuple, Context context, Iterable<Tuple9<String, String, String, String, Double, String, String, String, String>> iterable, Collector<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> collector) throws Exception {
             //asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level, asset_code, name
@@ -141,7 +141,7 @@ public class MainUntils {
     }
 
     @Slf4j
-    static class MyMapFunctionV3 implements MapFunction<SourceEvent, DataStruct> {
+    public static class MyMapFunctionV3 implements MapFunction<SourceEvent, DataStruct> {
         @Override
         public DataStruct map(SourceEvent sourceEvent) {
             String[] codes = sourceEvent.getCode().split("_");

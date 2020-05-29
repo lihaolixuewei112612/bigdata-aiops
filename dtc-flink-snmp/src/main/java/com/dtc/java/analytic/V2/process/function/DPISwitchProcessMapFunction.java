@@ -18,13 +18,13 @@ import java.util.Map;
  */
 @Slf4j
 public class DPISwitchProcessMapFunction extends ProcessWindowFunction<DataStruct, DataStruct, Tuple, TimeWindow> {
-
+    /**
+     * 此处的map<code(in.f2.in.f3),value_time>
+     * */
+    Map<String, String> mapSwitch = new HashMap<>();
     @Override
     public void process(Tuple tuple, Context context, Iterable<DataStruct> iterable, Collector<DataStruct> collector) throws Exception {
-        /**
-         * 此处的map<code(in.f2.in.f3),value_time>
-         * */
-        Map<String, String> mapSwitch = new HashMap<>();
+
         for (DataStruct in : iterable) {
             String code = in.getZbFourName();
             //判断是否是数据
@@ -55,9 +55,10 @@ public class DPISwitchProcessMapFunction extends ProcessWindowFunction<DataStruc
                         long currentTime = Long.parseLong(in.getTime());
                         double result = 0;
                         try {
-                            result = 8 * Math.abs((lastValue - currentValue)) / (lastTime - currentTime) * 1000;
+                            result = 8 * Math.abs((lastValue - currentValue)) / ((currentTime-lastTime)/1000);
                         } catch (ArithmeticException exc) {
                             log.error("dpi端口入速率计算时，时间差为0.", exc);
+                            continue;
                         }
                         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "103_102_103_107_107_1", in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),String.valueOf(result)));
                         mapSwitch.put(in.getHost() + "." + in.getZbFourName(),new_value);
@@ -77,9 +78,10 @@ public class DPISwitchProcessMapFunction extends ProcessWindowFunction<DataStruc
                         long currentTime = Long.parseLong(in.getTime());
                         double result = 0;
                         try {
-                            result = 8 * Math.abs((lastValue - currentValue)) / (lastTime - currentTime) * 1000;
+                            result = 8 * Math.abs((lastValue - currentValue)) / ((currentTime-lastTime)/1000);
                         } catch (ArithmeticException exc) {
                             log.error("dpi端口出速率计算时，时间差为0.", exc);
+                            continue;
                         }
                         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "103_102_103_107_107_2", in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),String.valueOf(result)));
                         mapSwitch.put(in.getHost() + "." + in.getZbFourName(),new_value);

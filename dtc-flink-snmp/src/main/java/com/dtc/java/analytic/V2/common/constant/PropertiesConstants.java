@@ -1,8 +1,6 @@
 package com.dtc.java.analytic.V2.common.constant;
 
 /**
- * Created on 2020-02-15
- *
  * @author :hao.li
  */
 public class PropertiesConstants {

@@ -460,7 +460,13 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
 
 
         //内存使用率
-        String memoryUsedRate = String.valueOf(mem_used / mem_total * 100);
+        String memoryUsedRate=null;
+        double v = mem_used / mem_total * 100;
+        if(v<0.0){
+            memoryUsedRate = String.valueOf(mem_used / mem_total * 100);
+        }else {
+            memoryUsedRate = String.valueOf(mem_used / mem_total * 100);
+        }
         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_109_109", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryUsedRate));
 
         //内存空闲率
