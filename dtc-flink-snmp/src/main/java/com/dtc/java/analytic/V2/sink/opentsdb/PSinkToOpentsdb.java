@@ -37,7 +37,8 @@ public class PSinkToOpentsdb extends RichSinkFunction<DataStruct> {
             String metric = value.getZbFourName();
             String host = value.getHost();
             String id = value.getZbLastCode();
-            long time = Long.parseLong(value.getTime());
+//            long time = Long.parseLong(value.getTime());
+            long time = System.currentTimeMillis();
             //转为保留两位小数
             java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
             double result = Double.parseDouble(df.format(Double.parseDouble(value.getValue())));

@@ -133,8 +133,8 @@ public class SC_Scene_ZHBB {
                 row1.setField(1, level_id);
                 row1.setField(2, type_id);
                 row1.setField(3, xz_num);
-                row1.setField(4, old_num);
-                row1.setField(5, wcl_num);
+                row1.setField(5, old_num);
+                row1.setField(4, wcl_num);
                 row1.setField(6, ycl_num);
                 row1.setField(7, js_time);
                 return row1;
