@@ -6,14 +6,8 @@ import com.dtc.java.analytic.V2.common.model.SourceEvent;
 import com.dtc.java.analytic.V2.common.model.TimesConstats;
 import com.dtc.java.analytic.V2.common.utils.ExecutionEnvUtil;
 import com.dtc.java.analytic.V2.common.utils.KafkaConfigUtil;
-import com.dtc.java.analytic.V2.map.function.DPIMapFunction;
-import com.dtc.java.analytic.V2.map.function.H3cMapFunction;
-import com.dtc.java.analytic.V2.map.function.LinuxMapFunction;
-import com.dtc.java.analytic.V2.map.function.WinMapFunction;
-import com.dtc.java.analytic.V2.process.function.DPISwitchProcessMapFunction;
-import com.dtc.java.analytic.V2.process.function.H3CSwitchProcessMapFunction;
-import com.dtc.java.analytic.V2.process.function.LinuxProcessMapFunction;
-import com.dtc.java.analytic.V2.process.function.WinProcessMapFunction;
+import com.dtc.java.analytic.V2.map.function.*;
+import com.dtc.java.analytic.V2.process.function.*;
 import com.dtc.java.analytic.V2.sink.mysql.MysqlSink;
 import com.dtc.java.analytic.V2.sink.opentsdb.PSinkToOpentsdb;
 import com.dtc.java.analytic.V2.source.mysql.ReadAlarmMessage;
@@ -85,6 +79,7 @@ public class StreamToFlinkV3 {
         Linux_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, build);
         //h3c交换机处理
         H3c_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool, build);
+        ZX_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool, build);
         DPI_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool, build);
         env.execute("Dtc-Alarm-Flink-Process");
     }
@@ -154,24 +149,24 @@ public class StreamToFlinkV3 {
         List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast, build);
         H3C_Switch_1.forEach(e -> e.addSink(new MysqlSink()));
     }
-    private static void HX_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream, ParameterTool parameterTool, TimesConstats build) {
+    private static void ZX_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream, ParameterTool parameterTool, TimesConstats build) {
         //交换机指标数据处理
-        SingleOutputStreamOperator<DataStruct> H3C_Switch = splitStream
+        SingleOutputStreamOperator<DataStruct> ZX_Switch = splitStream
                 .select("ZX_Switch")
-                .map(new H3cMapFunction())
+                .map(new ZXMapFunction())
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-                .process(new H3CSwitchProcessMapFunction());
-        H3C_Switch.map(new MapFunction<DataStruct, Object>() {
+                .process(new ZXSwitchProcessMapFunction());
+        ZX_Switch.map(new MapFunction<DataStruct, Object>() {
             @Override
             public Object map(DataStruct string) throws Exception {
                 String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
                 if (!bf.mightContain(demo)) {
-                    if ("102_101_101_101_101".equals(string.getZbFourName())) {
+                    if ("102_103_101_101_101".equals(string.getZbFourName())) {
                         bf.put(demo);
                         writeEventToHbase(string, parameterTool, "1");
                     }
-                    if ("102_101_103_107_108".equals(string.getZbFourName())) {
+                    if ("102_103_103_105_105".equals(string.getZbFourName())) {
                         bf.put(demo);
                         writeEventToHbase(string, parameterTool, "2");
                     }
@@ -180,9 +175,9 @@ public class StreamToFlinkV3 {
             }
         });
         //Linux数据全量写opentsdb
-        H3C_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
+        ZX_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
         //Linux数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast, build);
+        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(ZX_Switch, broadcast, build);
         H3C_Switch_1.forEach(e -> e.addSink(new MysqlSink()));
     }
 
