@@ -262,18 +262,13 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                 /**
                  *  主机内存:内存处理逻辑 包括内存总量/空闲内存/已用内存/内存使用率/内存空闲率
                  */
-
                 if ("101_101_104_101_101".equals(in.getZbFourName())) {
-                    if (cpuMap.containsKey("101_101_104_105_105") && cpuMap.containsKey("101_101_104_103_103") && cpuMap.containsKey("101_101_104_104_104")) {
+                    if (cpuMap.containsKey("101_101_104_105_105")) {
                         //原始内存数据，单位为Kb
                         double mem_total = Double.parseDouble(in.getValue());
                         double mem_available = Double.parseDouble(cpuMap.get("101_101_104_105_105").toString());
-                        double mem_buffered = Double.parseDouble(cpuMap.get("101_101_104_103_103").toString());
-                        double mem_cached = Double.parseDouble(cpuMap.get("101_101_104_104_104").toString());
-                        getCpuInfo(collector, df, in, mem_total, mem_available, mem_buffered, mem_cached);
+                        getCpuInfo(collector, df, in, mem_total, mem_available);
                         cpuMap.remove("101_101_104_105_105");
-                        cpuMap.remove("101_101_104_103_103");
-                        cpuMap.remove("101_101_104_104_104");
                         continue;
                     } else {
                         cpuMap.put("101_101_104_101_101", in.getValue());
@@ -281,54 +276,17 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
                     }
                 }
                 if ("101_101_104_105_105".equals(in.getZbFourName())) {
-                    if (cpuMap.containsKey("101_101_104_101_101") && cpuMap.containsKey("101_101_104_103_103") && cpuMap.containsKey("101_101_104_104_104")) {
+                    if (cpuMap.containsKey("101_101_104_101_101") ) {
                         double mem_total = Double.parseDouble(cpuMap.get("101_101_104_101_101").toString());
                         double mem_available = Double.parseDouble(in.getValue());
-                        double mem_buffered = Double.parseDouble(cpuMap.get("101_101_104_103_103").toString());
-                        double mem_cached = Double.parseDouble(cpuMap.get("101_101_104_104_104").toString());
-                        getCpuInfo(collector, df, in, mem_total, mem_available, mem_buffered, mem_cached);
+                        getCpuInfo(collector, df, in, mem_total, mem_available);
                         cpuMap.remove("101_101_104_101_101");
-                        cpuMap.remove("101_101_104_103_103");
-                        cpuMap.remove("101_101_104_104_104");
                         continue;
                     } else {
                         cpuMap.put("101_101_104_105_105", in.getValue());
                         continue;
                     }
                 }
-                if ("101_101_104_103_103".equals(in.getZbFourName())) {
-                    if (cpuMap.containsKey("101_101_104_101_101") && cpuMap.containsKey("101_101_104_105_105") && cpuMap.containsKey("101_101_104_104_104")) {
-                        double mem_total = Double.parseDouble(cpuMap.get("101_101_104_101_101").toString());
-                        double mem_available = Double.parseDouble(cpuMap.get("101_101_104_105_105").toString());
-                        double mem_buffered = Double.parseDouble(in.getValue());
-                        double mem_cached = Double.parseDouble(cpuMap.get("101_101_104_104_104").toString());
-                        getCpuInfo(collector, df, in, mem_total, mem_available, mem_buffered, mem_cached);
-                        cpuMap.remove("101_101_104_101_101");
-                        cpuMap.remove("101_101_104_105_105");
-                        cpuMap.remove("101_101_104_104_104");
-                        continue;
-                    } else {
-                        cpuMap.put("101_101_104_103_103", in.getValue());
-                        continue;
-                    }
-                }
-                if ("101_101_104_104_104".equals(in.getZbFourName())) {
-                    if (cpuMap.containsKey("101_101_104_101_101") && cpuMap.containsKey("101_101_104_105_105") && cpuMap.containsKey("101_101_104_103_103")) {
-                        double mem_total = Double.parseDouble(cpuMap.get("101_101_104_101_101").toString());
-                        double mem_available = Double.parseDouble(cpuMap.get("101_101_104_105_105").toString());
-                        double mem_buffered = Double.parseDouble(cpuMap.get("101_101_104_103_103").toString());
-                        double mem_cached = Double.parseDouble(in.getValue());
-                        getCpuInfo(collector, df, in, mem_total, mem_available, mem_buffered, mem_cached);
-                        cpuMap.remove("101_101_104_101_101");
-                        cpuMap.remove("101_101_104_105_105");
-                        cpuMap.remove("101_101_104_104_104");
-                        continue;
-                    } else {
-                        cpuMap.put("101_101_104_104_104", in.getValue());
-                        continue;
-                    }
-                }
-
                 //空闲内存换成MB单位
                 if ("101_101_104_106_106".equals(in.getZbFourName())) {
                     String result = Double.parseDouble(in.getValue()) / 1024 + "";
@@ -435,7 +393,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
     /**
      * 主机内存:内存处理逻辑 包括内存总量/空闲内存/已用内存/内存使用率/内存空闲率
      */
-    private void getCpuInfo(Collector<DataStruct> collector, DecimalFormat df, DataStruct in, double mem_total, double mem_available, double mem_buffered, double mem_cached) {
+    private void getCpuInfo(Collector<DataStruct> collector, DecimalFormat df, DataStruct in, double mem_total, double mem_available) {
 //        double mem_used = mem_total - mem_available - mem_buffered - mem_cached;
         double mem_used= mem_available;
         //总内存--单位MB
@@ -446,14 +404,6 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
         double mem_free=mem_total-mem_used;
         String memoryAvailable = df.format(mem_free / 1024d);
         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_105_105", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryAvailable));
-
-        //buffer内存
-        String memoryBuffer = df.format(mem_buffered / 1024d);
-        collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_103_103", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryBuffer));
-
-        //缓存内存
-        String memoryCached = df.format(mem_cached / 1024d);
-        collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_104_104", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryCached));
 
 
         //已用内存--单位MB

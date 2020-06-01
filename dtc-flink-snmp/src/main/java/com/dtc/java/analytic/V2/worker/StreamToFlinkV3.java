@@ -81,7 +81,7 @@ public class StreamToFlinkV3 {
         H3c_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool, build);
         ZX_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool, build);
         DPI_Data_Process(opentsdb_url, windowSizeMillis, broadcast, splitStream, parameterTool, build);
-        env.execute("Dtc-Alarm-Flink-Process");
+        env.execute("DTC-Alarm-Flink-Process");
     }
 
 
@@ -133,11 +133,11 @@ public class StreamToFlinkV3 {
                 if (!bf.mightContain(demo)) {
                     if ("102_101_101_101_101".equals(string.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "1");
+//                        writeEventToHbase(string, parameterTool, "1");
                     }
                     if ("102_101_103_107_108".equals(string.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "2");
+//                        writeEventToHbase(string, parameterTool, "2");
                     }
                 }
                 return string;
@@ -164,11 +164,11 @@ public class StreamToFlinkV3 {
                 if (!bf.mightContain(demo)) {
                     if ("102_103_101_101_101".equals(string.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "1");
+//                        writeEventToHbase(string, parameterTool, "1");
                     }
                     if ("102_103_103_105_105".equals(string.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "2");
+//                        writeEventToHbase(string, parameterTool, "2");
                     }
                 }
                 return string;
@@ -196,11 +196,11 @@ public class StreamToFlinkV3 {
                 if (!bf.mightContain(demo)) {
                     if ("103_102_101_101_101".equals(string.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "1");
+//                        writeEventToHbase(string, parameterTool, "1");
                     }
                     if ("103_102_103_107_107_1".equals(string.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "2");
+//                        writeEventToHbase(string, parameterTool, "2");
                     }
                 }
                 return string;
