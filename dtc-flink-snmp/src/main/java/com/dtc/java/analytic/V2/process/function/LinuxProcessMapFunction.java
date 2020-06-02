@@ -392,7 +392,7 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
 
     /**
      * 主机内存:内存处理逻辑 包括内存总量/空闲内存/已用内存/内存使用率/内存空闲率
-     * 测试有点问题，需要验证
+     * 测试有点问题，需要验证1111
      */
     private void getCpuInfo(Collector<DataStruct> collector, DecimalFormat df, DataStruct in, double mem_total, double mem_available) {
 //        double mem_used = mem_total - mem_available - mem_buffered - mem_cached;
