@@ -112,7 +112,7 @@ function start_service {
     fi
 }
 
-
+#flink.sh flink-snmp start
 
 # $0 master|worker
 function stop_service {

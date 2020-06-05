@@ -32,8 +32,7 @@ public class ZXSwitchProcessMapFunction extends ProcessWindowFunction<DataStruct
                 log.info("Value is not number of string!");
             } else {
                 if (code.equals("102_103_101_101_101") || code.equals("102_103_101_102_102") ||
-                        code.equals("102_103_102_103_103") || code.equals("102_103_103_105_105") ||
-                        code.equals("102_103_103_106_106") || code.equals("102_103_103_107_107")
+                        code.equals("102_103_102_103_103")  || code.equals("102_103_103_107_107")
                         || code.equals("102_103_103_108_108")|| code.equals("102_103_103_109_109")
                         || code.equals("102_103_103_110_110")) {
                     /**
@@ -44,6 +43,49 @@ public class ZXSwitchProcessMapFunction extends ProcessWindowFunction<DataStruct
                      *其中ZB_code为例：机器ip,1.0表示机框1，0板卡，表示机框1，板卡0的cpu使用率
                      */
                     collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),in.getValue()));
+                }
+                if (code.equals("102_103_103_109_109")) {
+                    String new_value = in.getValue() + "_" + in.getTime();
+                    if (mapSwitch.containsKey(in.getHost() + "." + in.getZbFourName())) {
+                        String[] s = mapSwitch.get(in.getHost() + "." + in.getZbFourName()).split("_");
+                        double lastValue = Double.parseDouble(s[0]);
+                        long lastTime = Long.parseLong(s[1]);
+                        double currentValue = Double.parseDouble(in.getValue());
+                        long currentTime = Long.parseLong(in.getTime());
+                        double result = 0;
+                        try {
+                            result = (Math.abs((lastValue - currentValue))/(1024*1024)) / ((currentTime-lastTime)/1000);
+                        } catch (ArithmeticException exc) {
+                            log.error("交换机端口出速率计算时，时间差为0.", exc);
+                        }
+                        collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "102_103_103_105_105", in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),String.valueOf(result)));
+                        mapSwitch.put(in.getHost() + "." + in.getZbFourName(),new_value);
+                        continue;
+                    } else {
+                        mapSwitch.put(in.getHost() + "." + in.getZbFourName(), new_value);
+                        continue;
+                    }
+                }
+                if (code.equals("102_103_103_107_107")) {
+                    String new_value = in.getValue() + "_" + in.getTime();
+                    if (mapSwitch.containsKey(in.getHost() + "." + in.getZbFourName())) {
+                        String[] s = mapSwitch.get(in.getHost() + "." + in.getZbFourName()).split("_");
+                        double lastValue = Double.parseDouble(s[0]);
+                        long lastTime = Long.parseLong(s[1]);
+                        double currentValue = Double.parseDouble(in.getValue());
+                        long currentTime = Long.parseLong(in.getTime());
+                        double result ;
+                        try {
+                            result = (Math.abs((lastValue - currentValue))/(1024*1024)) / ((currentTime-lastTime)/1000);
+                        } catch (ArithmeticException exc) {
+                            log.error("交换机端口入速率计算时，时间差为0.", exc);
+                            continue;
+                        }
+                        collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "102_103_103_106_106", in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),String.valueOf(result)));
+                        mapSwitch.put(in.getHost() + "." + in.getZbFourName(),new_value);
+                    } else {
+                        mapSwitch.put(in.getHost() + "." + in.getZbFourName(),new_value);
+                    }
                 }
             }
         }

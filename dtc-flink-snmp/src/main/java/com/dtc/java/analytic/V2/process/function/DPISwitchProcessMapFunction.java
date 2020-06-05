@@ -55,7 +55,7 @@ public class DPISwitchProcessMapFunction extends ProcessWindowFunction<DataStruc
                         long currentTime = Long.parseLong(in.getTime());
                         double result = 0;
                         try {
-                            result = 8 * Math.abs((lastValue - currentValue)) / ((currentTime-lastTime)/1000);
+                            result = (Math.abs((lastValue - currentValue))/(1024*1024)) / ((currentTime-lastTime)/1000);
                         } catch (ArithmeticException exc) {
                             log.error("dpi端口入速率计算时，时间差为0.", exc);
                             continue;
@@ -78,7 +78,7 @@ public class DPISwitchProcessMapFunction extends ProcessWindowFunction<DataStruc
                         long currentTime = Long.parseLong(in.getTime());
                         double result = 0;
                         try {
-                            result = 8 * Math.abs((lastValue - currentValue)) / ((currentTime-lastTime)/1000);
+                            result = (Math.abs((lastValue - currentValue))/(1024*1024)) / ((currentTime-lastTime)/1000);
                         } catch (ArithmeticException exc) {
                             log.error("dpi端口出速率计算时，时间差为0.", exc);
                             continue;

@@ -55,7 +55,7 @@ public class H3CSwitchProcessMapFunction extends ProcessWindowFunction<DataStruc
                         long currentTime = Long.parseLong(in.getTime());
                         double result = 0;
                         try {
-                            result = 8 * Math.abs((lastValue - currentValue)) / ((currentTime-lastTime)/1000);
+                            result = (Math.abs((lastValue - currentValue))/(1024*1024)) / ((currentTime-lastTime)/1000);
                         } catch (ArithmeticException exc) {
                             log.error("交换机端口出速率计算时，时间差为0.", exc);
                         }
@@ -77,7 +77,7 @@ public class H3CSwitchProcessMapFunction extends ProcessWindowFunction<DataStruc
                         long currentTime = Long.parseLong(in.getTime());
                         double result ;
                         try {
-                            result = 8 * Math.abs((lastValue - currentValue)) / ((currentTime-lastTime)/1000);
+                            result = (Math.abs((lastValue - currentValue))/(1024*1024)) / ((currentTime-lastTime)/1000);
                         } catch (ArithmeticException exc) {
                             log.error("交换机端口入速率计算时，时间差为0.", exc);
                             continue;
