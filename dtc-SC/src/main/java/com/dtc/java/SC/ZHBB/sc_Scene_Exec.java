@@ -24,7 +24,6 @@ public class sc_Scene_Exec {
         String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=UTF-8";
         SC_Scene_ZHBB.sc_Scence_one(env,driver,url,username,password);
         SC_Scene_ZHBB.sc_Scence_Two(env,driver,url,username,password);
-
         env.execute("dtc-自助报表");
 
     }
