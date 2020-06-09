@@ -4,8 +4,15 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/dtc-flink-zabbix/pom.xml" />
         <option value="$PROJECT_DIR$/dtc-SC/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/log-analytic/pom.xml" />
+        <option value="$PROJECT_DIR$/log.analytics/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8.0_201" project-jdk-type="JavaSDK" />
