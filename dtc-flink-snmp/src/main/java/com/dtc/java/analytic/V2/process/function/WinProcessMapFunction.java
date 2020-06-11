@@ -91,13 +91,13 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                     cpuNum.put(keyValue, "1");
                     {
                     }
-
                     continue;
                 } else {
                     flag = true;
                 }
             }
             List<String> list = null;
+            //todo:cpu展示有问题，需要重新思考
             if (flag) {
                 list = new ArrayList<>();
                 for (Map.Entry<String, String> entity : cpuNum.entrySet()) {
