@@ -130,13 +130,10 @@ public class StreamToFlinkV3 {
                 .process(new LinuxProcessMapFunction());
 
         //Linux数据全量写opentsdb
-        linuxProcess.print("ceshi:::");
         linuxProcess.addSink(new PSinkToOpentsdb(opentsdb_url));
 
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast,build);
-        alarmLinux.forEach(e -> e.print("linux打印告警:"));
-        alarmLinux.forEach(e -> logger.info("linux日志告警：{}", e));
 
         alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
