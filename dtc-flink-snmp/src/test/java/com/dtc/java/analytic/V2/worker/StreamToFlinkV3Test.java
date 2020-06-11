@@ -11,13 +11,14 @@ import com.dtc.java.analytic.V2.process.function.WinProcessMapFunction;
 import com.dtc.java.analytic.V2.sink.mysql.MysqlSink;
 import com.dtc.java.analytic.V2.sink.opentsdb.PSinkToOpentsdb;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.BroadcastState;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.state.ReadOnlyBroadcastState;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
-import org.apache.flink.api.java.tuple.Tuple;
-import org.apache.flink.api.java.tuple.Tuple9;
+import org.apache.flink.api.java.functions.KeySelector;
+import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.cep.CEP;
 import org.apache.flink.cep.PatternSelectFunction;
@@ -30,6 +31,7 @@ import org.apache.flink.streaming.api.datastream.*;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.co.BroadcastProcessFunction;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
+import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
@@ -125,13 +127,54 @@ public class StreamToFlinkV3Test {
 //
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
+        alarmLinux.forEach(e->e.keyBy(new KeySelector<AlterStruct, String>() {
+            @Override
+            public String getKey(AlterStruct value) throws Exception {
+                return value.getGaojing();
+            }
+            //时间窗口 6秒  滑动间隔3秒
+        }).timeWindow(Time.seconds(30))
+                .aggregate(new CountAggregate_2(),new CountWindowFunction_2()).print("test:"));
         alarmLinux.forEach(e->e.print("linux打印告警:"));
         alarmLinux.forEach(e->logger.info("linux日志告警：{}",e));
 
 //        alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
+    public static class CountWindowFunction_2 implements WindowFunction<Tuple4<AlterStruct,Double,Double,Double>, String, String, TimeWindow> {
+        @Override
+        public void apply(String productId, TimeWindow window, Iterable<Tuple4<AlterStruct,Double,Double,Double>> input, Collector<String> out) throws Exception {
+            /*商品访问统计输出*/
+            /*out.collect("productId"productId,window.getEnd(),input.iterator().next()));*/
+            out.collect("----------------窗口时间：" + window.getEnd());
+            out.collect("商品ID: " + productId + " 个数是: "+input.iterator().next().f1 +"  浏览量: " + input.iterator().next().f2+  "   值是： "+input.iterator().next().f3);
+        }
+    }
 
+    public static class CountAggregate_2 implements AggregateFunction<AlterStruct, Tuple3<AlterStruct, Double,Double>, Tuple4<AlterStruct,Double,Double,Double>> {
+        @Override
+        public Tuple3 createAccumulator() {
+            /*访问量初始化为0*/
+            return Tuple3.of("", 0D,0D);
+        }
+
+        @Override
+        public Tuple3<AlterStruct, Double,Double> add(AlterStruct value, Tuple3<AlterStruct, Double,Double> acc) {
+            /*访问量直接+1 即可*/
+            return new Tuple3<>(value, acc.f1 + Double.parseDouble(value.getValue()),acc.f2+1);
+        }
+
+        @Override
+        public Tuple4<AlterStruct,Double,Double,Double> getResult(Tuple3<AlterStruct, Double,Double> acc) {
+            Double result =acc.f1/acc.f2;
+            return Tuple4.of(acc.f0,acc.f1,acc.f2,result);
+        }
+
+        @Override
+        public Tuple3<AlterStruct, Double,Double> merge(Tuple3<AlterStruct, Double,Double> longLongTuple2, Tuple3<AlterStruct, Double,Double> acc1) {
+            return new Tuple3<>(longLongTuple2.f0, longLongTuple2.f1 + acc1.f1,longLongTuple2.f2+acc1.f2);
+        }
+    }
     private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast) {
 
         SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)

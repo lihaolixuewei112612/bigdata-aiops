@@ -14,8 +14,6 @@
         <module>dtc-SC</module>
         <module>dtc-dd-data</module>
         <module>dtc-dist</module>
-        <module>log.analytics</module>
-        <module>log-analytic</module>
 
 
     </modules>
