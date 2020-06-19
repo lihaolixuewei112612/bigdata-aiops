@@ -111,7 +111,7 @@ public class StreamToFlinkV3Test {
 
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast);
-        alarmWindows.forEach(e->logger.info("windows告警："+e));
+        alarmWindows.forEach(e -> logger.info("windows告警：" + e));
 //        alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
 
         //linux指标数据处理
@@ -127,54 +127,55 @@ public class StreamToFlinkV3Test {
 //
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
-        alarmLinux.forEach(e->e.keyBy(new KeySelector<AlterStruct, String>() {
+        alarmLinux.forEach(e -> e.keyBy(new KeySelector<AlterStruct, String>() {
             @Override
             public String getKey(AlterStruct value) throws Exception {
                 return value.getGaojing();
             }
             //时间窗口 6秒  滑动间隔3秒
-        }).timeWindow(Time.seconds(30))
-                .aggregate(new CountAggregate_2(),new CountWindowFunction_2()).print("test:"));
-        alarmLinux.forEach(e->e.print("linux打印告警:"));
-        alarmLinux.forEach(e->logger.info("linux日志告警：{}",e));
+        }).timeWindow(Time.seconds(60))
+                .aggregate(new CountAggregate_2(), new CountWindowFunction_2()).print("test:"));
+        alarmLinux.forEach(e -> e.print("linux打印告警:"));
 
 //        alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");
     }
-    public static class CountWindowFunction_2 implements WindowFunction<Tuple4<AlterStruct,Double,Double,Double>, String, String, TimeWindow> {
+
+    public static class CountWindowFunction_2 implements WindowFunction<Tuple4<AlterStruct, Double, Double, Double>, String, String, TimeWindow> {
         @Override
-        public void apply(String productId, TimeWindow window, Iterable<Tuple4<AlterStruct,Double,Double,Double>> input, Collector<String> out) throws Exception {
+        public void apply(String productId, TimeWindow window, Iterable<Tuple4<AlterStruct, Double, Double, Double>> input, Collector<String> out) throws Exception {
             /*商品访问统计输出*/
             /*out.collect("productId"productId,window.getEnd(),input.iterator().next()));*/
             out.collect("----------------窗口时间：" + window.getEnd());
-            out.collect("商品ID: " + productId + " 个数是: "+input.iterator().next().f1 +"  浏览量: " + input.iterator().next().f2+  "   值是： "+input.iterator().next().f3);
+            out.collect("商品ID: " + productId + " 个数是: " + input.iterator().next().f1 + "  浏览量: " + input.iterator().next().f2 + "   值是： " + input.iterator().next().f3);
         }
     }
 
-    public static class CountAggregate_2 implements AggregateFunction<AlterStruct, Tuple3<AlterStruct, Double,Double>, Tuple4<AlterStruct,Double,Double,Double>> {
+    public static class CountAggregate_2 implements AggregateFunction<AlterStruct, Tuple3<AlterStruct, Double, Double>, Tuple4<AlterStruct, Double, Double, Double>> {
         @Override
         public Tuple3 createAccumulator() {
             /*访问量初始化为0*/
-            return Tuple3.of("", 0D,0D);
+            return Tuple3.of("", 0D, 0D);
         }
 
         @Override
-        public Tuple3<AlterStruct, Double,Double> add(AlterStruct value, Tuple3<AlterStruct, Double,Double> acc) {
+        public Tuple3<AlterStruct, Double, Double> add(AlterStruct value, Tuple3<AlterStruct, Double, Double> acc) {
             /*访问量直接+1 即可*/
-            return new Tuple3<>(value, acc.f1 + Double.parseDouble(value.getValue()),acc.f2+1);
+            return new Tuple3<>(value, acc.f1 + Double.parseDouble(value.getValue()), acc.f2 + 1);
         }
 
         @Override
-        public Tuple4<AlterStruct,Double,Double,Double> getResult(Tuple3<AlterStruct, Double,Double> acc) {
-            Double result =acc.f1/acc.f2;
-            return Tuple4.of(acc.f0,acc.f1,acc.f2,result);
+        public Tuple4<AlterStruct, Double, Double, Double> getResult(Tuple3<AlterStruct, Double, Double> acc) {
+            Double result = acc.f1 / acc.f2;
+            return Tuple4.of(acc.f0, acc.f1, acc.f2, result);
         }
 
         @Override
-        public Tuple3<AlterStruct, Double,Double> merge(Tuple3<AlterStruct, Double,Double> longLongTuple2, Tuple3<AlterStruct, Double,Double> acc1) {
-            return new Tuple3<>(longLongTuple2.f0, longLongTuple2.f1 + acc1.f1,longLongTuple2.f2+acc1.f2);
+        public Tuple3<AlterStruct, Double, Double> merge(Tuple3<AlterStruct, Double, Double> longLongTuple2, Tuple3<AlterStruct, Double, Double> acc1) {
+            return new Tuple3<>(longLongTuple2.f0, longLongTuple2.f1 + acc1.f1, longLongTuple2.f2 + acc1.f2);
         }
     }
+
     private static List<DataStream<AlterStruct>> getAlarm(SingleOutputStreamOperator<DataStruct> event, BroadcastStream<Map<String, String>> broadcast) {
 
         SingleOutputStreamOperator<AlterStruct> alert_rule = event.connect(broadcast)
@@ -294,18 +295,21 @@ public class StreamToFlinkV3Test {
                 AlarmRule(value, out, unique_id, split1, result);
             }
 
-            @Override
-            public void processBroadcastElement(Map<String, String> value, Context ctx, Collector<AlterStruct> out) throws Exception {
-                if (value == null || value.size() == 0) {
-                    return;
-                }
-                BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
-                for (Map.Entry<String, String> entry : value.entrySet()) {
-                    broadcastState.put(entry.getKey(), entry.getValue());
-                }
+        @Override
+        public void processBroadcastElement (Map < String, String > value, Context ctx, Collector < AlterStruct > out) throws
+        Exception {
+            if (value == null || value.size() == 0) {
+                return;
             }
-        };
+            BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
+            for (Map.Entry<String, String> entry : value.entrySet()) {
+                broadcastState.put(entry.getKey(), entry.getValue());
+            }
+        }
     }
+
+    ;
+}
 
     /**
      * 告警规则
@@ -313,7 +317,6 @@ public class StreamToFlinkV3Test {
     private static void AlarmRule(DataStruct value, Collector<AlterStruct> out, String unique_id, String[] split1, String str1) {
         double data_value = Double.parseDouble(value.getValue());
         String code_name = str1;
-        System.out.println("数据进入具体判断阶段：");
         String level_1 = split1[0];
         String level_2 = split1[1];
         String level_3 = split1[2];
@@ -518,64 +521,64 @@ public class StreamToFlinkV3Test {
         }
     }
 
-    static class MySQLFunction implements MapFunction<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Map<String, String>> {
-        //(445,10.3.1.6,101_101_106_103,50.0,null,null,null)
+static class MySQLFunction implements MapFunction<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Map<String, String>> {
+    //(445,10.3.1.6,101_101_106_103,50.0,null,null,null)
 
-        @Override
-        public Map<String, String> map(Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> event) throws Exception {
-            Map<String, String> map = new HashMap<>();
-            for (Map.Entry<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> entries : event.entrySet()) {
-                Tuple9<String, String, String, Double, Double, Double, Double, String, String> value = entries.getValue();
-                String key = entries.getKey();
-                String asset_id = value.f0;
-                String ip = value.f1;
-                String code = value.f2;
-                Double level_1 = value.f3;
-                Double level_2 = value.f4;
-                Double level_3 = value.f5;
-                Double level_4 = value.f6;
-                String asset_code = value.f7;
-                String asset_name = value.f8;
-                String str = asset_id + ":" + code + ":" + asset_code + ":" + asset_name + ":" + level_1 + "|" + level_2 + "|" + level_3 + "|" + level_4;
-                map.put(key, str);
-            }
-            return map;
+    @Override
+    public Map<String, String> map(Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> event) throws Exception {
+        Map<String, String> map = new HashMap<>();
+        for (Map.Entry<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> entries : event.entrySet()) {
+            Tuple9<String, String, String, Double, Double, Double, Double, String, String> value = entries.getValue();
+            String key = entries.getKey();
+            String asset_id = value.f0;
+            String ip = value.f1;
+            String code = value.f2;
+            Double level_1 = value.f3;
+            Double level_2 = value.f4;
+            Double level_3 = value.f5;
+            Double level_4 = value.f6;
+            String asset_code = value.f7;
+            String asset_name = value.f8;
+            String str = asset_id + ":" + code + ":" + asset_code + ":" + asset_name + ":" + level_1 + "|" + level_2 + "|" + level_3 + "|" + level_4;
+            map.put(key, str);
         }
+        return map;
+    }
+}
+
+@Slf4j
+static class MySqlProcessMapFunction extends ProcessWindowFunction<Tuple9<String, String, String, String, Double, String, String, String, String>, Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Tuple, TimeWindow> {
+    @Override
+    public void process(Tuple tuple, Context context, Iterable<Tuple9<String, String, String, String, Double, String, String, String, String>> iterable, Collector<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> collector) throws Exception {
+        Tuple9<String, String, String, Double, Double, Double, Double, String, String> tuple9 = new Tuple9<>();
+        Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> map = new HashMap<>();
+        for (Tuple9<String, String, String, String, Double, String, String, String, String> sourceEvent : iterable) {
+            String asset_id = sourceEvent.f0;
+            String ip = sourceEvent.f1;
+            Double num = sourceEvent.f4;
+            String code = sourceEvent.f5;
+            String level = sourceEvent.f6;
+            tuple9.f0 = asset_id;
+            tuple9.f1 = ip;
+            tuple9.f2 = code;
+            String key = ip + "." + code.replace("_", ".");
+            if ("1".equals(level)) {
+                tuple9.f3 = num;
+            } else if ("2".equals(level)) {
+                tuple9.f4 = num;
+            } else if ("3".equals(level)) {
+                tuple9.f5 = num;
+            } else if ("4".equals(level)) {
+                tuple9.f6 = num;
+            }
+            tuple9.f7 = sourceEvent.f7;
+            tuple9.f8 = sourceEvent.f8;
+            map.put(key, tuple9);
+        }
+        collector.collect(map);
     }
 
-    @Slf4j
-    static class MySqlProcessMapFunction extends ProcessWindowFunction<Tuple9<String, String, String, String, Double, String, String, String, String>, Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Tuple, TimeWindow> {
-        @Override
-        public void process(Tuple tuple, Context context, Iterable<Tuple9<String, String, String, String, Double, String, String, String, String>> iterable, Collector<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> collector) throws Exception {
-            Tuple9<String, String, String, Double, Double, Double, Double, String, String> tuple9 = new Tuple9<>();
-            Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> map = new HashMap<>();
-            for (Tuple9<String, String, String, String, Double, String, String, String, String> sourceEvent : iterable) {
-                String asset_id = sourceEvent.f0;
-                String ip = sourceEvent.f1;
-                Double num = sourceEvent.f4;
-                String code = sourceEvent.f5;
-                String level = sourceEvent.f6;
-                tuple9.f0 = asset_id;
-                tuple9.f1 = ip;
-                tuple9.f2 = code;
-                String key = ip + "." + code.replace("_", ".");
-                if ("1".equals(level)) {
-                    tuple9.f3 = num;
-                } else if ("2".equals(level)) {
-                    tuple9.f4 = num;
-                } else if ("3".equals(level)) {
-                    tuple9.f5 = num;
-                } else if ("4".equals(level)) {
-                    tuple9.f6 = num;
-                }
-                tuple9.f7 = sourceEvent.f7;
-                tuple9.f8 = sourceEvent.f8;
-                map.put(key, tuple9);
-            }
-            collector.collect(map);
-        }
-
-    }
+}
 }
 
 

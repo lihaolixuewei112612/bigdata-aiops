@@ -1,0 +1,5 @@
+2020-06-14 11:47:55,712 - Shutting down BLOB cache
+2020-06-14 11:47:55,720 - Shutting down TaskExecutorLocalStateStoresManager.
+2020-06-14 11:47:55,712 - Shutting down BLOB cache
+2020-06-14 11:47:55,894 - Stopped BLOB server at 0.0.0.0:55000
+2020-06-14 11:47:55,897 - I/O manager removed spill file directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/flink-io-f7ab1042-6298-4c8c-82a8-afa59757264f
