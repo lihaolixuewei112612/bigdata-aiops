@@ -73,6 +73,8 @@ public class PropertiesConstants {
 
     public static final String CHAR_UTF8 = "UTF-8";
 
+    public static final String ALARM_CONVERGENCE="dtc.alarm.convergence";
+
 
     /**
      * default value
