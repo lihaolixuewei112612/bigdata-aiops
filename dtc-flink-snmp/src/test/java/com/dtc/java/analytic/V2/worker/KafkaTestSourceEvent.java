@@ -33,14 +33,14 @@ public class KafkaTestSourceEvent extends RichSourceFunction<SourceEvent> {
             String str = "{\"labels\":{\"__name__\":\"oracledb_resource_current_utilization\",\"instance\":\"10.3.7.231:9161\",\"job\":\"consul\",\"resource_name\":\"gcs_shadows\"},\"name\":\"oracledb_resource_current_utilization\",\"timestamp\":\"2019-08-23T06:40:52Z\",\"value\":\"0\"}";
 //            String str = generateEvent();
             ctx.collect(s);
-            Thread.sleep(10);
+            Thread.sleep(2000);
         }
 
     }
     private SourceEvent generateEvent(){
         SourceEvent event = new SourceEvent();
         event.setTime("1589537380872");
-        event.setCode("101_101_101_101_101");
+        event.setCode("101_100_101_101_101");
         event.setHost(channel.get(rand.nextInt(channel.size())));
         event.setNameCN("1分钟平均load值");
         event.setNameEN("system_load1");

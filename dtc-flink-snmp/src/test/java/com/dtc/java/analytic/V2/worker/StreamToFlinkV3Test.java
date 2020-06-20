@@ -8,6 +8,7 @@ import com.dtc.java.analytic.V2.map.function.LinuxMapFunction;
 import com.dtc.java.analytic.V2.map.function.WinMapFunction;
 import com.dtc.java.analytic.V2.process.function.LinuxProcessMapFunction;
 import com.dtc.java.analytic.V2.process.function.WinProcessMapFunction;
+import com.dtc.java.analytic.V2.process.function.alarmConvergence;
 import com.dtc.java.analytic.V2.sink.mysql.MysqlSink;
 import com.dtc.java.analytic.V2.sink.opentsdb.PSinkToOpentsdb;
 import lombok.extern.slf4j.Slf4j;
@@ -111,8 +112,11 @@ public class StreamToFlinkV3Test {
 
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast);
-        alarmWindows.forEach(e -> logger.info("windows告警：" + e));
-//        alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
+        alarmWindows.forEach(e-> {
+           e.keyBy("gaojing")
+                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+                    .process(new alarmConvergence()).print("告警收敛信息打印：   ");
+        });
 
         //linux指标数据处理
         SingleOutputStreamOperator<DataStruct> linuxProcess = splitStream
