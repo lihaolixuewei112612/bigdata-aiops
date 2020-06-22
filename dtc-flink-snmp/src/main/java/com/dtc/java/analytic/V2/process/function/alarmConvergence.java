@@ -11,7 +11,9 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created on 2019-12-26
@@ -23,10 +25,12 @@ import java.util.Map;
 public class alarmConvergence extends ProcessWindowFunction<AlterStruct, AlterStruct, Tuple, TimeWindow> {
     /**
      * 此处的map<code(in.f2.in.f3),value_time>
+     *
      * */
     Map<String, Integer> mapSwitch = new HashMap<>();
     @Override
     public void process(Tuple tuple, Context context, Iterable<AlterStruct> iterable, Collector<AlterStruct> collector) throws Exception {
+        Map<String, Integer> mapSwitch_bak = new HashMap<>();
         ParameterTool parameters = (ParameterTool)
                 getRuntimeContext().getExecutionConfig().getGlobalJobParameters();
         int anInt = parameters.getInt(PropertiesConstants.ALARM_CONVERGENCE);
@@ -37,6 +41,7 @@ public class alarmConvergence extends ProcessWindowFunction<AlterStruct, AlterSt
             if (!strResult) {
                 log.info("Value is not number of string!");
             } else {
+                mapSwitch_bak.put(in.getGaojing(),0);
                 mapSwitch.put(in.getGaojing(),mapSwitch.getOrDefault(in.getGaojing(),0)+1);
                 if(mapSwitch.get(in.getGaojing())==(anInt*0)+1){
                     AlterStruct alter_message = new AlterStruct("test-1", in.getHost(), in.getZbFourName(), in.getZbLastCode(), in.getNameCN(), in.getNameEN(), in.getEvent_time(), in.getSystem_time(), in.getValue(), "1", in.getUnique_id(), in.getYuzhi(), in.getHost() + "-" + in.getZbFourName());
@@ -81,6 +86,15 @@ public class alarmConvergence extends ProcessWindowFunction<AlterStruct, AlterSt
                     AlterStruct alter_message = new AlterStruct("test-11", in.getHost(), in.getZbFourName(), in.getZbLastCode(), in.getNameCN(), in.getNameEN(), in.getEvent_time(), in.getSystem_time(), in.getValue(), "1", in.getUnique_id(), in.getYuzhi(), in.getHost() + "-" + in.getZbFourName());
                     collector.collect(alter_message);
                 }
+            }
+
+        }
+        //中间隔断，上周期的数据需要清空
+        Set<Map.Entry<String, Integer>> entries = mapSwitch.entrySet();
+        for (Map.Entry<String, Integer> next : entries) {
+            String key = next.getKey();
+            if (!mapSwitch_bak.containsKey(key)) {
+                mapSwitch.remove(key);
             }
         }
     }
