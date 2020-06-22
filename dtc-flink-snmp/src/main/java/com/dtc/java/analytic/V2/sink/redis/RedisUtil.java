@@ -1,5 +1,7 @@
 package com.dtc.java.analytic.V2.sink.redis;
 
+import com.dtc.java.analytic.V2.common.constant.PropertiesConstants;
+import org.apache.flink.api.java.utils.ParameterTool;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -10,10 +12,11 @@ import redis.clients.jedis.JedisPoolConfig;
  * @Description : TODO描述类作用
  */
 public class RedisUtil {
-
     private static volatile JedisPool jedisPool = null;
-
-    public static Jedis getResource() {
+    public static Jedis getResource(ParameterTool parameterTool) {
+        String ip = parameterTool.get(PropertiesConstants.REDIS_IP).trim();
+        String port = parameterTool.get(PropertiesConstants.REDIS_PORT).trim();
+        String passwd = parameterTool.get(PropertiesConstants.REDIS_PW).trim();
         if (null == jedisPool) {
             synchronized (RedisUtil.class) {
                 if (null == jedisPool) {
@@ -22,7 +25,7 @@ public class RedisUtil {
                     config.setMaxIdle(1);
                     config.setMaxWaitMillis(100);
                     config.setTestOnBorrow(true);
-                    jedisPool = new JedisPool(config, "10.3.7.233", 6379,2000,"111111");
+                    jedisPool = new JedisPool(config, ip, Integer.parseInt(port),2000,passwd);
                 }
             }
         }

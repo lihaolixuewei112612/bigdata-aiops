@@ -36,7 +36,7 @@ public class alarmConvergence extends ProcessWindowFunction<AlterStruct, AlterSt
         int anInt = parameters.getInt(PropertiesConstants.ALARM_CONVERGENCE);
         for (AlterStruct in : iterable) {
             String code = in.getZbFourName();
-//            //判断是否是数据
+            //判断是否是数据
             boolean strResult = in.getValue().matches("-?[0-9]+.*[0-9]*");
             if (!strResult) {
                 log.info("Value is not number of string!");
