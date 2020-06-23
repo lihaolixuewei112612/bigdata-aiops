@@ -1,5 +1,6 @@
 package com.dtc.java.analytic.V2.worker;
 
+import com.dtc.java.analytic.V1.common.constant.PropertiesConstants;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;
@@ -46,6 +47,7 @@ import static com.dtc.java.analytic.V2.worker.untils.MainUntils.*;
  */
 public class StreamToFlinkV3 {
     private static final Logger logger = LoggerFactory.getLogger(StreamToFlinkV3.class);
+    //布隆过滤器
     static BloomFilter<String> bf = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 1000000, 0.001);
     private static DataStream<Map<String, String>> alarmDataStream = null;
 
@@ -55,8 +57,8 @@ public class StreamToFlinkV3 {
                 BasicTypeInfo.STRING_TYPE_INFO,
                 BasicTypeInfo.STRING_TYPE_INFO);
         ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
-        String opentsdb_url = parameterTool.get("dtc.opentsdb.url", "http://10.10.58.16:4399");
-        int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
+        String opentsdb_url = parameterTool.get(PropertiesConstants.OPENTSDB_URL, "http://10.10.58.16:4399").trim();
+        int windowSizeMillis = parameterTool.getInt(PropertiesConstants.WINDOWS_SIZE, 2000);
         TimesConstats build = getSize(parameterTool);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         env.getConfig().setGlobalJobParameters(parameterTool);
