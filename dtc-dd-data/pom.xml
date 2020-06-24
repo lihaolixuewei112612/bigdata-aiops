@@ -9,18 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>DD-Data</artifactId>
+<!--    <artifactId>DD-Data</artifactId>-->
+    <artifactId>dtc-dd-data</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jpcap/jpcap -->
-        <dependency>
-            <groupId>jpcap</groupId>
-            <artifactId>jpcap</artifactId>
-            <version>0.1.18-002</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

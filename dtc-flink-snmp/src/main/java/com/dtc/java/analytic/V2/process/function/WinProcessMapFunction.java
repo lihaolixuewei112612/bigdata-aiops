@@ -115,6 +115,7 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                             double result = (cpu_sum / list.size())*100;
                             collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), wc.getZbFourName(), "", wc.getNameCN(), wc.getNameEN(), wc.getTime(), String.valueOf(result)));
                             count += 1;
+                            cpuNum.clear();
                             continue;
                         }
                     }
