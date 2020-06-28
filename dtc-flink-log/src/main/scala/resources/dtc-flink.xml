@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!-- Put site-specific property overrides in this file. -->
+<configuration>
+
+    <property>
+        <name>flink.kafka.broker.list</name>
+        <value>10.3.7.232:9092,10.3.7.233:9092,10.3.6.20:9092</value>
+    </property>
+    <property>
+        <!-- HDFS file pattern for MapReduce input -->
+        <name>flink.zookeeper.quorum</name>
+        <!--<value>.*\/Razor.*log\.lz4</value>-->
+        <value>10.3.7.232:2181,10.3.7.233:2181,10.3.6.20:2181</value>
+    </property>
+
+    <!-- 将hdfs的数据导入到 hbase的开关-->
+    <property>
+        <name>flink.kafka.topic</name>
+        <value>connect-test</value>
+    </property>
+    <property>
+        <name>flink.kafka.groupid</name>
+        <value>bigdata_test</value>
+    </property>
+
+    <!-- es nodes-->
+    <property>
+        <name>dtc.es.nodes</name>
+        <value>10.3.6.7:9200,10.3.6.12:9200,10.3.6.16:9200</value>
+    </property>
+    <property>
+        <name>dtc.es.cluster.name</name>
+        <value>common_test</value>
+    </property>
+    <property>
+        <name>dtc.es.flink.index.name</name>
+        <value>flink_test</value>
+    </property>
+    <property>
+        <name>dtc.es.flink.type.name</name>
+        <value>flink_test</value>
+    </property>
+
+    <!--日志等级配置-->
+    <property>
+        <name>log.level</name>
+        <value>info</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.ip</name>
+        <value>10.3.6.7,10.3.6.12,10.3.6.16</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.port</name>
+        <value>2181</value>
+    </property>
+</configuration>

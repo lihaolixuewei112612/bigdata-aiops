@@ -13,7 +13,9 @@
         <module>dtc-flink-snmp</module>
         <module>dtc-SC</module>
         <module>dtc-dd-data</module>
+        <module>dtc-flink-log</module>
         <module>dtc-dist</module>
+
 
 
     </modules>

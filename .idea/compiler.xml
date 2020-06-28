@@ -8,8 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="dtc-flink-zabbix" />
         <module name="dtc-dd-data" />
-        <module name="dtc-SC" />
+        <module name="dtc-flink-log" />
         <module name="dtc-flink-snmp" />
+        <module name="dtc-SC" />
         <module name="dtc-dist" />
       </profile>
     </annotationProcessing>
@@ -17,6 +18,7 @@
       <module name="dtc-bigdata" target="1.5" />
       <module name="dtc-dd-data" target="8" />
       <module name="dtc-dist" target="1.5" />
+      <module name="dtc-flink-log" target="1.5" />
       <module name="dtc-flink-snmp" target="8" />
       <module name="dtc-flink-zabbix" target="8" />
       <module name="dtc-SC" target="8" />
