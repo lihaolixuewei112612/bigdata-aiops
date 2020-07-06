@@ -180,16 +180,4 @@ function start_flink-bb {
         echo "submit is success!!"
     fi
 }
-function start_dd {
-    if ! which java >/dev/null 2>&1 ; then
-        return 2;
-    fi
-    nohup ${EXEC} java -jar ${FM_HOME}/lib/flink/sc/dd/dtc-dd-data.jar &
-    local test=$?
-    if [ ${test} -ne 0 ];then
-        echo "submit is failed!"
-    else
-        echo "submit is success!!"
-    fi
-}
 

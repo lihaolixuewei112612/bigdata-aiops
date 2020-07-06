@@ -113,11 +113,11 @@ public class StreamToFlinkV3Test {
 
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast);
-        alarmWindows.forEach(e-> {
-           e.keyBy("gaojing")
-                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-                    .process(new alarmConvergence()).print("告警收敛信息打印：   ");
-        });
+//        alarmWindows.forEach(e-> {
+//           e.keyBy("gaojing")
+//                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+//                    .process(new alarmConvergence()).print("告警收敛信息打印：   ");
+//        });
 
         //linux指标数据处理
         SingleOutputStreamOperator<DataStruct> linuxProcess = splitStream

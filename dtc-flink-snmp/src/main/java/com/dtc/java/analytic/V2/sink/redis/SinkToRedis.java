@@ -37,7 +37,7 @@ public class SinkToRedis extends RichSinkFunction<Tuple3<String, String, String>
         } else if ("102_101_103_107_108".equals(value.f0)||"102_103_103_105_105".equals(value.f0)||"103_102_103_107_107_1".equals(value)) {
             jedis.sadd(value.f0 + "-" + 2, value.f1);
         }
-        jedis.expire(value.f0, 600);
+        jedis.expire(value.f0, 60000);
     }
 
     @Override

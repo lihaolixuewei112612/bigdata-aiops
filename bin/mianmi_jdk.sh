@@ -37,16 +37,16 @@ function key_gen(){
           "*ssword:" {send "$PASSWORD\r"}
     }
   expect "*#"
-  expect "rm -rf /root/.ssh"
+  expect "rm -rf ~/.ssh"
   expect "*#"
   send "${dtc_ssh_keygen} -t rsa -P ''\r"
   expect "*rsa):" { send "\r"
           expect "*y/n)?" {send "y\r"}
   }
   expect "*$"
-  send "cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys\r"
+  send "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys\r"
   expect "*$"
-  send "chmod 700 /root/.ssh/authorized_keys\r"
+  send "chmod 700 ~t/.ssh/authorized_keys\r"
 expect eof
 EOF
   done

@@ -23,6 +23,9 @@ import org.apache.flink.util.Collector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author : lihao
@@ -145,7 +148,7 @@ public class AlarmUntils {
                 if (split1.length != 4) {
                     return;
                 }
-                broadcastState.clear();
+//                broadcastState.clear();
                 AlarmRule(value, out, unique_id, split1, result);
             }
 

@@ -99,7 +99,7 @@ public class StreamToFlinkV3 {
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new WinProcessMapFunction());
-
+        //机器网络是否联通
         DataStream<AlterStruct> alarmPing = getAlarmPing(winProcess, broadcast, build);
         alarmPing.addSink(new MysqlSink());
         //windows数据全量写opentsdb
@@ -107,11 +107,11 @@ public class StreamToFlinkV3 {
 
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast, build);
-        alarmWindows.forEach(e-> {
-            SingleOutputStreamOperator<AlterStruct> process = e.keyBy("gaojing")
-                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-                    .process(new alarmConvergence());
-        });
+//        alarmWindows.forEach(e-> {
+//            SingleOutputStreamOperator<AlterStruct> process = e.keyBy("gaojing")
+//                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+//                    .process(new alarmConvergence());
+//        });
 
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
     }
