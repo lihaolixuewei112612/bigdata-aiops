@@ -21,11 +21,11 @@ public class RedisUtil {
             synchronized (RedisUtil.class) {
                 if (null == jedisPool) {
                     JedisPoolConfig config = new JedisPoolConfig();
-                    config.setMaxTotal(4);
-                    config.setMaxIdle(1);
-                    config.setMaxWaitMillis(100);
+                    config.setMaxTotal(1000);
+                    config.setMaxIdle(100);
+                    config.setMaxWaitMillis(5000);
                     config.setTestOnBorrow(true);
-                    jedisPool = new JedisPool(config, ip, Integer.parseInt(port),2000,passwd);
+                    jedisPool = new JedisPool(config, ip, Integer.parseInt(port),5000,passwd);
                 }
             }
         }
