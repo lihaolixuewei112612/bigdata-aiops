@@ -1,5 +1,6 @@
 package com.dtc.java.analytic.V2.worker;
 
+import com.dtc.java.analytic.V2.alarm.alarmConvergence;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;
@@ -8,7 +9,6 @@ import com.dtc.java.analytic.V2.map.function.LinuxMapFunction;
 import com.dtc.java.analytic.V2.map.function.WinMapFunction;
 import com.dtc.java.analytic.V2.process.function.LinuxProcessMapFunction;
 import com.dtc.java.analytic.V2.process.function.WinProcessMapFunction;
-import com.dtc.java.analytic.V2.process.function.alarmConvergence;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -132,15 +132,21 @@ public class StreamToFlinkV3Test {
 //
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
-        alarmLinux.forEach(e -> e.keyBy(new KeySelector<AlterStruct, String>() {
-            @Override
-            public String getKey(AlterStruct value) throws Exception {
-                return value.getGaojing();
-            }
-            //时间窗口 6秒  滑动间隔3秒
-        }).timeWindow(Time.seconds(60))
-                .aggregate(new CountAggregate_2(), new CountWindowFunction_2()).print("test:"));
-        alarmLinux.forEach(e -> e.print("linux打印告警:"));
+        alarmLinux.forEach(e-> {
+            SingleOutputStreamOperator<AlterStruct> process1 = e.keyBy("gaojing")
+                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+                    .process(new alarmConvergence());
+            process1.print("告警收敛策略 : ");
+        });
+//        alarmLinux.forEach(e -> e.keyBy(new KeySelector<AlterStruct, String>() {
+//            @Override
+//            public String getKey(AlterStruct value) throws Exception {
+//                return value.getGaojing();
+//            }
+//            //时间窗口 6秒  滑动间隔3秒
+//        }).timeWindow(Time.seconds(60))
+//                .aggregate(new CountAggregate_2(), new CountWindowFunction_2()).print("test:"));
+//        alarmLinux.forEach(e -> e.print("linux打印告警:"));
 
 //        alarmLinux.forEach(e -> e.addSink(new MysqlSink()));
         env.execute("Dtc-Alarm-Flink-Process");

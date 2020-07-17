@@ -85,7 +85,7 @@ public class DPComplete {
     private static void DP_EXEC(StreamExecutionEnvironment env, int windowSizeMillis) {
         DataStreamSource<Tuple2<Integer,Integer>> zsStream = env.addSource(new DaPingAllNum()).setParallelism(1);
         //大盘今日告警数
-        //DataStreamSource<Tuple2<Integer, Integer>> tuple2DataStreamSource = env.addSource(new DaPingAlarm()).setParallelism(1);
+//        DataStreamSource<Tuple2<Integer, Integer>> tuple2DataStreamSource = env.addSource(new DaPingAlarm()).setParallelism(1);
         //大盘今日工单
         DataStreamSource<Tuple2<Integer, Integer>> today_DP_WO = env.addSource(new DaPingOrder()).setParallelism(1);
         //变更

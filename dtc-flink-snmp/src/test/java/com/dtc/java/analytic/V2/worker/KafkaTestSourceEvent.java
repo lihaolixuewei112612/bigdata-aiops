@@ -30,17 +30,31 @@ public class KafkaTestSourceEvent extends RichSourceFunction<SourceEvent> {
         Long count = 0L;
         while (running && count < numElements) {
             SourceEvent s = generateEvent();
+            SourceEvent s1 = generateEvent1();
             String str = "{\"labels\":{\"__name__\":\"oracledb_resource_current_utilization\",\"instance\":\"10.3.7.231:9161\",\"job\":\"consul\",\"resource_name\":\"gcs_shadows\"},\"name\":\"oracledb_resource_current_utilization\",\"timestamp\":\"2019-08-23T06:40:52Z\",\"value\":\"0\"}";
 //            String str = generateEvent();
             ctx.collect(s);
-            Thread.sleep(2000);
+            ctx.collect(s1);
+            Thread.sleep(1000);
         }
 
     }
     private SourceEvent generateEvent(){
         SourceEvent event = new SourceEvent();
-        event.setTime("1589537380872");
-        event.setCode("101_100_101_101_101");
+        String time = String.valueOf(System.currentTimeMillis());
+        event.setTime(time);
+        event.setCode("101_101_106_101_101");
+        event.setHost(channel.get(rand.nextInt(channel.size())));
+        event.setNameCN("1分钟平均load值");
+        event.setNameEN("system_load1");
+        event.setValue(channel1.get(rand.nextInt(channel1.size())));
+        return event;
+    }
+    private SourceEvent generateEvent1() {
+        SourceEvent event = new SourceEvent();
+        String time = String.valueOf(System.currentTimeMillis());
+        event.setTime(time);
+        event.setCode("101_101_106_101_101");
         event.setHost(channel.get(rand.nextInt(channel.size())));
         event.setNameCN("1分钟平均load值");
         event.setNameEN("system_load1");

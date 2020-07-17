@@ -1,6 +1,6 @@
 package com.dtc.java.analytic.V2.worker;
 
-import com.dtc.java.analytic.V1.common.constant.PropertiesConstants;
+import com.dtc.java.analytic.V2.common.constant.PropertiesConstants;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;

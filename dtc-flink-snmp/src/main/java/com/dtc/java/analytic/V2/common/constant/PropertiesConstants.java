@@ -17,6 +17,7 @@ public class PropertiesConstants {
     public static final String TOPIC = "topic";
 
     public static final String GROUP_ID = "group.id";
+    public static final String WINDOWS_SIZE= "dtc.windowSizeMillis";
 
     public static final String KEY_DESERIALIZER = "key.deserializer";
 
