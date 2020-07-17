@@ -21,19 +21,21 @@ import java.util.Set;
  * @author :hao.li
  */
 @Slf4j
-public class alarmConvergence extends ProcessWindowFunction<AlterStruct, AlterStruct, Tuple, TimeWindow> {
+public class countAlarmConvergence extends ProcessWindowFunction<AlterStruct, AlterStruct, Tuple, TimeWindow> {
     /**
      * 此处的map<code(in.f2.in.f3),value_time>
      *
      * */
     Map<String, Integer> mapSwitch = new HashMap<>();
+
 //    Map<String, Integer> mapSwitch_bak = new HashMap<>();
     @Override
     public void process(Tuple tuple, Context context, Iterable<AlterStruct> iterable, Collector<AlterStruct> collector) throws Exception {
         Map<String, Integer> mapSwitch_bak = new HashMap<>();
         ParameterTool parameters = (ParameterTool)
                 getRuntimeContext().getExecutionConfig().getGlobalJobParameters();
-        int anInt = parameters.getInt(PropertiesConstants.ALARM_CONVERGENCE);
+        int anInt = parameters.getInt(PropertiesConstants.COUNT_ALARM_CONVERGENCE);
+
         for (AlterStruct in : iterable) {
             String code = in.getZbFourName();
             //判断是否是数据
@@ -90,14 +92,14 @@ public class alarmConvergence extends ProcessWindowFunction<AlterStruct, AlterSt
 
         }
         //中间隔断，上周期的数据需要清空
-        Iterator<Map.Entry<String, Integer>> iterator = mapSwitch.entrySet().iterator();
-        while(iterator.hasNext()){
-            Map.Entry<String, Integer> next = iterator.next();
-            String key = next.getKey();
-            if (!mapSwitch_bak.containsKey(key)) {
-                iterator.remove();
-            }
-        }
+//        Iterator<Map.Entry<String, Integer>> iterator = mapSwitch.entrySet().iterator();
+//        while(iterator.hasNext()){
+//            Map.Entry<String, Integer> next = iterator.next();
+//            String key = next.getKey();
+//            if (!mapSwitch_bak.containsKey(key)) {
+//                iterator.remove();
+//            }
+//        }
 //        mapSwitch_bak.clear();
     }
 }

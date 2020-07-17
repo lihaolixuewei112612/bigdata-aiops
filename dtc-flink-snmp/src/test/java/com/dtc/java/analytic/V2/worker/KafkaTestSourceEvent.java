@@ -19,6 +19,7 @@ public class KafkaTestSourceEvent extends RichSourceFunction<SourceEvent> {
     private boolean running = true;
     Random rand = new Random();
     List<String> channel = Arrays.asList("10.3.7.231", "10.3.7.232", "10.3.7.233", "10.3.7.234");
+//    List<String> channel = Arrays.asList("10.3.7.231");
     List<String> channel1 = Arrays.asList("0.8", "0.7", "0.9", "1.7");
     //{"time":"1589537380872","code":"101_101_101_101_101","host":"10.3.7.232","nameCN":"1分钟平均load值","value":"0.23","nameEN":"system_load1"}
 //{"time":"1589537382872","code":"101_101_101_101_101","host":"10.3.7.232","nameCN":"1分钟平均load值","value":"0.29","nameEN":"system_load1"}

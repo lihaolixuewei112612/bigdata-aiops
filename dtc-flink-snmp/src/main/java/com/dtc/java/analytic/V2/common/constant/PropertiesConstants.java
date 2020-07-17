@@ -73,8 +73,11 @@ public class PropertiesConstants {
     public static final String MIN_IDLE = "mysql.minIdle";
 
     public static final String CHAR_UTF8 = "UTF-8";
+    //per
+    public static final String COUNT_ALARM_CONVERGENCE="dtc.alarm.convergence.count";
+    //min
+    public static final String TIME_ALARM_CONVERGENCE="dtc.alarm.convergence.time";
 
-    public static final String ALARM_CONVERGENCE="dtc.alarm.convergence.times";
 
 
     /**

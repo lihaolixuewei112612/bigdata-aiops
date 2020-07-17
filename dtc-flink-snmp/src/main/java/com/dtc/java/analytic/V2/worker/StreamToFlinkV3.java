@@ -110,7 +110,7 @@ public class StreamToFlinkV3 {
 //        alarmWindows.forEach(e-> {
 //            SingleOutputStreamOperator<AlterStruct> process = e.keyBy("gaojing")
 //                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-//                    .process(new alarmConvergence());
+//                    .process(new countAlarmConvergence());
 //        });
 
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));

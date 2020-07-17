@@ -1,6 +1,7 @@
 package com.dtc.java.analytic.V2.worker;
 
-import com.dtc.java.analytic.V2.alarm.alarmConvergence;
+import com.dtc.java.analytic.V2.alarm.countAlarmConvergence;
+import com.dtc.java.analytic.V2.alarm.timeAlarmConvergence;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;
@@ -16,7 +17,6 @@ import org.apache.flink.api.common.state.BroadcastState;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.state.ReadOnlyBroadcastState;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
-import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.api.java.tuple.Tuple4;
@@ -116,7 +116,7 @@ public class StreamToFlinkV3Test {
 //        alarmWindows.forEach(e-> {
 //           e.keyBy("gaojing")
 //                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-//                    .process(new alarmConvergence()).print("告警收敛信息打印：   ");
+//                    .process(new countAlarmConvergence()).print("告警收敛信息打印：   ");
 //        });
 
         //linux指标数据处理
@@ -135,9 +135,17 @@ public class StreamToFlinkV3Test {
         alarmLinux.forEach(e-> {
             SingleOutputStreamOperator<AlterStruct> process1 = e.keyBy("gaojing")
                     .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-                    .process(new alarmConvergence());
-            process1.print("告警收敛策略 : ");
+                    .process(new timeAlarmConvergence());
+            process1.print("时间告警收敛策略 : ");
         });
+
+        alarmLinux.forEach(e-> {
+            SingleOutputStreamOperator<AlterStruct> process1 = e.keyBy("gaojing")
+                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+                    .process(new countAlarmConvergence());
+            process1.print("个数告警收敛策略 : ");
+        });
+
 //        alarmLinux.forEach(e -> e.keyBy(new KeySelector<AlterStruct, String>() {
 //            @Override
 //            public String getKey(AlterStruct value) throws Exception {
