@@ -15,7 +15,6 @@ import java.sql.SQLException;
 @Slf4j
 public class MySQLUtil {
 
-
     public static Connection getConnection(ParameterTool parameterTool) {
         final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
         Connection connection = null;

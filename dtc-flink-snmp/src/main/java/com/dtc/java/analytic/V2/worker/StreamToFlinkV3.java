@@ -1,5 +1,6 @@
 package com.dtc.java.analytic.V2.worker;
 
+import com.dtc.java.analytic.V2.common.constant.PropertiesConstants;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;
@@ -10,18 +11,22 @@ import com.dtc.java.analytic.V2.map.function.*;
 import com.dtc.java.analytic.V2.process.function.*;
 import com.dtc.java.analytic.V2.sink.mysql.MysqlSink;
 import com.dtc.java.analytic.V2.sink.opentsdb.PSinkToOpentsdb;
+import com.dtc.java.analytic.V2.sink.redis.SinkToRedis;
 import com.dtc.java.analytic.V2.source.mysql.ReadAlarmMessage;
 import com.google.common.base.Charsets;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
+import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
+import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.datastream.*;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.util.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.dtc.java.analytic.V2.alarm.AlarmUntils.getAlarm;
 import static com.dtc.java.analytic.V2.alarm.PingAlarmUntils.getAlarmPing;
-import static com.dtc.java.analytic.V2.worker.MainUntils.*;
+import static com.dtc.java.analytic.V2.worker.untils.MainUntils.*;
 
 
 /**
@@ -42,6 +47,7 @@ import static com.dtc.java.analytic.V2.worker.MainUntils.*;
  */
 public class StreamToFlinkV3 {
     private static final Logger logger = LoggerFactory.getLogger(StreamToFlinkV3.class);
+    //布隆过滤器
     static BloomFilter<String> bf = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 1000000, 0.001);
     private static DataStream<Map<String, String>> alarmDataStream = null;
 
@@ -51,11 +57,12 @@ public class StreamToFlinkV3 {
                 BasicTypeInfo.STRING_TYPE_INFO,
                 BasicTypeInfo.STRING_TYPE_INFO);
         ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
-        String opentsdb_url = parameterTool.get("dtc.opentsdb.url", "http://10.10.58.16:4399");
-        int windowSizeMillis = parameterTool.getInt("dtc.windowSizeMillis", 2000);
+        String opentsdb_url = parameterTool.get(PropertiesConstants.OPENTSDB_URL, "http://10.10.58.16:4399").trim();
+        int windowSizeMillis = parameterTool.getInt(PropertiesConstants.WINDOWS_SIZE, 2000);
         TimesConstats build = getSize(parameterTool);
         StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
         env.getConfig().setGlobalJobParameters(parameterTool);
+//        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         //asset_id, ipv4, strategy_kind, triger_name, number, code, alarm_level, asset_code, name
         DataStreamSource<Tuple9<String, String, String, String, Double, String, String, String, String>> alarmMessageMysql = env.addSource(new ReadAlarmMessage()).setParallelism(1);
         DataStream<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> process = alarmMessageMysql.keyBy(0, 5).timeWindow(Time.milliseconds(windowSizeMillis)).process(new MySqlProcessMapFunction());
@@ -92,7 +99,7 @@ public class StreamToFlinkV3 {
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new WinProcessMapFunction());
-
+        //机器网络是否联通
         DataStream<AlterStruct> alarmPing = getAlarmPing(winProcess, broadcast, build);
         alarmPing.addSink(new MysqlSink());
         //windows数据全量写opentsdb
@@ -100,6 +107,12 @@ public class StreamToFlinkV3 {
 
         //windows数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmWindows = getAlarm(winProcess, broadcast, build);
+//        alarmWindows.forEach(e-> {
+//            SingleOutputStreamOperator<AlterStruct> process = e.keyBy("gaojing")
+//                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+//                    .process(new countAlarmConvergence());
+//        });
+
         alarmWindows.forEach(e -> e.addSink(new MysqlSink()));
     }
 
@@ -126,23 +139,37 @@ public class StreamToFlinkV3 {
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new H3CSwitchProcessMapFunction());
-        H3C_Switch.map(new MapFunction<DataStruct, Object>() {
+//        H3C_Switch.map(new MapFunction<DataStruct, Object>() {
+//            @Override
+//            public Object map(DataStruct string) throws Exception {
+//                String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
+//                if (!bf.mightContain(demo)) {
+//                    if ("102_101_101_101_101".equals(string.getZbFourName())) {
+//                        bf.put(demo);
+//                        writeEventToHbase(string, parameterTool, "1");
+//                    }
+//                    if ("102_101_103_107_108".equals(string.getZbFourName())) {
+//                        bf.put(demo);
+//                        writeEventToHbase(string, parameterTool, "2");
+//                    }
+//                }
+//                return string;
+//            }
+//        });
+        //板卡等信息写入到redis中
+        H3C_Switch.flatMap(new FlatMapFunction<DataStruct, Tuple3<String, String, String>>() {
             @Override
-            public Object map(DataStruct string) throws Exception {
-                String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
+            public void flatMap(DataStruct value, Collector<Tuple3<String, String, String>> out) throws Exception {
+                String demo = value.getHost() + "_" + value.getZbFourName() + "_" + value.getZbLastCode();
                 if (!bf.mightContain(demo)) {
-                    if ("102_101_101_101_101".equals(string.getZbFourName())) {
+                    if ("102_101_101_101_101".equals(value.getZbFourName()) || "102_101_103_107_108".equals(value.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "1");
-                    }
-                    if ("102_101_103_107_108".equals(string.getZbFourName())) {
-                        bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "2");
+                        out.collect(new Tuple3<>(value.getZbFourName(), value.getHost(), value.getZbLastCode()));
                     }
                 }
-                return string;
             }
-        });
+        }).addSink(new SinkToRedis());
+
         //Linux数据全量写opentsdb
         H3C_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
         //Linux数据进行告警规则判断并将告警数据写入mysql
@@ -152,12 +179,17 @@ public class StreamToFlinkV3 {
 
     private static void ZX_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream, ParameterTool parameterTool, TimesConstats build) {
         //交换机指标数据处理
+<<<<<<< HEAD
         SingleOutputStreamOperator<DataStruct> H3C_Switch = splitStream
+=======
+        SingleOutputStreamOperator<DataStruct> ZX_Switch = splitStream
+>>>>>>> dev
                 .select("ZX_Switch")
                 .map(new ZXMapFunction())
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new ZXSwitchProcessMapFunction());
+<<<<<<< HEAD
         H3C_Switch.map(new MapFunction<DataStruct, Object>() {
             @Override
             public Object map(DataStruct string) throws Exception {
@@ -179,38 +211,89 @@ public class StreamToFlinkV3 {
         H3C_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast, build);
+=======
+        //板卡等信息数据写hbase中
+//        ZX_Switch.map(new MapFunction<DataStruct, Object>() {
+//            @Override
+//            public Object map(DataStruct string) throws Exception {
+//                String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
+//                if (!bf.mightContain(demo)) {
+//                    if ("102_103_101_101_101".equals(string.getZbFourName())) {
+//                        bf.put(demo);
+//                        writeEventToHbase(string, parameterTool, "1");
+//                    }
+//                    if ("102_103_103_105_105".equals(string.getZbFourName())) {
+//                        bf.put(demo);
+//                        writeEventToHbase(string, parameterTool, "2");
+//                    }
+//                }
+//                return string;
+//            }
+//        });
+        //板卡等信息写入到redis中
+        ZX_Switch.flatMap(new FlatMapFunction<DataStruct, Tuple3<String, String, String>>() {
+            @Override
+            public void flatMap(DataStruct value, Collector<Tuple3<String, String, String>> out) throws Exception {
+                String demo = value.getHost() + "_" + value.getZbFourName() + "_" + value.getZbLastCode();
+                if (!bf.mightContain(demo)) {
+                    if ("102_103_101_101_101".equals(value.getZbFourName()) || "102_103_103_105_105".equals(value.getZbFourName())) {
+                        bf.put(demo);
+                        out.collect(new Tuple3<>(value.getZbFourName(), value.getHost(), value.getZbLastCode()));
+                    }
+                }
+            }
+        }).addSink(new SinkToRedis());
+
+        //Linux数据全量写opentsdb
+        ZX_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
+        //Linux数据进行告警规则判断并将告警数据写入mysql
+        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(ZX_Switch, broadcast, build);
+>>>>>>> dev
         H3C_Switch_1.forEach(e -> e.addSink(new MysqlSink()));
     }
 
     private static void DPI_Data_Process(String opentsdb_url, int windowSizeMillis, BroadcastStream<Map<String, String>> broadcast, SplitStream<DataStruct> splitStream, ParameterTool parameterTool, TimesConstats build) {
         //交换机指标数据处理
-        SingleOutputStreamOperator<DataStruct> H3C_Switch = splitStream
+        SingleOutputStreamOperator<DataStruct> DPI_Switch = splitStream
                 .select("DPI")
                 .map(new DPIMapFunction())
                 .keyBy("Host")
                 .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                 .process(new DPISwitchProcessMapFunction());
-        H3C_Switch.map(new MapFunction<DataStruct, Object>() {
+//        DPI_Switch.map(new MapFunction<DataStruct, Object>() {
+//            @Override
+//            public Object map(DataStruct string) throws Exception {
+//                String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
+//                if (!bf.mightContain(demo)) {
+//                    if ("103_102_101_101_101".equals(string.getZbFourName())) {
+//                        bf.put(demo);
+//                        writeEventToHbase(string, parameterTool, "1");
+//                    }
+//                    if ("103_102_103_107_107_1".equals(string.getZbFourName())) {
+//                        bf.put(demo);
+//                        writeEventToHbase(string, parameterTool, "2");
+//                    }
+//                }
+//                return string;
+//            }
+//        });
+
+        DPI_Switch.flatMap(new FlatMapFunction<DataStruct, Tuple3<String, String, String>>() {
             @Override
-            public Object map(DataStruct string) throws Exception {
-                String demo = string.getHost() + "_" + string.getZbFourName() + "_" + string.getZbLastCode();
+            public void flatMap(DataStruct value, Collector<Tuple3<String, String, String>> out) throws Exception {
+                String demo = value.getHost() + "_" + value.getZbFourName() + "_" + value.getZbLastCode();
                 if (!bf.mightContain(demo)) {
-                    if ("103_102_101_101_101".equals(string.getZbFourName())) {
+                    if ("103_102_101_101_101".equals(value.getZbFourName()) || "103_102_103_107_107_1".equals(value.getZbFourName())) {
                         bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "1");
-                    }
-                    if ("103_102_103_107_107_1".equals(string.getZbFourName())) {
-                        bf.put(demo);
-                        writeEventToHbase(string, parameterTool, "2");
+                        out.collect(new Tuple3<>(value.getZbFourName(), value.getHost(), value.getZbLastCode()));
                     }
                 }
-                return string;
             }
-        });
+        }).addSink(new SinkToRedis());
         //Linux数据全量写opentsdb
-        H3C_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
+        DPI_Switch.addSink(new PSinkToOpentsdb(opentsdb_url));
         //Linux数据进行告警规则判断并将告警数据写入mysql
-        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(H3C_Switch, broadcast, build);
+        List<DataStream<AlterStruct>> H3C_Switch_1 = getAlarm(DPI_Switch, broadcast, build);
         H3C_Switch_1.forEach(e -> e.addSink(new MysqlSink()));
     }
 

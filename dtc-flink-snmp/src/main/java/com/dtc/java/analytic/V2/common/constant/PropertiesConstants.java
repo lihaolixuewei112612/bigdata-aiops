@@ -1,8 +1,6 @@
 package com.dtc.java.analytic.V2.common.constant;
 
 /**
- * Created on 2020-02-15
- *
  * @author :hao.li
  */
 public class PropertiesConstants {
@@ -19,6 +17,7 @@ public class PropertiesConstants {
     public static final String TOPIC = "topic";
 
     public static final String GROUP_ID = "group.id";
+    public static final String WINDOWS_SIZE= "dtc.windowSizeMillis";
 
     public static final String KEY_DESERIALIZER = "key.deserializer";
 
@@ -74,6 +73,11 @@ public class PropertiesConstants {
     public static final String MIN_IDLE = "mysql.minIdle";
 
     public static final String CHAR_UTF8 = "UTF-8";
+    //per
+    public static final String COUNT_ALARM_CONVERGENCE="dtc.alarm.convergence.count";
+    //min
+    public static final String TIME_ALARM_CONVERGENCE="dtc.alarm.convergence.time";
+
 
 
     /**
@@ -133,5 +137,11 @@ public class PropertiesConstants {
     public static final String MYSQL_USERNAME = "mysql.username";
     public static final String MYSQL_ALAEM_TABLE = "mysql.alarm_rule_table";
     public static final String MYSQL_WINDOWS_TABLE = "mysql.windows_disk_sql";
+
+    //redis
+    public static final String REDIS_IP="dtc.redis.ip";
+    public static final String REDIS_PORT="dtc.redis.port";
+    public static final String REDIS_PW="dtc.redis.pw";
+
 
 }

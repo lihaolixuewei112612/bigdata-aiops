@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/dtc-SC" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dtc-dd-data" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dtc-dist" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dtc-flink-log" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dtc-flink-snmp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dtc-flink-zabbix" charset="UTF-8" />
   </component>

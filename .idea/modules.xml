@@ -6,9 +6,9 @@
       <module fileurl="file://$PROJECT_DIR$/dtc-bigdata.iml" filepath="$PROJECT_DIR$/dtc-bigdata.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-dd-data/dtc-dd-data.iml" filepath="$PROJECT_DIR$/dtc-dd-data/dtc-dd-data.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-dist/dtc-dist.iml" filepath="$PROJECT_DIR$/dtc-dist/dtc-dist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dtc-flink-log/dtc-flink-log.iml" filepath="$PROJECT_DIR$/dtc-flink-log/dtc-flink-log.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-flink-snmp/dtc-flink-snmp.iml" filepath="$PROJECT_DIR$/dtc-flink-snmp/dtc-flink-snmp.iml" />
       <module fileurl="file://$PROJECT_DIR$/dtc-flink-zabbix/dtc-flink-zabbix.iml" filepath="$PROJECT_DIR$/dtc-flink-zabbix/dtc-flink-zabbix.iml" />
-      <module fileurl="file://$PROJECT_DIR$/log-analytic/log-analytic.iml" filepath="$PROJECT_DIR$/log-analytic/log-analytic.iml" />
     </modules>
   </component>
 </project>

@@ -91,13 +91,13 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                     cpuNum.put(keyValue, "1");
                     {
                     }
-
                     continue;
                 } else {
                     flag = true;
                 }
             }
             List<String> list = null;
+            //todo:cpu展示有问题，需要重新思考
             if (flag) {
                 list = new ArrayList<>();
                 for (Map.Entry<String, String> entity : cpuNum.entrySet()) {
@@ -115,6 +115,7 @@ public class WinProcessMapFunction extends ProcessWindowFunction<DataStruct, Dat
                             double result = (cpu_sum / list.size())*100;
                             collector.collect(new DataStruct(wc.getSystem_name(), wc.getHost(), wc.getZbFourName(), "", wc.getNameCN(), wc.getNameEN(), wc.getTime(), String.valueOf(result)));
                             count += 1;
+                            cpuNum.clear();
                             continue;
                         }
                     }

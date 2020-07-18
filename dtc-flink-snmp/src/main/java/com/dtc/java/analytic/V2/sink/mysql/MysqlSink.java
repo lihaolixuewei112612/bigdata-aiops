@@ -3,6 +3,7 @@ package com.dtc.java.analytic.V2.sink.mysql;
 import com.dtc.java.analytic.V2.common.constant.MySQLUtil;
 import com.dtc.java.analytic.V2.common.constant.PropertiesConstants;
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
+import com.dtc.java.analytic.V2.worker.StreamToFlinkV3;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
@@ -88,6 +89,7 @@ public class MysqlSink extends RichSinkFunction<AlterStruct> {
             preparedStatement.setString(9, index_id);
             preparedStatement.setString(10,strategy_id);
             preparedStatement.executeUpdate();
+            System.out.println(description+" 打印告警数据写入到msyql中,策略id是 "+ strategy_id);
         } catch (Exception e) {
             e.printStackTrace();
         }

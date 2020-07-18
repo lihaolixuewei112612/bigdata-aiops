@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>DD-Data</artifactId>
+<!--    <artifactId>DD-Data</artifactId>-->
+    <artifactId>dtc-dd-data</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -21,6 +22,11 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shyiko</groupId>
+            <artifactId>mysql-binlog-connector-java</artifactId>
+            <version>0.13.0</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>

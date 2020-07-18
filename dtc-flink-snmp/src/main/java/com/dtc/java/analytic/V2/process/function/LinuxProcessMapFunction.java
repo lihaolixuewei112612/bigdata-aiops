@@ -436,13 +436,15 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
      * 主机内存:内存处理逻辑 包括内存总量/空闲内存/已用内存/内存使用率/内存空闲率
      */
     private void getCpuInfo(Collector<DataStruct> collector, DecimalFormat df, DataStruct in, double mem_total, double mem_available, double mem_buffered, double mem_cached) {
-        double mem_used = mem_total - mem_available - mem_buffered - mem_cached;
+//        double mem_used = mem_total - mem_available - mem_buffered - mem_cached;
+        double mem_used= mem_available;
         //总内存--单位MB
         String memoryTotal_M = df.format(mem_total / 1024d);
         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_101_101", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryTotal_M));
 
         //可获取内存--单位MB
-        String memoryAvailable = df.format(mem_available / 1024d);
+        double mem_free=mem_total-mem_used;
+        String memoryAvailable = df.format(mem_free / 1024d);
         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_105_105", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryAvailable));
 
         //buffer内存
@@ -455,12 +457,18 @@ public class LinuxProcessMapFunction extends ProcessWindowFunction<DataStruct, D
 
 
         //已用内存--单位MB
-        String memoryUsed_M = df.format((mem_total - mem_available - mem_buffered - mem_cached) / 1024d);
+        String memoryUsed_M = df.format(mem_used / 1024d);
         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_102_102", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryUsed_M));
 
 
         //内存使用率
-        String memoryUsedRate = String.valueOf(mem_used / mem_total * 100);
+        String memoryUsedRate=null;
+        double v = mem_used / mem_total * 100;
+        if(v<0.0){
+            memoryUsedRate ="0";
+        }else {
+            memoryUsedRate = String.valueOf(mem_used / mem_total * 100);
+        }
         collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), "101_101_104_109_109", "000", in.getNameCN(), in.getNameEN(), in.getTime(), memoryUsedRate));
 
         //内存空闲率

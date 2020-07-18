@@ -5,6 +5,7 @@ import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.SourceEvent;
 import com.dtc.java.analytic.V2.common.utils.ExecutionEnvUtil;
 import com.dtc.java.analytic.V2.common.utils.KafkaConfigUtil;
+import com.dtc.java.analytic.V2.source.test.TestSourceEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.api.common.functions.FilterFunction;
@@ -40,8 +41,8 @@ public class StreamToFlinkV4{
 //        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
 
-//        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
-        DataStreamSource<SourceEvent> streamSource = KafkaConfigUtil.buildSource(env);
+        DataStreamSource<SourceEvent> streamSource = env.addSource(new TestSourceEvent());
+//        DataStreamSource<SourceEvent> streamSource = KafkaConfigUtil.buildSource(env);
 
         /**
          * {"time":"1581691002687","code":"101_101_107_105_105","host":"10.3.7.234","nameCN":"磁盘剩余大小","value":"217802544","nameEN":"disk_free"}

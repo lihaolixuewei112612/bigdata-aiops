@@ -1,10 +1,5 @@
 package com.dtc.java.analytic.V2.alarm;
 
-/**
- * @Author : lihao
- * Created on : 2020-05-26
- * @Description : TODO描述类作用
- */
 import com.dtc.java.analytic.V2.common.model.AlterStruct;
 import com.dtc.java.analytic.V2.common.model.DataStruct;
 import com.dtc.java.analytic.V2.common.model.TimesConstats;
@@ -28,6 +23,9 @@ import org.apache.flink.util.Collector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author : lihao
@@ -150,7 +148,7 @@ public class AlarmUntils {
                 if (split1.length != 4) {
                     return;
                 }
-                broadcastState.clear();
+//                broadcastState.clear();
                 AlarmRule(value, out, unique_id, split1, result);
             }
 
@@ -378,4 +376,3 @@ public class AlarmUntils {
         }
     }
 }
-

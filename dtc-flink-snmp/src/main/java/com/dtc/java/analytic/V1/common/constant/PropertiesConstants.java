@@ -31,6 +31,8 @@ public class PropertiesConstants {
 
     public static final String OPENTSDB_URL="dtc.opentsdb.url";
 
+   public static final String WINDOWS_SIZE= "dtc.windowSizeMillis";
+
     public static final String METRICS_TOPIC = "metrics.topic";
 
     public static final String CONSUMER_FROM_TIME = "consumer.from.time";
@@ -97,27 +99,6 @@ public class PropertiesConstants {
 
     public static final String DEFAULT_DTC_SQL ="select * from DPComplete";
 
-    public static final int DEFAULT_INITIA_SIZE = 10;
-
-    public static final int DEFAULT_MAX_TOTAL = 50;
-
-    public static final int DEFAULT_MIN_IDLE = 5;
-
-    public static final String DEFAULT_CHAR_UTF8 = "UTF-8";
-
-    public static final String CEP = "CEP";
-
-    public static final String TU_BING = "Tubing";
-
-    public static final String CASSANDRA = "Cassandra";
-
-    public static final String TU_BING_SINK = "TubingSink";
-
-    public static final String CASSANDRA_SINK = "CassandraSink";
-
-    public static final String CASSANDRA_HOST_1 = "cassandra.host.1";
-
-    public static final String CASSANDRA_HOST_2 = "cassandra.host.2";
 
     //es config
     public static final String ELASTICSEARCH_BULK_FLUSH_MAX_ACTIONS = "elasticsearch.bulk.flush.max.actions";
