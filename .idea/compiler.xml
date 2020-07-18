@@ -15,13 +15,13 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
-      <module name="dtc-bigdata" target="1.5" />
       <module name="dtc-dd-data" target="8" />
       <module name="dtc-dist" target="1.5" />
       <module name="dtc-flink-log" target="1.5" />
       <module name="dtc-flink-snmp" target="8" />
       <module name="dtc-flink-zabbix" target="8" />
       <module name="dtc-SC" target="8" />
+      <module name="dtc_worker" target="1.5" />
       <module name="log-analytic" target="1.5" />
       <module name="log.analytics" target="1.5" />
     </bytecodeTargetLevel>
