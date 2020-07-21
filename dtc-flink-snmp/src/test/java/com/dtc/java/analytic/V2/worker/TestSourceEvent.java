@@ -39,7 +39,7 @@ public class TestSourceEvent extends RichSourceFunction<Tuple9<String, String, S
         tuple9.f0=rand.nextInt(100)+"|"+rand.nextInt(10)+"|"+rand.nextInt(100);
         tuple9.f1 = channel.get(rand.nextInt(channel.size()));
         tuple9.f2="指标告警";
-        tuple9.f3="1分钟平均load值";
+        tuple9.f3="2020-07-21";
         tuple9.f4=0.0;
         tuple9.f5="101_101_106_101_101";
         tuple9.f6="1";

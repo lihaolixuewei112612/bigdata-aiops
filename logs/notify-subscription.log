@@ -1,0 +1,274 @@
+2020-07-21 22:42:38,637 - Running job on local embedded Flink mini cluster
+2020-07-21 22:42:38,681 - Starting Flink Mini Cluster
+2020-07-21 22:42:39,074 - Starting Metrics Registry
+2020-07-21 22:42:39,198 - No metrics reporter configured, no metrics will be exposed/reported.
+2020-07-21 22:42:39,346 - Starting RPC Service(s)
+2020-07-21 22:42:39,916 - Slf4jLogger started
+2020-07-21 22:42:39,971 - Trying to start actor system at :0
+2020-07-21 22:42:40,034 - Slf4jLogger started
+2020-07-21 22:42:40,113 - Starting remoting
+2020-07-21 22:42:40,585 - Remoting started; listening on addresses :[akka.tcp://flink-metrics@169.254.82.43:50750]
+2020-07-21 22:42:40,597 - Actor system started at akka.tcp://flink-metrics@169.254.82.43:50750
+2020-07-21 22:42:40,601 - Starting high-availability services
+2020-07-21 22:42:40,631 - Created BLOB server storage directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/blobStore-f2e4daa0-e0c8-4be1-9374-438a634966c7
+2020-07-21 22:42:40,637 - Started BLOB server at 0.0.0.0:50751 - max concurrent requests: 50 - max backlog: 1000
+2020-07-21 22:42:40,639 - Starting ResourceManger
+2020-07-21 22:42:40,679 - Starting RPC endpoint for org.apache.flink.runtime.resourcemanager.StandaloneResourceManager at akka://flink/user/resourcemanager_c3777a4e-9872-42c1-8eef-9dfd24426f18 .
+2020-07-21 22:42:40,702 - Proposing leadership to contender org.apache.flink.runtime.resourcemanager.StandaloneResourceManager@6569dded @ akka://flink/user/resourcemanager_c3777a4e-9872-42c1-8eef-9dfd24426f18
+2020-07-21 22:42:40,704 - ResourceManager akka://flink/user/resourcemanager_c3777a4e-9872-42c1-8eef-9dfd24426f18 was granted leadership with fencing token 82656caabc3d7ec20d6d7923c5a94e75
+2020-07-21 22:42:40,705 - Starting the SlotManager.
+2020-07-21 22:42:40,707 - Created BLOB cache storage directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/blobStore-a300e55b-5b05-4cf2-8cbd-53805cb46f10
+2020-07-21 22:42:40,707 - Received confirmation of leadership for leader akka://flink/user/resourcemanager_c3777a4e-9872-42c1-8eef-9dfd24426f18 , session=0d6d7923-c5a9-4e75-8265-6caabc3d7ec2
+2020-07-21 22:42:40,710 - Created BLOB cache storage directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/blobStore-25daf3e4-ae46-43e4-bc1e-25a431caf40c
+2020-07-21 22:42:40,711 - Starting 1 TaskManger(s)
+2020-07-21 22:42:40,716 - Starting TaskManager with ResourceID: c9c708c4-eef2-4a36-aebe-90218a891e5d
+2020-07-21 22:42:40,774 - Temporary file directory '/var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T': total 233 GB, usable 28 GB (12.02% usable)
+2020-07-21 22:42:40,972 - Allocated 202 MB for network buffer pool (number of memory segments: 6472, bytes per segment: 32768).
+2020-07-21 22:42:40,985 - Could not load Queryable State Client Proxy. Probable reason: flink-queryable-state-runtime is not in the classpath. To enable Queryable State, please move the flink-queryable-state-runtime jar from the opt to the lib folder.
+2020-07-21 22:42:40,985 - Could not load Queryable State Server. Probable reason: flink-queryable-state-runtime is not in the classpath. To enable Queryable State, please move the flink-queryable-state-runtime jar from the opt to the lib folder.
+2020-07-21 22:42:40,987 - Starting the network environment and its components.
+2020-07-21 22:42:40,990 - Limiting managed memory to 0.7 of the currently free heap space (1266 MB), memory will be allocated lazily.
+2020-07-21 22:42:40,998 - I/O manager uses directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/flink-io-08f56a29-7e73-4bf7-b458-9290c6a50813 for spill files.
+2020-07-21 22:42:41,015 - Messages have a max timeout of 10000 ms
+2020-07-21 22:42:41,023 - Starting RPC endpoint for org.apache.flink.runtime.taskexecutor.TaskExecutor at akka://flink/user/taskmanager_0 .
+2020-07-21 22:42:41,038 - Start job leader service.
+2020-07-21 22:42:41,038 - Connecting to ResourceManager akka://flink/user/resourcemanager_c3777a4e-9872-42c1-8eef-9dfd24426f18(82656caabc3d7ec20d6d7923c5a94e75).
+2020-07-21 22:42:41,040 - User file cache uses directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/flink-dist-cache-995b45bc-b89e-49ef-b46e-c8a585be6906
+2020-07-21 22:42:41,041 - Starting dispatcher rest endpoint.
+2020-07-21 22:42:41,057 - Resolved ResourceManager address, beginning registration
+2020-07-21 22:42:41,057 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-07-21 22:42:41,064 - Registering TaskManager with ResourceID c9c708c4-eef2-4a36-aebe-90218a891e5d (akka://flink/user/taskmanager_0) at ResourceManager
+2020-07-21 22:42:41,066 - Successful registration at resource manager akka://flink/user/resourcemanager_c3777a4e-9872-42c1-8eef-9dfd24426f18 under registration id 86c869518275f434acf44cb73593057c.
+2020-07-21 22:42:41,080 - Upload directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/flink-web-upload does not exist, or has been deleted externally. Previously uploaded files are no longer available.
+2020-07-21 22:42:41,082 - Created directory /var/folders/3q/wbz72rsd42516hfplsw14k_c0000gn/T/flink-web-upload for file uploads.
+2020-07-21 22:42:41,117 - Starting rest endpoint.
+2020-07-21 22:42:41,536 - Log file environment variable 'log.file' is not set.
+2020-07-21 22:42:41,537 - JobManager log files are unavailable in the web dashboard. Log file location not found in environment variable 'log.file' or configuration key 'Key: 'web.log.path' , default: null (deprecated keys: [jobmanager.web.log.path])'.
+2020-07-21 22:42:41,554 - Failed to load web based job submission extension. Probable reason: flink-runtime-web is not in the classpath.
+2020-07-21 22:42:41,772 - Rest endpoint listening at localhost:50752
+2020-07-21 22:42:41,772 - Proposing leadership to contender org.apache.flink.runtime.dispatcher.DispatcherRestEndpoint@17a703f5 @ http://localhost:50752
+2020-07-21 22:42:41,772 - Starting job dispatcher(s) for JobManger
+2020-07-21 22:42:41,772 - http://localhost:50752 was granted leadership with leaderSessionID=da983127-e15f-466b-a9dc-366d3e565b9d
+2020-07-21 22:42:41,773 - Received confirmation of leadership for leader http://localhost:50752 , session=da983127-e15f-466b-a9dc-366d3e565b9d
+2020-07-21 22:42:41,783 - Starting RPC endpoint for org.apache.flink.runtime.dispatcher.StandaloneDispatcher at akka://flink/user/dispatchere64803f1-9fe3-4a92-8d4d-c3f0ef278ad5 .
+2020-07-21 22:42:41,798 - Proposing leadership to contender org.apache.flink.runtime.dispatcher.StandaloneDispatcher@260ff5b7 @ akka://flink/user/dispatchere64803f1-9fe3-4a92-8d4d-c3f0ef278ad5
+2020-07-21 22:42:41,799 - Flink Mini Cluster started successfully
+2020-07-21 22:42:41,799 - Dispatcher akka://flink/user/dispatchere64803f1-9fe3-4a92-8d4d-c3f0ef278ad5 was granted leadership with fencing token b037ced6-aad9-4aee-9d38-27e5984b2528
+2020-07-21 22:42:41,804 - Recovering all persisted jobs.
+2020-07-21 22:42:41,806 - Received confirmation of leadership for leader akka://flink/user/dispatchere64803f1-9fe3-4a92-8d4d-c3f0ef278ad5 , session=b037ced6-aad9-4aee-9d38-27e5984b2528
+2020-07-21 22:42:41,818 - Submitting job ca2b91944917eef197eae5efdb432d5d (Dtc-Alarm-Flink-Process).
+2020-07-21 22:42:41,845 - Starting RPC endpoint for org.apache.flink.runtime.jobmaster.JobMaster at akka://flink/user/jobmanager_1 .
+2020-07-21 22:42:41,861 - Initializing job Dtc-Alarm-Flink-Process (ca2b91944917eef197eae5efdb432d5d).
+2020-07-21 22:42:41,870 - Using restart strategy FixedDelayRestartStrategy(maxNumberRestartAttempts=3, delayBetweenRestartAttempts=10000) for Dtc-Alarm-Flink-Process (ca2b91944917eef197eae5efdb432d5d).
+2020-07-21 22:42:41,876 - Starting RPC endpoint for org.apache.flink.runtime.jobmaster.slotpool.SlotPool at akka://flink/user/8f3fb8d3-8d32-4e83-803f-c4347dbdd891 .
+2020-07-21 22:42:41,905 - Job recovers via failover strategy: full graph restart
+2020-07-21 22:42:41,947 - Running initialization on master for job Dtc-Alarm-Flink-Process (ca2b91944917eef197eae5efdb432d5d).
+2020-07-21 22:42:41,947 - Successfully ran initialization on master in 0 ms.
+2020-07-21 22:42:41,982 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,000 - Proposing leadership to contender org.apache.flink.runtime.jobmaster.JobManagerRunner@268257e3 @ akka://flink/user/jobmanager_1
+2020-07-21 22:42:42,001 - JobManager runner for job Dtc-Alarm-Flink-Process (ca2b91944917eef197eae5efdb432d5d) was granted leadership with session id 7267a22d-8750-4f5a-b4d5-7bb84bc53443 at akka://flink/user/jobmanager_1.
+2020-07-21 22:42:42,011 - Starting execution of job Dtc-Alarm-Flink-Process (ca2b91944917eef197eae5efdb432d5d)
+2020-07-21 22:42:42,014 - Job Dtc-Alarm-Flink-Process (ca2b91944917eef197eae5efdb432d5d) switched from state CREATED to RUNNING.
+2020-07-21 22:42:42,017 - Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,028 - Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,029 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,031 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,031 - Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,032 - SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,033 - SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,033 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,033 - Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,034 - SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,034 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,034 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,034 - SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,034 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,034 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) switched from CREATED to SCHEDULED.
+2020-07-21 22:42:42,036 - Cannot serve slot request, no ResourceManager connected. Adding as pending request [SlotRequestId{cbb40d21eb58086b67ab77ca52a55ce0}]
+2020-07-21 22:42:42,039 - Received confirmation of leadership for leader akka://flink/user/jobmanager_1 , session=7267a22d-8750-4f5a-b4d5-7bb84bc53443
+2020-07-21 22:42:42,041 - Connecting to ResourceManager akka://flink/user/resourcemanager_c3777a4e-9872-42c1-8eef-9dfd24426f18(82656caabc3d7ec20d6d7923c5a94e75)
+2020-07-21 22:42:42,044 - Resolved ResourceManager address, beginning registration
+2020-07-21 22:42:42,045 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-07-21 22:42:42,047 - Registering job manager b4d57bb84bc534437267a22d87504f5a@akka://flink/user/jobmanager_1 for job ca2b91944917eef197eae5efdb432d5d.
+2020-07-21 22:42:42,052 - Registered job manager b4d57bb84bc534437267a22d87504f5a@akka://flink/user/jobmanager_1 for job ca2b91944917eef197eae5efdb432d5d.
+2020-07-21 22:42:42,054 - JobManager successfully registered at ResourceManager, leader id: 82656caabc3d7ec20d6d7923c5a94e75.
+2020-07-21 22:42:42,056 - Requesting new slot [SlotRequestId{cbb40d21eb58086b67ab77ca52a55ce0}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=0, nativeMemoryInMB=0, networkMemoryInMB=0} from resource manager.
+2020-07-21 22:42:42,057 - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=0, nativeMemoryInMB=0, networkMemoryInMB=0} for job ca2b91944917eef197eae5efdb432d5d with allocation id AllocationID{8e0057ea958ea4d68aba3f7d15a15d4d}.
+2020-07-21 22:42:42,058 - Receive slot request AllocationID{8e0057ea958ea4d68aba3f7d15a15d4d} for job ca2b91944917eef197eae5efdb432d5d from resource manager with leader id 82656caabc3d7ec20d6d7923c5a94e75.
+2020-07-21 22:42:42,061 - Allocated slot for AllocationID{8e0057ea958ea4d68aba3f7d15a15d4d}.
+2020-07-21 22:42:42,061 - Add job ca2b91944917eef197eae5efdb432d5d for job leader monitoring.
+2020-07-21 22:42:42,063 - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 7267a22d-8750-4f5a-b4d5-7bb84bc53443.
+2020-07-21 22:42:42,064 - Resolved JobManager address, beginning registration
+2020-07-21 22:42:42,064 - Registration at JobManager attempt 1 (timeout=100ms)
+2020-07-21 22:42:42,067 - Successful registration at job manager akka://flink/user/jobmanager_1 for job ca2b91944917eef197eae5efdb432d5d.
+2020-07-21 22:42:42,069 - Establish JobManager connection for job ca2b91944917eef197eae5efdb432d5d.
+2020-07-21 22:42:42,072 - Offer reserved slots to the leader of job ca2b91944917eef197eae5efdb432d5d.
+2020-07-21 22:42:42,081 - Activate slot AllocationID{8e0057ea958ea4d68aba3f7d15a15d4d}.
+2020-07-21 22:42:42,086 - Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,086 - Deploying Source: Custom Source (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,093 - Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,094 - Deploying Source: Custom Source -> Map -> (Map, Map) (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,096 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,096 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,099 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,099 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,100 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,101 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,101 - Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,102 - Deploying Co-Process-Broadcast (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,102 - Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,103 - Deploying Co-Process-Broadcast (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,103 - SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,103 - Deploying SelectCepOperator (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,104 - SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,105 - Deploying SelectCepOperator (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,105 - SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,105 - Deploying SelectCepOperator (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,106 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,107 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,108 - SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,108 - Deploying SelectCepOperator (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,108 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,109 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,111 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,111 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,112 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) switched from SCHEDULED to DEPLOYING.
+2020-07-21 22:42:42,113 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #0) to localhost
+2020-07-21 22:42:42,141 - Received task Source: Custom Source (1/1).
+2020-07-21 22:42:42,142 - Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,142 - Creating FileSystem stream leak safety net for task Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) [DEPLOYING]
+2020-07-21 22:42:42,144 - Received task Source: Custom Source -> Map -> (Map, Map) (1/1).
+2020-07-21 22:42:42,145 - Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,145 - Creating FileSystem stream leak safety net for task Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) [DEPLOYING]
+2020-07-21 22:42:42,154 - Loading JAR files for task Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) [DEPLOYING].
+2020-07-21 22:42:42,156 - Loading JAR files for task Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) [DEPLOYING].
+2020-07-21 22:42:42,160 - Registering task at network: Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) [DEPLOYING].
+2020-07-21 22:42:42,160 - Registering task at network: Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) [DEPLOYING].
+2020-07-21 22:42:42,164 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1).
+2020-07-21 22:42:42,165 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,165 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) [DEPLOYING]
+2020-07-21 22:42:42,165 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) [DEPLOYING].
+2020-07-21 22:42:42,167 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1).
+2020-07-21 22:42:42,167 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,167 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) [DEPLOYING]
+2020-07-21 22:42:42,168 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) [DEPLOYING].
+2020-07-21 22:42:42,167 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) [DEPLOYING].
+2020-07-21 22:42:42,169 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1).
+2020-07-21 22:42:42,170 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,170 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) [DEPLOYING]
+2020-07-21 22:42:42,170 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) [DEPLOYING].
+2020-07-21 22:42:42,170 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) [DEPLOYING].
+2020-07-21 22:42:42,173 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) [DEPLOYING].
+2020-07-21 22:42:42,173 - Received task Co-Process-Broadcast (1/1).
+2020-07-21 22:42:42,174 - Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,174 - Creating FileSystem stream leak safety net for task Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) [DEPLOYING]
+2020-07-21 22:42:42,174 - Loading JAR files for task Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) [DEPLOYING].
+2020-07-21 22:42:42,177 - Received task Co-Process-Broadcast (1/1).
+2020-07-21 22:42:42,178 - Registering task at network: Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) [DEPLOYING].
+2020-07-21 22:42:42,178 - Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,178 - Creating FileSystem stream leak safety net for task Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) [DEPLOYING]
+2020-07-21 22:42:42,178 - Loading JAR files for task Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) [DEPLOYING].
+2020-07-21 22:42:42,180 - Received task SelectCepOperator (1/1).
+2020-07-21 22:42:42,181 - Registering task at network: Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) [DEPLOYING].
+2020-07-21 22:42:42,181 - SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,181 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) [DEPLOYING]
+2020-07-21 22:42:42,181 - Loading JAR files for task SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) [DEPLOYING].
+2020-07-21 22:42:42,183 - Received task SelectCepOperator (1/1).
+2020-07-21 22:42:42,183 - SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,183 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) [DEPLOYING]
+2020-07-21 22:42:42,184 - Loading JAR files for task SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) [DEPLOYING].
+2020-07-21 22:42:42,184 - Registering task at network: SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) [DEPLOYING].
+2020-07-21 22:42:42,186 - Registering task at network: SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) [DEPLOYING].
+2020-07-21 22:42:42,186 - Received task SelectCepOperator (1/1).
+2020-07-21 22:42:42,187 - SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,206 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) [DEPLOYING]
+2020-07-21 22:42:42,206 - Loading JAR files for task SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) [DEPLOYING].
+2020-07-21 22:42:42,209 - Registering task at network: SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) [DEPLOYING].
+2020-07-21 22:42:42,209 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-07-21 22:42:42,212 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,212 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) [DEPLOYING]
+2020-07-21 22:42:42,212 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) [DEPLOYING].
+2020-07-21 22:42:42,227 - Received task SelectCepOperator (1/1).
+2020-07-21 22:42:42,229 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) [DEPLOYING].
+2020-07-21 22:42:42,230 - SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,230 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) [DEPLOYING]
+2020-07-21 22:42:42,231 - Loading JAR files for task SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) [DEPLOYING].
+2020-07-21 22:42:42,231 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-07-21 22:42:42,232 - Registering task at network: SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) [DEPLOYING].
+2020-07-21 22:42:42,234 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-07-21 22:42:42,234 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,235 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) [DEPLOYING]
+2020-07-21 22:42:42,235 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) [DEPLOYING].
+2020-07-21 22:42:42,236 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) [DEPLOYING].
+2020-07-21 22:42:42,240 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,246 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) [DEPLOYING]
+2020-07-21 22:42:42,248 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) [DEPLOYING].
+2020-07-21 22:42:42,248 - SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,249 - SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,249 - SelectCepOperator (1/1) (19cc4753c22e11ff73b6c7a4fc69d9c2) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,249 - SelectCepOperator (1/1) (57af43ff7aeebb66ea887b37fa680157) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,256 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,263 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) [DEPLOYING].
+2020-07-21 22:42:42,264 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-07-21 22:42:42,289 - Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,290 - Source: Custom Source -> Map -> (Map, Map) (1/1) (fe806fd85454ef6674d9d24a026a7245) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,290 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,256 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,294 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) switched from CREATED to DEPLOYING.
+2020-07-21 22:42:42,294 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) [DEPLOYING]
+2020-07-21 22:42:42,294 - SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,294 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) [DEPLOYING].
+2020-07-21 22:42:42,294 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,295 - SelectCepOperator (1/1) (db03abfd2e9aee1d1890ebd8cbee9f8d) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,296 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) [DEPLOYING].
+2020-07-21 22:42:42,298 - Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,298 - SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,298 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,298 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,299 - Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,300 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,314 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,314 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,317 - Co-Process-Broadcast (1/1) (e4cafcf04d4c8691157cf7ea0c4a4dd9) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,361 - Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,361 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,358 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,347 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,336 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,332 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,330 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,319 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,371 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,371 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,371 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,371 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,370 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,382 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-07-21 22:42:42,382 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-07-21 22:42:42,384 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-07-21 22:42:42,388 - SelectCepOperator (1/1) (78cd979adbd0c76208556470e15ee953) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,388 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-07-21 22:42:42,388 - Co-Process-Broadcast (1/1) (ac911cd7f5628562e600cc5447f56b1d) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,389 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-07-21 22:42:42,398 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-07-21 22:42:42,401 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-07-21 22:42:42,402 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (eebe36e31e520f9ac5dad05ed91f3035) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,404 - Source: Custom Source (1/1) (200de465fd7cdca3c6d9057dd6d0b828) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,404 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (1c52829dfb43f5d88ca50a17f9078c14) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,404 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (9244493ab058fd4b4aa8d4080f4b2c05) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,405 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (5bdcd40fb655df1e66682b5aed7d731a) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,413 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (7ba648a0c96ef71516f6bafbf6cb9e04) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,413 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (12e88b57afe4dff59d4baa95b81fc956) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,414 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (0421d08e7d5456057043eff9e2c6fec8) switched from DEPLOYING to RUNNING.
+2020-07-21 22:42:42,423 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-07-21 22:42:42,481 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,483 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,483 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,485 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,487 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,485 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,485 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,485 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,485 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,485 - Initializing heap keyed state backend with stream factory.
+2020-07-21 22:42:42,485 - Initializing heap keyed state backend with stream factory.

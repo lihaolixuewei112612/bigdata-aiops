@@ -18,22 +18,12 @@ import java.util.Map;
  */
 @Slf4j
 public class ZXSwitchProcessMapFunction extends ProcessWindowFunction<DataStruct, DataStruct, Tuple, TimeWindow> {
-<<<<<<< HEAD
-
-    @Override
-    public void process(Tuple tuple, Context context, Iterable<DataStruct> iterable, Collector<DataStruct> collector) throws Exception {
-        /**
-         * 此处的map<code(in.f2.in.f3),value_time>
-         * */
-        Map<String, String> mapSwitch = new HashMap<>();
-=======
     /**
      * 此处的map<code(in.f2.in.f3),value_time>
      * */
     Map<String, String> mapSwitch = new HashMap<>();
     @Override
     public void process(Tuple tuple, Context context, Iterable<DataStruct> iterable, Collector<DataStruct> collector) throws Exception {
->>>>>>> dev
         for (DataStruct in : iterable) {
             String code = in.getZbFourName();
             //判断是否是数据
@@ -44,15 +34,8 @@ public class ZXSwitchProcessMapFunction extends ProcessWindowFunction<DataStruct
                 if (code.equals("102_103_101_101_101") || code.equals("102_103_101_102_102") ||
                         code.equals("102_103_102_103_103") || code.equals("102_103_103_105_105") ||
                         code.equals("102_103_103_106_106") || code.equals("102_103_103_107_107")
-<<<<<<< HEAD
-                        || code.equals("102_103_103_108_108")
-                        || code.equals("102_103_103_109_109")
-                        || code.equals("102_103_103_110_110")
-                        || code.equals("102_103_103_111_111")) {
-=======
                         || code.equals("102_103_103_108_108")|| code.equals("102_103_103_109_109")
                         || code.equals("102_103_103_110_110")) {
->>>>>>> dev
                     /**
                      *交换机cpu使用率/内存总量/内存利用率/端口入方向错误报文数/端口出方向错误报文数/端口的工作状态
                      * 以交换机cpu使用率数据格式为例说明如下：
@@ -61,10 +44,6 @@ public class ZXSwitchProcessMapFunction extends ProcessWindowFunction<DataStruct
                      *其中ZB_code为例：机器ip,1.0表示机框1，0板卡，表示机框1，板卡0的cpu使用率
                      */
                     collector.collect(new DataStruct(in.getSystem_name(), in.getHost(), in.getZbFourName(), in.getZbLastCode(),in.getNameCN(), in.getNameEN(), in.getTime(),in.getValue()));
-<<<<<<< HEAD
-                    continue;
-=======
->>>>>>> dev
                 }
             }
         }
