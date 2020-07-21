@@ -1,6 +1,6 @@
 字段名称11111111111111111111 TDH字段类型  DEFAULT NULL COMMENT '字段'
 ##基础表-主体信息表(entity_info)
-CREATE TABLE dsc_bas.entity_info(
+CREATE TABLE entity_info(
     entityCode varchar DEFAULT NULL COMMENT '客户编码',
     entityName varchar DEFAULT NULL COMMENT '客户名称',
     entityShortName varchar DEFAULT NULL COMMENT '客户简称',

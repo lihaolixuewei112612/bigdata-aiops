@@ -132,12 +132,9 @@ public class StreamToFlinkV3Test {
 //
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
-        alarmLinux.forEach(e-> {
-            SingleOutputStreamOperator<AlterStruct> process1 = e.keyBy("gaojing")
-                    .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
-                    .process(new timeAlarmConvergence());
-            process1.print("时间告警收敛策略 : ");
-        });
+        alarmLinux.stream().map(e -> e.keyBy("gaojing")
+                .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
+                .process(new timeAlarmConvergence())).forEach(process1 -> process1.print("时间告警收敛策略 : "));
 
         alarmLinux.forEach(e-> {
             SingleOutputStreamOperator<AlterStruct> process1 = e.keyBy("gaojing")
