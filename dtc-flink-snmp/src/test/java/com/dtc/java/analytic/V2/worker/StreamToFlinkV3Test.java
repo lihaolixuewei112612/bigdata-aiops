@@ -40,10 +40,8 @@ import org.apache.flink.util.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -132,14 +130,14 @@ public class StreamToFlinkV3Test {
 //
         //Linux数据进行告警规则判断并将告警数据写入mysql
         List<DataStream<AlterStruct>> alarmLinux = getAlarm(linuxProcess, broadcast);
-        alarmLinux.forEach(e-> {
+        alarmLinux.forEach(e -> {
             SingleOutputStreamOperator<AlterStruct> process1 = e.keyBy("gaojing")
                     .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                     .process(new timeAlarmConvergence());
             process1.print("时间告警收敛策略 : ");
         });
 
-        alarmLinux.forEach(e-> {
+        alarmLinux.forEach(e -> {
             SingleOutputStreamOperator<AlterStruct> process1 = e.keyBy("gaojing")
                     .timeWindow(Time.of(windowSizeMillis, TimeUnit.MILLISECONDS))
                     .process(new countAlarmConvergence());
@@ -289,9 +287,10 @@ public class StreamToFlinkV3Test {
                     return;
                 }
                 //asset_id + ":" + code + ":"+ asset_code + ":" +asset_name+":"+ alarm
+                // asset_id + ":" + code + ":" + asset_code + ":" + asset_name + ":" +ip+ ":"+ level_1 + "|" + level_2 + "|" + level_3 + "|" + level_4
                 String targetId = broadcastState.get(weiyi).trim();
                 String[] split = targetId.split(":");
-                if (split.length != 5) {
+                if (split.length != 6) {
                     return;
                 }
                 String unique_id = split[0].trim();
@@ -302,7 +301,23 @@ public class StreamToFlinkV3Test {
                 String asset_code = split[2].trim();
                 String asset_name = split[3].trim();
                 String result = asset_code + "(" + asset_name + ")";
-                String r_value = split[4].trim();
+                //mysql告警设置时间
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String my_time = split[4].split("_")[1].trim();
+                Date date1 = format.parse(my_time);
+                long my_rtime = date1.getTime();
+                //数据时间戳处理
+                Date d = new Date();
+                String beginDate = value.getTime();
+                String sd = format.format(new Date(Long.parseLong(beginDate))); // 时间戳转换日期
+                String sdt = format.format(d);
+                Date date = format.parse(sdt);
+                //日期转时间戳（毫秒）
+                long data_time = date.getTime();
+                if(my_rtime==data_time){
+                    return;
+                }
+                String r_value = split[5].trim();
                 if (unique_id.isEmpty() || code.isEmpty() || r_value.isEmpty()) {
                     return;
                 }
@@ -314,21 +329,21 @@ public class StreamToFlinkV3Test {
                 AlarmRule(value, out, unique_id, split1, result);
             }
 
-        @Override
-        public void processBroadcastElement (Map < String, String > value, Context ctx, Collector < AlterStruct > out) throws
-        Exception {
-            if (value == null || value.size() == 0) {
-                return;
-            }
-            BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
-            for (Map.Entry<String, String> entry : value.entrySet()) {
-                broadcastState.put(entry.getKey(), entry.getValue());
+            @Override
+            public void processBroadcastElement(Map<String, String> value, Context ctx, Collector<AlterStruct> out) throws
+                    Exception {
+                if (value == null || value.size() == 0) {
+                    return;
+                }
+                BroadcastState<String, String> broadcastState = ctx.getBroadcastState(ALARM_RULES);
+                for (Map.Entry<String, String> entry : value.entrySet()) {
+                    broadcastState.put(entry.getKey(), entry.getValue());
+                }
             }
         }
-    }
 
-    ;
-}
+                ;
+    }
 
     /**
      * 告警规则
@@ -540,64 +555,65 @@ public class StreamToFlinkV3Test {
         }
     }
 
-static class MySQLFunction implements MapFunction<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Map<String, String>> {
-    //(445,10.3.1.6,101_101_106_103,50.0,null,null,null)
+    static class MySQLFunction implements MapFunction<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Map<String, String>> {
+        //(445,10.3.1.6,101_101_106_103,50.0,null,null,null)
 
-    @Override
-    public Map<String, String> map(Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> event) throws Exception {
-        Map<String, String> map = new HashMap<>();
-        for (Map.Entry<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> entries : event.entrySet()) {
-            Tuple9<String, String, String, Double, Double, Double, Double, String, String> value = entries.getValue();
-            String key = entries.getKey();
-            String asset_id = value.f0;
-            String ip = value.f1;
-            String code = value.f2;
-            Double level_1 = value.f3;
-            Double level_2 = value.f4;
-            Double level_3 = value.f5;
-            Double level_4 = value.f6;
-            String asset_code = value.f7;
-            String asset_name = value.f8;
-            String str = asset_id + ":" + code + ":" + asset_code + ":" + asset_name + ":" + level_1 + "|" + level_2 + "|" + level_3 + "|" + level_4;
-            map.put(key, str);
-        }
-        return map;
-    }
-}
-
-@Slf4j
-static class MySqlProcessMapFunction extends ProcessWindowFunction<Tuple9<String, String, String, String, Double, String, String, String, String>, Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Tuple, TimeWindow> {
-    @Override
-    public void process(Tuple tuple, Context context, Iterable<Tuple9<String, String, String, String, Double, String, String, String, String>> iterable, Collector<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> collector) throws Exception {
-        Tuple9<String, String, String, Double, Double, Double, Double, String, String> tuple9 = new Tuple9<>();
-        Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> map = new HashMap<>();
-        for (Tuple9<String, String, String, String, Double, String, String, String, String> sourceEvent : iterable) {
-            String asset_id = sourceEvent.f0;
-            String ip = sourceEvent.f1;
-            Double num = sourceEvent.f4;
-            String code = sourceEvent.f5;
-            String level = sourceEvent.f6;
-            tuple9.f0 = asset_id;
-            tuple9.f1 = ip;
-            tuple9.f2 = code;
-            String key = ip + "." + code.replace("_", ".");
-            if ("1".equals(level)) {
-                tuple9.f3 = num;
-            } else if ("2".equals(level)) {
-                tuple9.f4 = num;
-            } else if ("3".equals(level)) {
-                tuple9.f5 = num;
-            } else if ("4".equals(level)) {
-                tuple9.f6 = num;
+        @Override
+        public Map<String, String> map(Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> event) throws Exception {
+            Map<String, String> map = new HashMap<>();
+            for (Map.Entry<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> entries : event.entrySet()) {
+                Tuple9<String, String, String, Double, Double, Double, Double, String, String> value = entries.getValue();
+                String key = entries.getKey();
+                String asset_id = value.f0;
+                String ip = value.f1;
+                String code = value.f2;
+                Double level_1 = value.f3;
+                Double level_2 = value.f4;
+                Double level_3 = value.f5;
+                Double level_4 = value.f6;
+                String asset_code = value.f7;
+                String asset_name = value.f8;
+                String str = asset_id + ":" + code + ":" + asset_code + ":" + asset_name + ":" +ip+ ":"+ level_1 + "|" + level_2 + "|" + level_3 + "|" + level_4;
+                map.put(key, str);
             }
-            tuple9.f7 = sourceEvent.f7;
-            tuple9.f8 = sourceEvent.f8;
-            map.put(key, tuple9);
+            return map;
         }
-        collector.collect(map);
     }
 
-}
+    @Slf4j
+    static class MySqlProcessMapFunction extends ProcessWindowFunction<Tuple9<String, String, String, String, Double, String, String, String, String>, Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>, Tuple, TimeWindow> {
+        @Override
+        public void process(Tuple tuple, Context context, Iterable<Tuple9<String, String, String, String, Double, String, String, String, String>> iterable, Collector<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> collector) throws Exception {
+            Tuple9<String, String, String, Double, Double, Double, Double, String, String> tuple9 = new Tuple9<>();
+            Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>> map = new HashMap<>();
+            for (Tuple9<String, String, String, String, Double, String, String, String, String> sourceEvent : iterable) {
+                String asset_id = sourceEvent.f0;
+                String ip = sourceEvent.f1;
+                String time = sourceEvent.f3;
+                Double num = sourceEvent.f4;
+                String code = sourceEvent.f5;
+                String level = sourceEvent.f6;
+                tuple9.f0 = asset_id;
+                tuple9.f1 = ip + "_" + time;
+                tuple9.f2 = code;
+                String key = ip + "." + code.replace("_", ".");
+                if ("1".equals(level)) {
+                    tuple9.f3 = num;
+                } else if ("2".equals(level)) {
+                    tuple9.f4 = num;
+                } else if ("3".equals(level)) {
+                    tuple9.f5 = num;
+                } else if ("4".equals(level)) {
+                    tuple9.f6 = num;
+                }
+                tuple9.f7 = sourceEvent.f7;
+                tuple9.f8 = sourceEvent.f8;
+                map.put(key, tuple9);
+            }
+            collector.collect(map);
+        }
+
+    }
 }
 
 
