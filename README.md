@@ -53,6 +53,10 @@
 - Kafka
 - Hive
 - Hbase
+- redis
+- hadoop
+- flume
+- snmp
 
 ## 主要架构
 
