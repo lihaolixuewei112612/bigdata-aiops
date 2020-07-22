@@ -303,6 +303,7 @@ public class StreamToFlinkV3Test {
                 String result = asset_code + "(" + asset_name + ")";
                 //mysql告警设置时间
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String my_ip = split[4].split("_")[0].trim();
                 String my_time = split[4].split("_")[1].trim();
                 Date date1 = format.parse(my_time);
                 long my_rtime = date1.getTime();
@@ -314,7 +315,7 @@ public class StreamToFlinkV3Test {
                 Date date = format.parse(sdt);
                 //日期转时间戳（毫秒）
                 long data_time = date.getTime();
-                if(my_rtime==data_time){
+                if(host_ip.equals(my_ip)&&my_rtime==data_time){
                     return;
                 }
                 String r_value = split[5].trim();

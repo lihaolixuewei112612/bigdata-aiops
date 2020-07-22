@@ -6,7 +6,7 @@
         <parameter value="-target:jvm-1.8" />
       </parameters>
     </profile>
-    <profile name="Maven 2" modules="dtc-flink--log,dtc-flink-log">
+    <profile name="Maven 2" modules="dtc-flink-log">
       <parameters>
         <parameter value="-target:jvm-1.5" />
       </parameters>
