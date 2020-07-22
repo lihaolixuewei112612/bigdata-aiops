@@ -305,6 +305,18 @@ public class StreamToFlinkV3Test {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String my_ip = split[4].split("_")[0].trim();
                 String my_time = split[4].split("_")[1].trim();
+                String my_time_d = split[4].split("_")[2].trim();
+                if("null".equals(my_time)&&!("null".equals(my_time_d))){
+                    Integer date1 = Integer.parseInt(my_time_d.split("_")[0].trim());
+                    Integer date2 = Integer.parseInt(my_time_d.split("_")[1].trim());
+                    if(date1<date2){
+                        Date date = new Date();
+                        String format1 = format.format(date);
+                        System.out.println(format1);
+                    }
+                    Date d = new Date();
+                    format.format(d);
+                }
                 Date date1 = format.parse(my_time);
                 long my_rtime = date1.getTime();
                 //数据时间戳处理
@@ -315,7 +327,7 @@ public class StreamToFlinkV3Test {
                 Date date = format.parse(sdt);
                 //日期转时间戳（毫秒）
                 long data_time = date.getTime();
-                if(host_ip.equals(my_ip)&&my_rtime==data_time){
+                if (host_ip.equals(my_ip) && my_rtime == data_time) {
                     return;
                 }
                 String r_value = split[5].trim();
@@ -574,7 +586,7 @@ public class StreamToFlinkV3Test {
                 Double level_4 = value.f6;
                 String asset_code = value.f7;
                 String asset_name = value.f8;
-                String str = asset_id + ":" + code + ":" + asset_code + ":" + asset_name + ":" +ip+ ":"+ level_1 + "|" + level_2 + "|" + level_3 + "|" + level_4;
+                String str = asset_id + ":" + code + ":" + asset_code + ":" + asset_name + ":" + ip + ":" + level_1 + "|" + level_2 + "|" + level_3 + "|" + level_4;
                 map.put(key, str);
             }
             return map;
@@ -590,12 +602,13 @@ public class StreamToFlinkV3Test {
             for (Tuple9<String, String, String, String, Double, String, String, String, String> sourceEvent : iterable) {
                 String asset_id = sourceEvent.f0;
                 String ip = sourceEvent.f1;
+                String time_d = sourceEvent.f2;
                 String time = sourceEvent.f3;
                 Double num = sourceEvent.f4;
                 String code = sourceEvent.f5;
                 String level = sourceEvent.f6;
                 tuple9.f0 = asset_id;
-                tuple9.f1 = ip + "_" + time;
+                tuple9.f1 = ip + "_" + time + "_" + time_d;
                 tuple9.f2 = code;
                 String key = ip + "." + code.replace("_", ".");
                 if ("1".equals(level)) {
