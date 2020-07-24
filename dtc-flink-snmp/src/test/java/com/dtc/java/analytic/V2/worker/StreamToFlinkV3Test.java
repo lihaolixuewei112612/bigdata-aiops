@@ -40,6 +40,7 @@ import org.apache.flink.util.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +52,6 @@ import java.util.concurrent.TimeUnit;
  * @author :ren
  */
 public class StreamToFlinkV3Test {
-    private static final Logger logger = LoggerFactory.getLogger(StreamToFlinkV3.class);
     private static DataStream<Map<String, String>> alarmDataStream = null;
 
     public static void main(String[] args) throws Exception {
@@ -305,31 +305,9 @@ public class StreamToFlinkV3Test {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String my_ip = split[4].split("_")[0].trim();
                 String my_time = split[4].split("_")[1].trim();
-                String my_time_d = split[4].split("_")[2].trim();
-                if("null".equals(my_time)&&!("null".equals(my_time_d))){
-                    Integer date1 = Integer.parseInt(my_time_d.split("_")[0].trim());
-                    Integer date2 = Integer.parseInt(my_time_d.split("_")[1].trim());
-                    if(date1<date2){
-                        Date date = new Date();
-                        String format1 = format.format(date);
-                        System.out.println(format1);
-                    }
-                    Date d = new Date();
-                    format.format(d);
-                }
-                Date date1 = format.parse(my_time);
-                long my_rtime = date1.getTime();
-                //数据时间戳处理
-                Date d = new Date();
-                String beginDate = value.getTime();
-                String sd = format.format(new Date(Long.parseLong(beginDate))); // 时间戳转换日期
-                String sdt = format.format(d);
-                Date date = format.parse(sdt);
-                //日期转时间戳（毫秒）
-                long data_time = date.getTime();
-                if (host_ip.equals(my_ip) && my_rtime == data_time) {
-                    return;
-                }
+                String my_time_d = split[4].split("_",3)[2].trim();
+                if (alarmConvergence(value, host_ip, format, my_ip, my_time, my_time_d)) return;
+
                 String r_value = split[5].trim();
                 if (unique_id.isEmpty() || code.isEmpty() || r_value.isEmpty()) {
                     return;
@@ -356,6 +334,129 @@ public class StreamToFlinkV3Test {
         }
 
                 ;
+    }
+
+    private static boolean alarmConvergence(DataStruct value, String host_ip, SimpleDateFormat format, String my_ip, String my_time, String my_time_d) throws ParseException {
+        //不设置天，仅设置时间段处理逻辑
+        if (my_time.length()==0 && my_time_d.length()!=0 && host_ip.equals(my_ip)) {
+            SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Integer trim = Integer.parseInt(my_time_d.split("_")[0].trim());
+            Integer trim1 = Integer.parseInt(my_time_d.split("_")[1].trim());
+            Date date = new Date();
+            String format1 = format.format(date);
+            if (trim1 != 0 && trim < trim1) {
+                String time1 = format1 + " " + trim + ":00:00";
+                String time2 = format1 + " " + trim1 + ":00:00";
+                long time1_1 = format2.parse(time1).getTime();
+                long time2_1 = format2.parse(time2).getTime();
+                long data_time = Long.parseLong(value.getTime());
+                if (data_time > time1_1 && data_time < time2_1) {
+                    return true;
+                }
+            } else if (trim1 == 0) {
+                String time1 = format1 + " " + trim + ":00:00";
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(date);
+                calendar.add(calendar.DATE, 1);//把日期往后增加一天.整数往后推,负数往前移动
+                date = calendar.getTime(); //这个时间就是日期往后推一天的结果
+                String dateString = format.format(date);
+                String time2 = null;
+                if (trim1.toString().length() == 1) {
+                    time2 = dateString + " 0" + trim1 + ":00:00";
+                } else {
+                    time2 = dateString + " " + trim1 + ":00:00";
+                }
+                long time1_1 = format2.parse(time1).getTime();
+                long time2_1 = format2.parse(time2).getTime();
+                long data_time = Long.parseLong(value.getTime());
+                if (data_time > time1_1 && data_time < time2_1) {
+                    return true;
+                }
+            } else if (trim1 != 0 && trim1 < trim) {
+                String time1 = format1 + " " + trim + ":00:00";
+
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(date);
+                calendar.add(calendar.DATE, 1);//把日期往后增加一天.整数往后推,负数往前移动
+                date = calendar.getTime(); //这个时间就是日期往后推一天的结果
+                String dateString = format.format(date);
+                String time2 = dateString + " " + "00:00:00";
+
+                String time3 = null;
+                if (trim1.toString().length() == 1) {
+                    time3 = dateString + " 0" + trim1 + ":00:00";
+                } else {
+                    time3 = dateString + " " + trim1 + ":00:00";
+                }
+                long time1_1 = format2.parse(time1).getTime();
+                long time2_1 = format2.parse(time2).getTime();
+                long time3_1 = format2.parse(time3).getTime();
+                long data_time = Long.parseLong(value.getTime());
+                if ((data_time > time1_1 && data_time < time2_1) || (data_time > time2_1 && data_time < time3_1)) {
+                    return true;
+                }
+            }
+        }
+        //设置天，不设置具体时间段，以天为准
+        else if (my_time.length()!=0 && my_time_d.length()==0 && host_ip.equals(my_ip)) {
+            Date date1 = format.parse(my_time);
+            long my_rtime = date1.getTime();
+            //数据时间戳处理
+            Date d = new Date();
+            String beginDate = value.getTime();
+            String sd = format.format(new Date(Long.parseLong(beginDate))); // 时间戳转换日期
+            String sdt = format.format(d);
+            Date date = format.parse(sdt);
+            //日期转时间戳（毫秒）
+            long data_time = date.getTime();
+            if (host_ip.equals(my_ip) && my_rtime == data_time) {
+                return true;
+            }
+        }
+        //设置天及具体的时间段
+        else if (my_time.length()!=0 && my_time_d.length()!=0 && host_ip.equals(my_ip)) {
+            SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Integer trim = Integer.parseInt(my_time_d.split("_")[0].trim());
+            Integer trim1 = Integer.parseInt(my_time_d.split("_")[1].trim());
+            String time1 = null;
+            String time2 = null;
+            if (trim1 != 0 && trim < trim1) {
+                if (trim.toString().length() == 1) {
+                    time1 = my_time + " 0" + trim + ":00:00";
+                } else {
+                    time1 = my_time + " " + trim + ":00:00";
+                }
+                if (trim1.toString().length() == 1) {
+                    time2 = my_time + " 0" + trim1 + ":00:00";
+                } else {
+                    time2 = my_time + " " + trim1 + ":00:00";
+                }
+                long time1_1 = format2.parse(time1).getTime();
+                long time2_1 = format2.parse(time2).getTime();
+                long data_time = Long.parseLong(value.getTime());
+                if (data_time > time1_1 && data_time < time2_1) {
+                    return true;
+                }
+            } else if (trim1 == 0) {
+                Date date = new Date();
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(date);
+                calendar.add(calendar.DATE, 1);//把日期往后增加一天.整数往后推,负数往前移动
+                if (trim.toString().length() == 1) {
+                    time1 = my_time + " 0" + trim + ":00:00";
+                } else {
+                    time1 = my_time + " " + trim + ":00:00";
+                }
+                time2 = my_time + " 0" + trim1 + ":00:00";
+                long time1_1 = format2.parse(time1).getTime();
+                long time2_1 = format2.parse(time2).getTime();
+                long data_time = Long.parseLong(value.getTime());
+                if (data_time > time1_1 && data_time < time2_1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

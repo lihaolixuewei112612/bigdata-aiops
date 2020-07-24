@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dtc-analytics_new</groupId>
-    <artifactId>dtc-bigdata</artifactId>
+    <artifactId>bigdata_aiops</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1</version>
     <modules>

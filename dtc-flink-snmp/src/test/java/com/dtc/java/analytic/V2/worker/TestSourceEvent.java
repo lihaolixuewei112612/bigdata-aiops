@@ -20,7 +20,8 @@ public class TestSourceEvent extends RichSourceFunction<Tuple9<String, String, S
     private boolean running = true;
     Random rand = new Random();
     //(601|1|99,10.3.7.231,指标告警,1分钟平均load值,0.0,101_101_101_101_101,1,test,test12)
-    List<String> channel = Arrays.asList("10.3.7.231", "10.3.7.232", "10.3.7.233", "10.3.7.234");
+    List<String> channel = Arrays.asList("10.3.7.231");
+//    List<String> channel = Arrays.asList("10.3.7.231", "10.3.7.232", "10.3.7.233", "10.3.7.234");
 
     @Override
     public void run(SourceContext<Tuple9<String, String, String, String, Double, String, String, String, String>> ctx) throws Exception {
@@ -38,7 +39,7 @@ public class TestSourceEvent extends RichSourceFunction<Tuple9<String, String, S
         Tuple9<String, String, String, String, Double, String, String, String, String> tuple9=new Tuple9<>();
         tuple9.f0=rand.nextInt(100)+"|"+rand.nextInt(10)+"|"+rand.nextInt(100);
         tuple9.f1 = channel.get(rand.nextInt(channel.size()));
-        tuple9.f2="20-05";
+        tuple9.f2="10_12";
         tuple9.f3="";
         tuple9.f4=0.0;
         tuple9.f5="101_101_106_101_101";
