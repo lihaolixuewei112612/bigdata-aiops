@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AlterStruct {
-    //系统类型
+    //系统类型///
     private String System_name;
     ///ip
     private String Host;
