@@ -143,7 +143,7 @@ public class Main {
                 patternStream.select(new PatternSelectFunction<Tuple5<String, String, String, String, String>, String>() {
                     @Override
                     public String select(Map<String, List<Tuple5<String, String, String, String, String>>> map) throws Exception {
-                        log.info("1 ===================================================================");
+//                        log.info("1 ===================================================================");
 //                      log.info("p = {}", map);
                         System.out.println("p = {}," + map);
                         String msg = String.format("ID %d has login failed 3 times in 5 seconds.and User %s"
@@ -193,7 +193,7 @@ public class Main {
             try {
                 json = objectMapper.readTree(s);
             } catch (IOException e) {
-                log.error("Data resolve make mistake,and the reason is " + e);
+//                log.error("Data resolve make mistake,and the reason is " + e);
                 return Tuple5.of("null","null", "null", "null", "null");
             }
             String codes = json.get("code").textValue();
@@ -209,7 +209,7 @@ public class Main {
                 Object obj = JSON.parse(str);
                 result = true;
             } catch (Exception e) {
-                log.warn("Event data is not musi");
+//                log.warn("Event data is not musi");
                 result = false;
             }
             return result;

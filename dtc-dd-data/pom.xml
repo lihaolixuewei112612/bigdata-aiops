@@ -43,17 +43,32 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.45</version>
         </dependency>
-        <dependency>
-            <groupId>com.ganshane.specs1</groupId>
-            <artifactId>lippi-oapi-encrpt</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ganshane.specs</groupId>
-            <artifactId>taobao-sdk-java-auto-20200228</artifactId>
-            <version>1.0.0</version>
+<!--        <dependency>-->
+<!--            <groupId>com.ganshane.specs1</groupId>-->
+<!--            <artifactId>lippi-oapi-encrpt</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.ganshane.specs</groupId>-->
+<!--            <artifactId>taobao-sdk-java-auto-20200228</artifactId>-->
+<!--            <version>1.0.0</version>-->
 
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.taobao.top</groupId>
+            <artifactId>lippi-oapi-encrpt</artifactId>
+            <version>dingtalk-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/lippi-oapi-encrpt.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.taobao.top</groupId>
+            <artifactId>top-api-sdk-dev</artifactId>
+            <version>ding-open-mc-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/taobao-sdk-java-auto_1479188381469-20200228.jar</systemPath>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

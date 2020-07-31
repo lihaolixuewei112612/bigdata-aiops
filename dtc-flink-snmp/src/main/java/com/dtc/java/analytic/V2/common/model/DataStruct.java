@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class DataStruct {
     private String System_name;
     private String Host;
@@ -21,4 +21,79 @@ public class DataStruct {
     private String nameEN;
     private String time;
     private String value;
+
+    public DataStruct(String system_name, String host, String zbFourName, String zbLastCode, String nameCN, String nameEN, String time, String value) {
+        System_name = system_name;
+        Host = host;
+        this.zbFourName = zbFourName;
+        this.zbLastCode = zbLastCode;
+        this.nameCN = nameCN;
+        this.nameEN = nameEN;
+        this.time = time;
+        this.value = value;
+    }
+
+    public String getSystem_name() {
+        return System_name;
+    }
+
+    public void setSystem_name(String system_name) {
+        System_name = system_name;
+    }
+
+    public String getHost() {
+        return Host;
+    }
+
+    public void setHost(String host) {
+        Host = host;
+    }
+
+    public String getZbFourName() {
+        return zbFourName;
+    }
+
+    public void setZbFourName(String zbFourName) {
+        this.zbFourName = zbFourName;
+    }
+
+    public String getZbLastCode() {
+        return zbLastCode;
+    }
+
+    public void setZbLastCode(String zbLastCode) {
+        this.zbLastCode = zbLastCode;
+    }
+
+    public String getNameCN() {
+        return nameCN;
+    }
+
+    public void setNameCN(String nameCN) {
+        this.nameCN = nameCN;
+    }
+
+    public String getNameEN() {
+        return nameEN;
+    }
+
+    public void setNameEN(String nameEN) {
+        this.nameEN = nameEN;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

@@ -11,24 +11,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.45" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: com.taobao.top:lippi-oapi-encrpt:dingtalk-SNAPSHOT">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/lippi-oapi-encrpt.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: com.taobao.top:top-api-sdk-dev:ding-open-mc-SNAPSHOT">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/taobao-sdk-java-auto_1479188381469-20200228.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.flink:flink-hbase_2.11:1.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hbase:hbase-server:1.4.3" level="project" />
@@ -79,6 +61,15 @@
     <orderEntry type="library" name="Maven: org.apache.avro:avro:1.7.4" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.paranamer:paranamer:2.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hadoop:hadoop-annotations:2.6.0" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: jdk.tools:jdk.tools:1.6">
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_261/lib/tools.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-servlet:3.0" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.6.2.Final" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
