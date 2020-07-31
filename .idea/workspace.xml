@@ -6,9 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b18018b-1de0-42cd-8955-ce8ee5a1b5c5" name="Default Changelist" comment="squash! 修改linux处理逻辑">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3b18018b-1de0-42cd-8955-ce8ee5a1b5c5" name="Default Changelist" comment="squash! 修改linux处理逻辑" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
