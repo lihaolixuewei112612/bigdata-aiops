@@ -1,0 +1,29 @@
+update deloitte.h_adjustment_detail t set master_id_sets='C_M06,C_M07,C_M08,C_M09,C_M10,C_M11,C_M12,C_M13,SMJJ,QHGS' where t.industry_type='金融机构' and t.industry_name='通用';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M08,C_M09' where t.industry_type='金融机构' and t.industry_name='保险专用';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M10' where t.industry_type='金融机构' and t.industry_name='信托专用';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M12' where t.industry_type='金融机构' and t.industry_name='类银行金融机构专用';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M01,C_M02,C_M14,C_M15,C_M16,C_M17,C_M18,C_M19,C_M20,C_M21,C_M22,C_M23,C_M24,C_M25,C_M26,C_M27,C_M28,C_M29,C_M30,C_M31' where t.industry_type='一般行业' and t.industry_name='通用';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M01' where t.industry_type='一般行业' and t.industry_name='钢铁';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M02' where t.industry_type='一般行业' and t.industry_name='城投';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M14' where t.industry_type='一般行业' and t.industry_name='开发型房地产';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M15' where t.industry_type='一般行业' and t.industry_name='持有型房地产';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M16' where t.industry_type='一般行业' and t.industry_name='煤炭';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M17' where t.industry_type='一般行业' and t.industry_name='石油天然气';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M18' where t.industry_type='一般行业' and t.industry_name='化工';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M19' where t.industry_type='一般行业' and t.industry_name='金属与采矿';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M20' where t.industry_type='一般行业' and t.industry_name='建筑业';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M21' where t.industry_type='一般行业' and t.industry_name='交通运输';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M22' where t.industry_type='一般行业' and t.industry_name='重工业';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M23' where t.industry_type='一般行业' and t.industry_name='汽车与汽车零部件';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M24' where t.industry_type='一般行业' and t.industry_name='轻工业';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M25' where t.industry_type='一般行业' and t.industry_name='农林牧渔与食品饮料';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M26' where t.industry_type='一般行业' and t.industry_name='批发零售';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M27' where t.industry_type='一般行业' and t.industry_name='传媒';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M28' where t.industry_type='一般行业' and t.industry_name='医疗保健';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M29' where t.industry_type='一般行业' and t.industry_name='IT与电信';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M30' where t.industry_type='一般行业' and t.industry_name='公用事业';
+update deloitte.h_adjustment_detail t set master_id_sets='C_M31' where t.industry_type='一般行业' and t.industry_name='通用公司';
+
+
+1. 主标尺表；
+2. 内评确定的3张表；

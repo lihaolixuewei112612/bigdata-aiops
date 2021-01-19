@@ -1,0 +1,68 @@
+CREATE OR REPLACE procedure cust.p_ids_monthly_bill_standard_1()
+ is
+ l_sqlBuf STRING;
+ l_tableName string;
+ I_BILLSTYPE string;
+		BEGIN
+            l_tableName := F_IDS_GET_TABLENAME('bill_sparkZd_2','');
+            I_BILLSTYPE:='month'
+            l_sqlBuf := "select " ||
+                    "   z.khh," ||
+                    "   z.qmzzc," ||
+                    "   z.qczzc," ||
+                    "   z.qmzjye," ||
+                    "   z.qmzqsz," ||
+                    "   z.qmzfz," ||
+                    "   z.yk,"    ||
+                    "   z.ykl,"   ||
+                    "   z.nhsyl," ||
+                    "   z.crje," ||
+                    "   z.qcje," ||
+                    "   z.zrzqsz," ||
+                    "   z.zczqsz," ||
+                    "   z.zcjlr," ||
+                    "   z.bdl," ||
+                    "   z.yk_gp,"    ||
+                    "   z.cggs_gp,"  ||
+                    "   z.cgcgl_gp," ||
+                    "   z.cjje_gp_mr," ||
+                    "   z.cjje_gp_mc," ||
+                    "   z.jybs_gp_mr," ||
+                    "   z.jybs_gp_mc," ||
+                    "   z.ztcs AS ztcs_gp," ||
+                    "   z.ztsl_gp," ||
+                    "   z.ztcgl AS ztcgl_gp,"||
+                    "   z.yl_list," ||
+                    "   z.ks_list," ||
+                    "   z.qczzc_rzrq," ||
+                    "   z.qmzqsz_rzrq," ||
+                    "   z.qmzjye_rzrq," ||
+                    "   z.qmzfz_rzrq,"  ||
+                    "   z.yk_rzrq,"     ||
+                    "   z.qmzxjz_rzrq,"   ||
+                    "   z.zxjz_zzl_rzrq," ||
+                    "   z.qmzqsz_jrcp,"   ||
+                    "   z.yk_jrcp,"     ||
+                    "   z.qmzzc_ggqq,"  ||
+                    "   z.qmzjye_ggqq," ||
+                    "   z.qmzqsz_ggqq," ||
+                    "   z.yk_ggqq,"     ||
+                    "   z.qmzxjz_ggqq,"    ||
+                    "   z.zxjz_zzl_ggqq"   ||
+                    " from  " || F_IDS_GET_TABLENAME('bill_sparkresult1', '') ||" z ";
+
+            F_IDS_CREATE_TEMP_TABLE(l_sqlBuf, l_tableName);
+        END;
+
+
+CREATE OR REPLACE FUNCTION CUST.F_IDS_CREATE_TEMP_TABLE(
+    i_sqlBuf IN STRING,
+    i_tableName IN STRING
+)
+RETURN BOOLEAN
+IS
+BEGIN
+    EXECUTE IMMEDIATE 'drop table if exists '|| i_tableName ||';';
+    EXECUTE IMMEDIATE 'CREATE TABLE ' || i_tableName || ' STORED AS HOLODESK AS ' || i_sqlBuf || ';';
+    RETURN TRUE;
+END;

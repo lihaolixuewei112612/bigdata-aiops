@@ -61,7 +61,7 @@ public class MainUntils {
         int anInt1_one = parameterTool.getInt("dtc.alarm.time.long.one", 60000);
         int anInt_two = parameterTool.getInt("dtc.alarm.times.two", 1);
         int anInt1_two = parameterTool.getInt("dtc.alarm.time.long.two", 60000);
-        TimesConstats build = TimesConstats.builder().one(anInt_one).two(anInt1_one).three(anInt_two).four(anInt1_two).build();
+        TimesConstats build = new TimesConstats.Builder().one(anInt_one).two(anInt1_one).three(anInt_two).four(anInt1_two).build();
         return build;
     }
 

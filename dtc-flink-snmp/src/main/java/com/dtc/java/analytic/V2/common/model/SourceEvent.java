@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
  *
  * @author :hao.li
  */
-@Data
-@NoArgsConstructor
+
 public class SourceEvent {
     private String time;
     private String code;
@@ -19,6 +18,8 @@ public class SourceEvent {
     private String nameEN;
     private String value;
 
+    public SourceEvent() {
+    }
 
     public SourceEvent(String time, String code, String host, String nameCN, String nameEN, String value) {
         this.time = time;

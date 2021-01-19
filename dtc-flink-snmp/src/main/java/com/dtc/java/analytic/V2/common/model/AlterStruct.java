@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
  *
  * @author :hao.li
  */
-@Data
-@NoArgsConstructor
+
 public class AlterStruct {
     //系统类型///111
     private String System_name;
@@ -38,6 +37,9 @@ public class AlterStruct {
     private String yuzhi;
     //ip-code
     private String gaojing;
+
+    public AlterStruct() {
+    }
 
     public AlterStruct(String system_name, String host, String zbFourName, String zbLastCode, String nameCN, String nameEN, String event_time, String system_time, String value, String level, String unique_id, String yuzhi, String gaojing) {
         System_name = system_name;

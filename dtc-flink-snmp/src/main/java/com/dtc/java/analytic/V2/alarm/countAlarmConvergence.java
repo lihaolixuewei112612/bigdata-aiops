@@ -41,7 +41,6 @@ public class countAlarmConvergence extends ProcessWindowFunction<AlterStruct, Al
             //判断是否是数据
             boolean strResult = in.getValue().matches("-?[0-9]+.*[0-9]*");
             if (!strResult) {
-                log.info("Value is not number of string!");
             } else {
                 mapSwitch_bak.put(in.getGaojing(),0);
                 mapSwitch.put(in.getGaojing(),mapSwitch.getOrDefault(in.getGaojing(),0)+1);

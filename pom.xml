@@ -15,7 +15,7 @@
         <module>dtc-dd-data</module>
         <module>dtc-flink-log</module>
         <module>dtc-dist</module>
-
+        <module>wokrer</module>
 
 
     </modules>

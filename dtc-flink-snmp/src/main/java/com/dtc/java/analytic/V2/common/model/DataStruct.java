@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
  *
  * @author :hao.li
  */
-@Data
-@NoArgsConstructor
-//@AllArgsConstructor
+//@Data
 public class DataStruct {
     private String System_name;
     private String Host;
@@ -20,7 +18,12 @@ public class DataStruct {
     private String nameCN;
     private String nameEN;
     private String time;
-    private String value;
+    public String value;
+
+    public DataStruct() {
+    }
+
+
 
     public DataStruct(String system_name, String host, String zbFourName, String zbLastCode, String nameCN, String nameEN, String time, String value) {
         System_name = system_name;

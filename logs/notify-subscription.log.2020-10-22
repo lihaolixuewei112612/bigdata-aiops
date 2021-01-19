@@ -1,0 +1,1579 @@
+2020-10-22 08:27:23,508 - The heartbeat of ResourceManager with id 7a150c9874befa290b5c2ca455f1623f timed out.
+2020-10-22 08:27:24,121 - Close ResourceManager connection 7a150c9874befa290b5c2ca455f1623f: The heartbeat of ResourceManager with id 7a150c9874befa290b5c2ca455f1623f timed out..
+2020-10-22 08:27:24,121 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:27:23,513 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:27:23,512 - The heartbeat of TaskManager with id 9735f6d5-4d5e-4b40-b8a0-59f778b53caa timed out.
+2020-10-22 08:27:24,144 - Close JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:27:24,144 - Closing TaskExecutor connection 9735f6d5-4d5e-4b40-b8a0-59f778b53caa because: The heartbeat of TaskManager with id 9735f6d5-4d5e-4b40-b8a0-59f778b53caa  timed out.
+2020-10-22 08:27:24,144 - Attempting to fail task externally Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8).
+2020-10-22 08:27:24,144 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:27:24,144 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:27:24,146 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8) switched from RUNNING to FAILED.
+java.util.concurrent.TimeoutException: Heartbeat of TaskManager with id 9735f6d5-4d5e-4b40-b8a0-59f778b53caa timed out.
+	at org.apache.flink.runtime.jobmaster.JobMaster$TaskManagerHeartbeatListener.notifyHeartbeatTimeout(JobMaster.java:1631)
+	at org.apache.flink.runtime.heartbeat.HeartbeatManagerImpl$HeartbeatMonitor.run(HeartbeatManagerImpl.java:339)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at org.apache.flink.runtime.concurrent.akka.ActorSystemScheduledExecutorAdapter$ScheduledFutureTask.run(ActorSystemScheduledExecutorAdapter.java:154)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2020-10-22 08:27:24,437 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:27:24,437 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:27:24,437 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state RUNNING to FAILING.
+java.util.concurrent.TimeoutException: Heartbeat of TaskManager with id 9735f6d5-4d5e-4b40-b8a0-59f778b53caa timed out.
+	at org.apache.flink.runtime.jobmaster.JobMaster$TaskManagerHeartbeatListener.notifyHeartbeatTimeout(JobMaster.java:1631)
+	at org.apache.flink.runtime.heartbeat.HeartbeatManagerImpl$HeartbeatMonitor.run(HeartbeatManagerImpl.java:339)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at org.apache.flink.runtime.concurrent.akka.ActorSystemScheduledExecutorAdapter$ScheduledFutureTask.run(ActorSystemScheduledExecutorAdapter.java:154)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2020-10-22 08:27:24,438 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:27:24,146 - Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,439 - Triggering cancellation of task code Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8).
+2020-10-22 08:27:24,441 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:27:24,442 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:27:24,442 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:27:24,442 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:27:24,443 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:27:24,443 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:27:24,444 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af).
+2020-10-22 08:27:24,444 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,444 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af).
+2020-10-22 08:27:24,445 - Attempting to fail task externally SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5).
+2020-10-22 08:27:24,445 - SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,445 - Triggering cancellation of task code SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5).
+2020-10-22 08:27:24,445 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6).
+2020-10-22 08:27:24,445 - Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,447 - SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,448 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,448 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,448 - SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,448 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6) switched from RUNNING to CANCELING.
+2020-10-22 08:27:24,445 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,449 - Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30) switched from CANCELING to CANCELED.
+2020-10-22 08:27:24,450 - Try to restart or fail the job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) if no longer possible.
+2020-10-22 08:27:24,450 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state FAILING to RESTARTING.
+2020-10-22 08:27:24,451 - Restarting the job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076).
+2020-10-22 08:27:24,449 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6).
+2020-10-22 08:27:24,723 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd).
+2020-10-22 08:27:24,723 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,858 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd).
+2020-10-22 08:27:24,858 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8).
+2020-10-22 08:27:24,858 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,858 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8).
+2020-10-22 08:27:24,859 - Attempting to fail task externally Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436).
+2020-10-22 08:27:24,859 - Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,961 - Triggering cancellation of task code Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436).
+2020-10-22 08:27:24,961 - Attempting to fail task externally Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94).
+2020-10-22 08:27:24,961 - Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,962 - Triggering cancellation of task code Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94).
+2020-10-22 08:27:24,963 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd).
+2020-10-22 08:27:24,962 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8).
+2020-10-22 08:27:24,962 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af).
+2020-10-22 08:27:24,963 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6).
+2020-10-22 08:27:24,963 - Attempting to fail task externally SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d).
+2020-10-22 08:27:24,963 - SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,963 - Triggering cancellation of task code SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d).
+2020-10-22 08:27:24,963 - Attempting to fail task externally Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd).
+2020-10-22 08:27:24,963 - Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,964 - Triggering cancellation of task code Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd).
+2020-10-22 08:27:24,964 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f).
+2020-10-22 08:27:24,964 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:24,964 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f).
+2020-10-22 08:27:24,965 - Attempting to fail task externally SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80).
+2020-10-22 08:27:25,090 - Freeing task resources for Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94).
+2020-10-22 08:27:25,090 - Freeing task resources for Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436).
+2020-10-22 08:27:25,090 - Freeing task resources for Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8).
+2020-10-22 08:27:25,091 - Freeing task resources for SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5).
+2020-10-22 08:27:25,091 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f).
+2020-10-22 08:27:25,091 - SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:25,093 - Triggering cancellation of task code SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80).
+2020-10-22 08:27:25,093 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30).
+2020-10-22 08:27:25,093 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:25,093 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30).
+2020-10-22 08:27:25,123 - Attempting to fail task externally SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792).
+2020-10-22 08:27:25,123 - SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:25,123 - Triggering cancellation of task code SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792).
+2020-10-22 08:27:25,123 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879).
+2020-10-22 08:27:25,124 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 08:27:25,124 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879).
+2020-10-22 08:27:25,135 - The heartbeat of ResourceManager with id 7a150c9874befa290b5c2ca455f1623f timed out.
+2020-10-22 08:27:25,136 - Close ResourceManager connection 7a150c9874befa290b5c2ca455f1623f.
+2020-10-22 08:27:25,136 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566).
+2020-10-22 08:27:25,136 - Resolved JobManager address, beginning registration
+2020-10-22 08:27:25,136 - Registration at JobManager attempt 1 (timeout=100ms)
+2020-10-22 08:27:25,136 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:27:25,136 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:27:25,296 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd) [FAILED]
+2020-10-22 08:27:25,301 - Terminating registration attempts towards ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc.
+2020-10-22 08:27:25,302 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566).
+2020-10-22 08:27:25,303 - Close JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:27:25,462 - Attempting to cancel task Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436).
+2020-10-22 08:27:25,462 - Task Source: Custom Source (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Attempting to cancel task Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94).
+2020-10-22 08:27:25,462 - Task Source: Custom Source -> Map -> (Map, Map) (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f).
+2020-10-22 08:27:25,462 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30).
+2020-10-22 08:27:25,462 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Attempting to cancel task Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8).
+2020-10-22 08:27:25,462 - Task Co-Process-Broadcast (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:27:25,462 - Attempting to cancel task SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d).
+2020-10-22 08:27:25,462 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:27:25,462 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Attempting to cancel task SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80).
+2020-10-22 08:27:25,462 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd).
+2020-10-22 08:27:25,462 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) is already in state FAILED
+2020-10-22 08:27:25,462 - Attempting to cancel task Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd).
+2020-10-22 08:27:25,462 - Task Co-Process-Broadcast (1/1) is already in state FAILED
+2020-10-22 08:27:25,463 - Attempting to cancel task SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5).
+2020-10-22 08:27:25,463 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,463 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879).
+2020-10-22 08:27:25,463 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,463 - Resolved JobManager address, beginning registration
+2020-10-22 08:27:25,463 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af).
+2020-10-22 08:27:25,463 - Registration at JobManager attempt 1 (timeout=100ms)
+2020-10-22 08:27:25,463 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,463 - Attempting to cancel task SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792).
+2020-10-22 08:27:25,463 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,463 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6).
+2020-10-22 08:27:25,463 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,463 - Discarding the results produced by task execution 4591aaf742531a417aff858236fc6cd8.
+2020-10-22 08:27:25,480 - Freeing task resources for SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792).
+2020-10-22 08:27:25,481 - Freeing task resources for SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d).
+2020-10-22 08:27:25,481 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5) [FAILED]
+2020-10-22 08:27:25,481 - Ensuring all FileSystem streams are closed for task Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436) [FAILED]
+2020-10-22 08:27:25,481 - Ensuring all FileSystem streams are closed for task Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8) [FAILED]
+2020-10-22 08:27:25,481 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8).
+2020-10-22 08:27:25,481 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d) [FAILED]
+2020-10-22 08:27:25,485 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f) [FAILED]
+2020-10-22 08:27:25,485 - Freeing task resources for Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd).
+2020-10-22 08:27:25,485 - Ensuring all FileSystem streams are closed for task Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd) [FAILED]
+2020-10-22 08:27:25,486 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af) [FAILED]
+2020-10-22 08:27:25,486 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6) [FAILED]
+2020-10-22 08:27:25,481 - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94) [FAILED]
+2020-10-22 08:27:25,482 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30).
+2020-10-22 08:27:25,491 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30) [FAILED]
+2020-10-22 08:27:25,491 - Freeing task resources for SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80).
+2020-10-22 08:27:25,492 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879).
+2020-10-22 08:27:25,492 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80) [FAILED]
+2020-10-22 08:27:25,493 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8) [FAILED]
+2020-10-22 08:27:25,493 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792) [FAILED]
+2020-10-22 08:27:25,495 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,492 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879) [FAILED]
+2020-10-22 08:27:25,498 - Free slot TaskSlot(index:0, state:ALLOCATED, resource profile: ResourceProfile{cpuCores=1.7976931348623157E308, heapMemoryInMB=2147483647, directMemoryInMB=2147483647, nativeMemoryInMB=2147483647, networkMemoryInMB=2147483647}, allocationId: AllocationID{97be7c82aba4eea4f23fdb675227b72b}, jobId: 058858201c44ee51f8f6b6248546b076).
+2020-10-22 08:27:25,499 - Attempting to fail task externally Co-Process-Broadcast (1/1) (b590524b4f05cb76411daac1ebeecaf8).
+2020-10-22 08:27:25,499 - Task Co-Process-Broadcast (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (b200028636e1ae8ecdce63c1da2b54af).
+2020-10-22 08:27:25,499 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally SelectCepOperator (1/1) (a14720f821f8a6b5441c8659cd0735b5).
+2020-10-22 08:27:25,499 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4df78e72f183171c40c0bb59a95041b6).
+2020-10-22 08:27:25,499 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (78b46d8afba75e609ce390b6d07a2bfd).
+2020-10-22 08:27:25,499 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4591aaf742531a417aff858236fc6cd8).
+2020-10-22 08:27:25,499 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Source: Custom Source (1/1) (023f4ff2565edd089220e46c01af0436).
+2020-10-22 08:27:25,499 - Task Source: Custom Source (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Source: Custom Source -> Map -> (Map, Map) (1/1) (7c6c56a802fc9824c427289438480d94).
+2020-10-22 08:27:25,499 - Task Source: Custom Source -> Map -> (Map, Map) (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally SelectCepOperator (1/1) (a36854207e583ae0b76f23ddb0bc852d).
+2020-10-22 08:27:25,499 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Co-Process-Broadcast (1/1) (7822a8de3eb38e42bdc94296233927fd).
+2020-10-22 08:27:25,499 - Task Co-Process-Broadcast (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (47abe453f5725c3d9258c35f56681b8f).
+2020-10-22 08:27:25,499 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) is already in state FAILED
+2020-10-22 08:27:25,499 - Attempting to fail task externally SelectCepOperator (1/1) (e5ee5ccc956e45e8a2f2fdfd317c7d80).
+2020-10-22 08:27:25,499 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,500 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (de57630c936d0f6f716f70b7d1cdea30).
+2020-10-22 08:27:25,500 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) is already in state FAILED
+2020-10-22 08:27:25,500 - Attempting to fail task externally SelectCepOperator (1/1) (dcc2b5c99dd96ea75574f3ac4fc1e792).
+2020-10-22 08:27:25,500 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 08:27:25,500 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (f2e706e98cc5ed2108b2262d2e72e879).
+2020-10-22 08:27:25,500 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 08:27:25,541 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) 78b46d8afba75e609ce390b6d07a2bfd.
+2020-10-22 08:27:25,542 - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom Source 023f4ff2565edd089220e46c01af0436.
+2020-10-22 08:27:25,542 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator a14720f821f8a6b5441c8659cd0735b5.
+2020-10-22 08:27:25,542 - Un-registering task and sending final execution state FAILED to JobManager for task Co-Process-Broadcast b590524b4f05cb76411daac1ebeecaf8.
+2020-10-22 08:27:25,542 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator a36854207e583ae0b76f23ddb0bc852d.
+2020-10-22 08:27:25,542 - Un-registering task and sending final execution state FAILED to JobManager for task Co-Process-Broadcast 7822a8de3eb38e42bdc94296233927fd.
+2020-10-22 08:27:25,542 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out b200028636e1ae8ecdce63c1da2b54af.
+2020-10-22 08:27:25,543 - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom Source -> Map -> (Map, Map) 7c6c56a802fc9824c427289438480d94.
+2020-10-22 08:27:25,543 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) de57630c936d0f6f716f70b7d1cdea30.
+2020-10-22 08:27:25,544 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map 47abe453f5725c3d9258c35f56681b8f.
+2020-10-22 08:27:25,544 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator e5ee5ccc956e45e8a2f2fdfd317c7d80.
+2020-10-22 08:27:25,544 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out 4591aaf742531a417aff858236fc6cd8.
+2020-10-22 08:27:25,545 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator dcc2b5c99dd96ea75574f3ac4fc1e792.
+2020-10-22 08:27:25,545 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out f2e706e98cc5ed2108b2262d2e72e879.
+2020-10-22 08:27:25,546 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out 4df78e72f183171c40c0bb59a95041b6.
+2020-10-22 08:27:25,548 - Registering TaskManager with ResourceID 9735f6d5-4d5e-4b40-b8a0-59f778b53caa (akka://flink/user/taskmanager_0) at ResourceManager
+2020-10-22 08:27:25,549 - Registering TaskManager with ResourceID 9735f6d5-4d5e-4b40-b8a0-59f778b53caa (akka://flink/user/taskmanager_0) at ResourceManager
+2020-10-22 08:27:25,549 - Free slot TaskSlot(index:0, state:RELEASING, resource profile: ResourceProfile{cpuCores=1.7976931348623157E308, heapMemoryInMB=2147483647, directMemoryInMB=2147483647, nativeMemoryInMB=2147483647, networkMemoryInMB=2147483647}, allocationId: AllocationID{97be7c82aba4eea4f23fdb675227b72b}, jobId: 058858201c44ee51f8f6b6248546b076).
+2020-10-22 08:27:25,549 - Remove job 058858201c44ee51f8f6b6248546b076 from job leader monitoring.
+2020-10-22 08:27:25,549 - Close JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:27:25,863 - Successful registration at resource manager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc under registration id 3a8364d99a02369e5506ea024d52bdd3.
+2020-10-22 08:28:14,732 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:28:14,732 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:28:14,732 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:28:14,732 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:28:14,732 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:28:14,733 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:28:14,733 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:28:15,543 - Close JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:28:15,543 - Cannot reconnect to job 058858201c44ee51f8f6b6248546b076 because it is not registered.
+2020-10-22 08:29:04,754 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:29:04,754 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:29:04,754 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:29:04,754 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:29:04,754 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:29:04,755 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:29:04,755 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:29:54,770 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:29:54,770 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:29:54,770 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:29:54,770 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:29:54,770 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:29:54,770 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:29:54,770 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:30:44,793 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:30:44,793 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:30:44,793 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:30:44,793 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:30:44,793 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:30:44,793 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:30:44,793 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:31:34,812 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:31:34,812 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:31:34,812 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:31:34,812 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:31:34,812 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:31:34,812 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:31:34,813 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:32:24,834 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:32:24,834 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:32:24,834 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:32:24,834 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:32:24,834 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:32:24,834 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:32:24,835 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:33:14,852 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:33:14,852 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:33:14,852 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:33:14,852 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:33:14,852 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:33:14,853 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:33:14,853 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:34:04,869 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:34:04,869 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:34:04,869 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:34:04,870 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:34:04,870 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:34:04,870 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:34:04,870 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:34:54,883 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:34:54,883 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:34:54,883 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:34:54,883 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:34:54,883 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:34:54,883 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:34:54,883 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:35:43,221 - JobManager successfully registered at ResourceManager, leader id: 98ed57ffbbb8d53704908921b3064566.
+2020-10-22 08:35:43,223 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state RESTARTING to CREATED.
+2020-10-22 08:35:43,224 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state CREATED to RUNNING.
+2020-10-22 08:35:43,224 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Requesting new slot [SlotRequestId{a2b9168330da819edfb826dea56ec1ec}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=0, nativeMemoryInMB=0, networkMemoryInMB=0} from resource manager.
+2020-10-22 08:35:43,224 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) switched from CREATED to SCHEDULED.
+2020-10-22 08:35:43,224 - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=0, nativeMemoryInMB=0, networkMemoryInMB=0} for job 058858201c44ee51f8f6b6248546b076 with allocation id AllocationID{97e4bdaed4079e093d6f02dd7af08ba6}.
+2020-10-22 08:35:43,225 - Receive slot request AllocationID{97e4bdaed4079e093d6f02dd7af08ba6} for job 058858201c44ee51f8f6b6248546b076 from resource manager with leader id 98ed57ffbbb8d53704908921b3064566.
+2020-10-22 08:35:43,225 - Allocated slot for AllocationID{97e4bdaed4079e093d6f02dd7af08ba6}.
+2020-10-22 08:35:43,225 - Add job 058858201c44ee51f8f6b6248546b076 for job leader monitoring.
+2020-10-22 08:35:43,225 - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 7a3cfe7d-adf3-41a7-a3a6-cd9e076dd518.
+2020-10-22 08:35:43,225 - Resolved JobManager address, beginning registration
+2020-10-22 08:35:43,225 - Registration at JobManager attempt 1 (timeout=100ms)
+2020-10-22 08:35:43,226 - Successful registration at job manager akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:35:43,226 - Establish JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:35:43,226 - Offer reserved slots to the leader of job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:35:43,226 - Activate slot AllocationID{97e4bdaed4079e093d6f02dd7af08ba6}.
+2020-10-22 08:35:43,227 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying Source: Custom Source -> Map -> (Map, Map) (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying Source: Custom Source (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying Co-Process-Broadcast (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying Co-Process-Broadcast (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying SelectCepOperator (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying SelectCepOperator (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,227 - Deploying SelectCepOperator (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,227 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,228 - Deploying SelectCepOperator (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,228 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,228 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,228 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,228 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,228 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,228 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,228 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from SCHEDULED to DEPLOYING.
+2020-10-22 08:35:43,228 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #1) to 127.0.0.1
+2020-10-22 08:35:43,230 - Received task Source: Custom Source -> Map -> (Map, Map) (1/1).
+2020-10-22 08:35:43,230 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,230 - Creating FileSystem stream leak safety net for task Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) [DEPLOYING]
+2020-10-22 08:35:43,230 - Loading JAR files for task Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) [DEPLOYING].
+2020-10-22 08:35:43,230 - Received task Source: Custom Source (1/1).
+2020-10-22 08:35:43,230 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,230 - Creating FileSystem stream leak safety net for task Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) [DEPLOYING]
+2020-10-22 08:35:43,230 - Loading JAR files for task Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) [DEPLOYING].
+2020-10-22 08:35:43,231 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1).
+2020-10-22 08:35:43,231 - Registering task at network: Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) [DEPLOYING].
+2020-10-22 08:35:43,231 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,231 - Registering task at network: Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) [DEPLOYING].
+2020-10-22 08:35:43,231 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) [DEPLOYING]
+2020-10-22 08:35:43,232 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) [DEPLOYING].
+2020-10-22 08:35:43,232 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1).
+2020-10-22 08:35:43,232 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) [DEPLOYING].
+2020-10-22 08:35:43,233 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,233 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) [DEPLOYING]
+2020-10-22 08:35:43,233 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) [DEPLOYING].
+2020-10-22 08:35:43,233 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1).
+2020-10-22 08:35:43,233 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) [DEPLOYING].
+2020-10-22 08:35:43,234 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,234 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) [DEPLOYING]
+2020-10-22 08:35:43,235 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) [DEPLOYING].
+2020-10-22 08:35:43,235 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) [DEPLOYING].
+2020-10-22 08:35:43,236 - Received task Co-Process-Broadcast (1/1).
+2020-10-22 08:35:43,236 - Received task Co-Process-Broadcast (1/1).
+2020-10-22 08:35:43,236 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,236 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,237 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,237 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,237 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,237 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,237 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,237 - Received task SelectCepOperator (1/1).
+2020-10-22 08:35:43,237 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,237 - Creating FileSystem stream leak safety net for task Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) [DEPLOYING]
+2020-10-22 08:35:43,237 - Loading JAR files for task Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) [DEPLOYING].
+2020-10-22 08:35:43,238 - Received task SelectCepOperator (1/1).
+2020-10-22 08:35:43,238 - Registering task at network: Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) [DEPLOYING].
+2020-10-22 08:35:43,240 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,240 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,240 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) [DEPLOYING]
+2020-10-22 08:35:43,240 - Creating FileSystem stream leak safety net for task Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) [DEPLOYING]
+2020-10-22 08:35:43,240 - Loading JAR files for task Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) [DEPLOYING].
+2020-10-22 08:35:43,240 - Loading JAR files for task SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) [DEPLOYING].
+2020-10-22 08:35:43,240 - Received task SelectCepOperator (1/1).
+2020-10-22 08:35:43,241 - Registering task at network: SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) [DEPLOYING].
+2020-10-22 08:35:43,240 - Registering task at network: Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) [DEPLOYING].
+2020-10-22 08:35:43,242 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,242 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,245 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,245 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) [DEPLOYING]
+2020-10-22 08:35:43,245 - Loading JAR files for task SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) [DEPLOYING].
+2020-10-22 08:35:43,245 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,245 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) [DEPLOYING]
+2020-10-22 08:35:43,246 - Loading JAR files for task SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) [DEPLOYING].
+2020-10-22 08:35:43,245 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-10-22 08:35:43,246 - Registering task at network: SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) [DEPLOYING].
+2020-10-22 08:35:43,245 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,246 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,246 - Registering task at network: SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) [DEPLOYING].
+2020-10-22 08:35:43,245 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,248 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,249 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-10-22 08:35:43,249 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,248 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,249 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,249 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,249 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,251 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,252 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,252 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,250 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,253 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,254 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,247 - Received task SelectCepOperator (1/1).
+2020-10-22 08:35:43,254 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 08:35:43,250 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-10-22 08:35:43,255 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 08:35:43,252 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,255 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 08:35:43,256 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,257 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,257 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,257 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,257 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) [DEPLOYING]
+2020-10-22 08:35:43,257 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) [DEPLOYING].
+2020-10-22 08:35:43,257 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 08:35:43,257 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,258 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) [DEPLOYING]
+2020-10-22 08:35:43,258 - Loading JAR files for task SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) [DEPLOYING].
+2020-10-22 08:35:43,257 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,257 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) [DEPLOYING]
+2020-10-22 08:35:43,258 - Registering task at network: SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) [DEPLOYING].
+2020-10-22 08:35:43,257 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) [DEPLOYING]
+2020-10-22 08:35:43,259 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) [DEPLOYING].
+2020-10-22 08:35:43,258 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from CREATED to DEPLOYING.
+2020-10-22 08:35:43,259 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) [DEPLOYING]
+2020-10-22 08:35:43,259 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) [DEPLOYING].
+2020-10-22 08:35:43,259 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) [DEPLOYING].
+2020-10-22 08:35:43,258 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) [DEPLOYING].
+2020-10-22 08:35:43,258 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) [DEPLOYING].
+2020-10-22 08:35:43,260 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,261 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,261 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) [DEPLOYING].
+2020-10-22 08:35:43,261 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) [DEPLOYING].
+2020-10-22 08:35:43,261 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,262 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,262 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,262 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,262 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,262 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,262 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,262 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,263 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,264 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,263 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,264 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,264 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 08:35:43,264 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from DEPLOYING to RUNNING.
+2020-10-22 08:35:43,265 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 08:35:43,266 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 08:35:43,266 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 08:35:43,266 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,268 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,268 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,268 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 08:35:43,269 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:43,270 - Initializing heap keyed state backend with stream factory.
+2020-10-22 08:35:44,904 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 08:35:44,904 - Disconnect job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076 from the resource manager.
+2020-10-22 08:35:44,904 - Close ResourceManager connection 7a150c9874befa290b5c2ca455f1623f: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out..
+2020-10-22 08:35:44,904 - Connecting to ResourceManager akka://flink/user/resourcemanager_54137817-c894-4f7e-add2-b4947548efcc(98ed57ffbbb8d53704908921b3064566)
+2020-10-22 08:35:44,905 - Resolved ResourceManager address, beginning registration
+2020-10-22 08:35:44,905 - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-10-22 08:35:44,905 - Registering job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:35:44,905 - Registered job manager a3a6cd9e076dd5187a3cfe7dadf341a7@akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 08:35:44,905 - JobManager successfully registered at ResourceManager, leader id: 98ed57ffbbb8d53704908921b3064566.
+2020-10-22 13:47:48,508 - The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+2020-10-22 13:47:48,508 - Close JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 13:47:48,508 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d).
+2020-10-22 13:47:48,508 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,523 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d).
+2020-10-22 13:47:48,525 - Attempting to fail task externally SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a).
+2020-10-22 13:47:48,525 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,525 - Triggering cancellation of task code SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a).
+2020-10-22 13:47:48,525 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867).
+2020-10-22 13:47:48,525 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,528 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867).
+2020-10-22 13:47:48,528 - Attempting to fail task externally SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765).
+2020-10-22 13:47:48,528 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,528 - Triggering cancellation of task code SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765).
+2020-10-22 13:47:48,528 - Attempting to fail task externally Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28).
+2020-10-22 13:47:48,528 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,529 - Triggering cancellation of task code Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28).
+2020-10-22 13:47:48,529 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de).
+2020-10-22 13:47:48,529 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,522 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) switched from RUNNING to FAILED.
+java.util.concurrent.TimeoutException: Heartbeat of TaskManager with id 9735f6d5-4d5e-4b40-b8a0-59f778b53caa timed out.
+	at org.apache.flink.runtime.jobmaster.JobMaster$TaskManagerHeartbeatListener.notifyHeartbeatTimeout(JobMaster.java:1631)
+	at org.apache.flink.runtime.heartbeat.HeartbeatManagerImpl$HeartbeatMonitor.run(HeartbeatManagerImpl.java:339)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at org.apache.flink.runtime.concurrent.akka.ActorSystemScheduledExecutorAdapter$ScheduledFutureTask.run(ActorSystemScheduledExecutorAdapter.java:154)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2020-10-22 13:47:48,593 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de).
+2020-10-22 13:47:48,593 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state RUNNING to FAILING.
+java.util.concurrent.TimeoutException: Heartbeat of TaskManager with id 9735f6d5-4d5e-4b40-b8a0-59f778b53caa timed out.
+	at org.apache.flink.runtime.jobmaster.JobMaster$TaskManagerHeartbeatListener.notifyHeartbeatTimeout(JobMaster.java:1631)
+	at org.apache.flink.runtime.heartbeat.HeartbeatManagerImpl$HeartbeatMonitor.run(HeartbeatManagerImpl.java:339)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at org.apache.flink.runtime.concurrent.akka.ActorSystemScheduledExecutorAdapter$ScheduledFutureTask.run(ActorSystemScheduledExecutorAdapter.java:154)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2020-10-22 13:47:48,594 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e).
+2020-10-22 13:47:48,594 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,594 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e).
+2020-10-22 13:47:48,613 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de).
+2020-10-22 13:47:48,611 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867).
+2020-10-22 13:47:48,603 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,624 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5).
+2020-10-22 13:47:48,624 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,624 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5).
+2020-10-22 13:47:48,625 - Attempting to fail task externally Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70).
+2020-10-22 13:47:48,625 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,627 - Triggering cancellation of task code Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70).
+2020-10-22 13:47:48,627 - Attempting to fail task externally SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864).
+2020-10-22 13:47:48,627 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,627 - Triggering cancellation of task code SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864).
+2020-10-22 13:47:48,627 - Attempting to fail task externally Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517).
+2020-10-22 13:47:48,628 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,628 - Triggering cancellation of task code Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517).
+2020-10-22 13:47:48,628 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c).
+2020-10-22 13:47:48,628 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,628 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c).
+2020-10-22 13:47:48,628 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342).
+2020-10-22 13:47:48,628 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,628 - Triggering cancellation of task code Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342).
+2020-10-22 13:47:48,628 - Attempting to fail task externally Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6).
+2020-10-22 13:47:48,628 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,687 - Triggering cancellation of task code Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6).
+2020-10-22 13:47:48,688 - Attempting to fail task externally SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421).
+2020-10-22 13:47:48,688 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,688 - Triggering cancellation of task code SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421).
+2020-10-22 13:47:48,599 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d).
+2020-10-22 13:47:48,689 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) [FAILED]
+2020-10-22 13:47:48,599 - Freeing task resources for SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765).
+2020-10-22 13:47:48,599 - Freeing task resources for SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a).
+2020-10-22 13:47:48,595 - Freeing task resources for Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28).
+2020-10-22 13:47:48,712 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) [FAILED]
+2020-10-22 13:47:48,712 - Ensuring all FileSystem streams are closed for task Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) [FAILED]
+2020-10-22 13:47:48,713 - Freeing task resources for SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421).
+2020-10-22 13:47:48,713 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) [FAILED]
+2020-10-22 13:47:48,715 - Close JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 13:47:48,715 - Attempting to cancel task Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6).
+2020-10-22 13:47:48,715 - Task Source: Custom Source (1/1) is already in state FAILED
+2020-10-22 13:47:48,715 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) ec2d6c3e2bcac5b763ab08eb25a0256d.
+2020-10-22 13:47:48,716 - Un-registering task and sending final execution state FAILED to JobManager for task Co-Process-Broadcast fb160df7eb32875713ab38659baa0c28.
+2020-10-22 13:47:48,712 - Freeing task resources for Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517).
+2020-10-22 13:47:48,701 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e).
+2020-10-22 13:47:48,700 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5).
+2020-10-22 13:47:48,716 - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) [FAILED]
+2020-10-22 13:47:48,716 - Freeing task resources for Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6).
+2020-10-22 13:47:48,716 - Ensuring all FileSystem streams are closed for task Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) [FAILED]
+2020-10-22 13:47:48,716 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator 0b6ebc9e455e6f56107443d3b406a43a.
+2020-10-22 13:47:48,717 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator bf17f2f5cb8453eba1e59ab287e54421.
+2020-10-22 13:47:48,700 - Freeing task resources for SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864).
+2020-10-22 13:47:48,717 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (ec2d6c3e2bcac5b763ab08eb25a0256d) switched from RUNNING to FAILED.
+org.apache.flink.util.FlinkException: JobManager responsible for 058858201c44ee51f8f6b6248546b076 lost the leadership.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.closeJobManagerConnection(TaskExecutor.java:1185)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor.access$1200(TaskExecutor.java:138)
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1625)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:332)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:158)
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.onReceive(AkkaRpcActor.java:142)
+	at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:165)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:502)
+	at akka.actor.UntypedActor.aroundReceive(UntypedActor.scala:95)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:526)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:495)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.util.concurrent.TimeoutException: The heartbeat of JobManager with id b95f07aa38c057f2bf9d72fbddc0b160 timed out.
+	at org.apache.flink.runtime.taskexecutor.TaskExecutor$JobManagerHeartbeatListener.lambda$notifyHeartbeatTimeout$0(TaskExecutor.java:1626)
+	... 15 more
+2020-10-22 13:47:48,697 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c).
+2020-10-22 13:47:48,732 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (c4df06cc493963cf56fc2b0fa8e3722c) [FAILED]
+2020-10-22 13:47:48,697 - Freeing task resources for Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342).
+2020-10-22 13:47:48,697 - Freeing task resources for Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70).
+2020-10-22 13:47:48,625 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,625 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) [FAILED]
+2020-10-22 13:47:48,734 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,625 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) [FAILED]
+2020-10-22 13:47:48,735 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,735 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from RUNNING to CANCELING.
+2020-10-22 13:47:48,734 - Ensuring all FileSystem streams are closed for task Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) [FAILED]
+2020-10-22 13:47:48,735 - Co-Process-Broadcast (1/1) (fb160df7eb32875713ab38659baa0c28) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,735 - Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,733 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) [FAILED]
+2020-10-22 13:47:48,732 - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom Source -> Map -> (Map, Map) 716b0bdc934f4c512311414c5f9b4517.
+2020-10-22 13:47:48,746 - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom Source 453e16988645d0700be7d74e6e3200d6.
+2020-10-22 13:47:48,746 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out c4df06cc493963cf56fc2b0fa8e3722c.
+2020-10-22 13:47:48,747 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5).
+2020-10-22 13:47:48,747 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) is already in state FAILED
+2020-10-22 13:47:48,747 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out 538af06f0402cc26e4b664c8025de867.
+2020-10-22 13:47:48,747 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de).
+2020-10-22 13:47:48,747 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) is already in state FAILED
+2020-10-22 13:47:48,747 - Attempting to cancel task SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864).
+2020-10-22 13:47:48,747 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 13:47:48,747 - Discarding the results produced by task execution ec2d6c3e2bcac5b763ab08eb25a0256d.
+2020-10-22 13:47:48,747 - Attempting to cancel task Co-Process-Broadcast (1/1) (96f2e42707e176cdc7db9a5c9cfc5a70).
+2020-10-22 13:47:48,747 - Task Co-Process-Broadcast (1/1) is already in state FAILED
+2020-10-22 13:47:48,747 - Attempting to cancel task SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765).
+2020-10-22 13:47:48,747 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 13:47:48,747 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) c50724fd88b086824ecffabda68891de.
+2020-10-22 13:47:48,747 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e).
+2020-10-22 13:47:48,747 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 13:47:48,747 - Attempting to cancel task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342).
+2020-10-22 13:47:48,748 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 13:47:48,748 - Discarding the results produced by task execution c4df06cc493963cf56fc2b0fa8e3722c.
+2020-10-22 13:47:48,748 - Un-registering task and sending final execution state FAILED to JobManager for task Co-Process-Broadcast 96f2e42707e176cdc7db9a5c9cfc5a70.
+2020-10-22 13:47:48,748 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out a41ec3c95bd4427952732c0485f5e342.
+2020-10-22 13:47:48,717 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) [FAILED]
+2020-10-22 13:47:48,716 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) [FAILED]
+2020-10-22 13:47:48,716 - Ensuring all FileSystem streams are closed for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) [FAILED]
+2020-10-22 13:47:48,712 - Ensuring all FileSystem streams are closed for task SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) [FAILED]
+2020-10-22 13:47:48,745 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (538af06f0402cc26e4b664c8025de867) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - Source: Custom Source -> Map -> (Map, Map) (1/1) (716b0bdc934f4c512311414c5f9b4517) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (a41ec3c95bd4427952732c0485f5e342) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - SelectCepOperator (1/1) (bf17f2f5cb8453eba1e59ab287e54421) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,750 - Source: Custom Source (1/1) (453e16988645d0700be7d74e6e3200d6) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,751 - SelectCepOperator (1/1) (0b6ebc9e455e6f56107443d3b406a43a) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,751 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (c50724fd88b086824ecffabda68891de) switched from CANCELING to CANCELED.
+2020-10-22 13:47:48,751 - Free slot TaskSlot(index:0, state:ALLOCATED, resource profile: ResourceProfile{cpuCores=1.7976931348623157E308, heapMemoryInMB=2147483647, directMemoryInMB=2147483647, nativeMemoryInMB=2147483647, networkMemoryInMB=2147483647}, allocationId: AllocationID{97e4bdaed4079e093d6f02dd7af08ba6}, jobId: 058858201c44ee51f8f6b6248546b076).
+2020-10-22 13:47:48,751 - Attempting to fail task externally SelectCepOperator (1/1) (ed986f96b703ea06d12b190a46884765).
+2020-10-22 13:47:48,751 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 13:47:48,751 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (af9e0883018ef66f08d6a31a15fe723e).
+2020-10-22 13:47:48,751 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) is already in state FAILED
+2020-10-22 13:47:48,751 - Attempting to fail task externally Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (26ff7d747f7e2e5a2030fb70b3e834f5).
+2020-10-22 13:47:48,751 - Task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) is already in state FAILED
+2020-10-22 13:47:48,751 - Attempting to fail task externally SelectCepOperator (1/1) (3761ab2ef5da390b8bf5082881914864).
+2020-10-22 13:47:48,751 - Task SelectCepOperator (1/1) is already in state FAILED
+2020-10-22 13:47:48,756 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map 26ff7d747f7e2e5a2030fb70b3e834f5.
+2020-10-22 13:47:48,756 - Un-registering task and sending final execution state FAILED to JobManager for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out af9e0883018ef66f08d6a31a15fe723e.
+2020-10-22 13:47:48,756 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator 3761ab2ef5da390b8bf5082881914864.
+2020-10-22 13:47:48,757 - Un-registering task and sending final execution state FAILED to JobManager for task SelectCepOperator ed986f96b703ea06d12b190a46884765.
+2020-10-22 13:47:48,757 - Free slot TaskSlot(index:0, state:RELEASING, resource profile: ResourceProfile{cpuCores=1.7976931348623157E308, heapMemoryInMB=2147483647, directMemoryInMB=2147483647, nativeMemoryInMB=2147483647, networkMemoryInMB=2147483647}, allocationId: AllocationID{97e4bdaed4079e093d6f02dd7af08ba6}, jobId: 058858201c44ee51f8f6b6248546b076).
+2020-10-22 13:47:48,757 - Remove job 058858201c44ee51f8f6b6248546b076 from job leader monitoring.
+2020-10-22 13:47:48,757 - Close JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 13:47:48,763 - Try to restart or fail the job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) if no longer possible.
+2020-10-22 13:47:48,763 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state FAILING to RESTARTING.
+2020-10-22 13:47:48,763 - Restarting the job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076).
+2020-10-22 13:47:48,763 - Resolved JobManager address, beginning registration
+2020-10-22 13:47:48,763 - Resolved JobManager address, beginning registration
+2020-10-22 13:56:38,096 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state RESTARTING to CREATED.
+2020-10-22 13:56:38,096 - Job Dtc-Alarm-Flink-Process (058858201c44ee51f8f6b6248546b076) switched from state CREATED to RUNNING.
+2020-10-22 13:56:38,096 - Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,096 - Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,096 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,096 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Requesting new slot [SlotRequestId{2533fb2a81a832e6da1df1e8e9122e76}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=0, nativeMemoryInMB=0, networkMemoryInMB=0} from resource manager.
+2020-10-22 13:56:38,097 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=0, nativeMemoryInMB=0, networkMemoryInMB=0} for job 058858201c44ee51f8f6b6248546b076 with allocation id AllocationID{6492f25c8ffee15bc044143b16514e56}.
+2020-10-22 13:56:38,097 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) switched from CREATED to SCHEDULED.
+2020-10-22 13:56:38,097 - Receive slot request AllocationID{6492f25c8ffee15bc044143b16514e56} for job 058858201c44ee51f8f6b6248546b076 from resource manager with leader id 98ed57ffbbb8d53704908921b3064566.
+2020-10-22 13:56:38,097 - Allocated slot for AllocationID{6492f25c8ffee15bc044143b16514e56}.
+2020-10-22 13:56:38,097 - Add job 058858201c44ee51f8f6b6248546b076 for job leader monitoring.
+2020-10-22 13:56:38,097 - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 7a3cfe7d-adf3-41a7-a3a6-cd9e076dd518.
+2020-10-22 13:56:38,097 - Resolved JobManager address, beginning registration
+2020-10-22 13:56:38,098 - Registration at JobManager attempt 1 (timeout=100ms)
+2020-10-22 13:56:38,098 - Successful registration at job manager akka://flink/user/jobmanager_1 for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 13:56:38,098 - Establish JobManager connection for job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 13:56:38,098 - Offer reserved slots to the leader of job 058858201c44ee51f8f6b6248546b076.
+2020-10-22 13:56:38,098 - Activate slot AllocationID{6492f25c8ffee15bc044143b16514e56}.
+2020-10-22 13:56:38,099 - Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,099 - Deploying Source: Custom Source (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,099 - Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,099 - Deploying Source: Custom Source -> Map -> (Map, Map) (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,099 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,099 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,099 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,099 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,099 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,099 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying Co-Process-Broadcast (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying Co-Process-Broadcast (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying SelectCepOperator (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying SelectCepOperator (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying SelectCepOperator (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying SelectCepOperator (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,100 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,100 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,101 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) switched from SCHEDULED to DEPLOYING.
+2020-10-22 13:56:38,101 - Deploying Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (attempt #2) to 127.0.0.1
+2020-10-22 13:56:38,103 - Received task Source: Custom Source (1/1).
+2020-10-22 13:56:38,103 - Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,103 - Creating FileSystem stream leak safety net for task Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) [DEPLOYING]
+2020-10-22 13:56:38,103 - Loading JAR files for task Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) [DEPLOYING].
+2020-10-22 13:56:38,104 - Received task Source: Custom Source -> Map -> (Map, Map) (1/1).
+2020-10-22 13:56:38,104 - Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,104 - Creating FileSystem stream leak safety net for task Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) [DEPLOYING]
+2020-10-22 13:56:38,104 - Loading JAR files for task Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) [DEPLOYING].
+2020-10-22 13:56:38,105 - Registering task at network: Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) [DEPLOYING].
+2020-10-22 13:56:38,105 - Registering task at network: Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) [DEPLOYING].
+2020-10-22 13:56:38,105 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1).
+2020-10-22 13:56:38,105 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,105 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) [DEPLOYING]
+2020-10-22 13:56:38,105 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) [DEPLOYING].
+2020-10-22 13:56:38,106 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) [DEPLOYING].
+2020-10-22 13:56:38,106 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1).
+2020-10-22 13:56:38,107 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,107 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) [DEPLOYING]
+2020-10-22 13:56:38,107 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) [DEPLOYING].
+2020-10-22 13:56:38,107 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) [DEPLOYING].
+2020-10-22 13:56:38,108 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1).
+2020-10-22 13:56:38,109 - Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,109 - Source: Custom Source (1/1) (b0b01df43df277b1aefc5f979dbf4058) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,109 - Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,109 - Source: Custom Source -> Map -> (Map, Map) (1/1) (f528215aba2147be3796b8e1b1d8e506) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,109 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,109 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,109 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) [DEPLOYING]
+2020-10-22 13:56:38,109 - Received task Co-Process-Broadcast (1/1).
+2020-10-22 13:56:38,109 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,109 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,109 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) [DEPLOYING].
+2020-10-22 13:56:38,110 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,110 - Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,110 - Creating FileSystem stream leak safety net for task Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) [DEPLOYING]
+2020-10-22 13:56:38,110 - Loading JAR files for task Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) [DEPLOYING].
+2020-10-22 13:56:38,110 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) [DEPLOYING].
+2020-10-22 13:56:38,110 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) (1/1) (77880d4005b1cf976b791155e6b0a8ed) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,112 - Received task Co-Process-Broadcast (1/1).
+2020-10-22 13:56:38,111 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,111 - Registering task at network: Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) [DEPLOYING].
+2020-10-22 13:56:38,112 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,112 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) (1/1) (aaf71d59b72ed301debc3953fdd3f0f5) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,112 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,112 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) -> Map (1/1) (1e33b553247b5e5bd5eaa172764de0b9) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,112 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,112 - Received task SelectCepOperator (1/1).
+2020-10-22 13:56:38,113 - Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,113 - Creating FileSystem stream leak safety net for task Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) [DEPLOYING]
+2020-10-22 13:56:38,113 - Loading JAR files for task Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) [DEPLOYING].
+2020-10-22 13:56:38,113 - SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,113 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) [DEPLOYING]
+2020-10-22 13:56:38,113 - Loading JAR files for task SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) [DEPLOYING].
+2020-10-22 13:56:38,113 - Registering task at network: Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) [DEPLOYING].
+2020-10-22 13:56:38,114 - Received task SelectCepOperator (1/1).
+2020-10-22 13:56:38,114 - Registering task at network: SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) [DEPLOYING].
+2020-10-22 13:56:38,114 - Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,114 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,114 - Co-Process-Broadcast (1/1) (170177d4207d01d3edc852b1b26ed79e) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,115 - Received task SelectCepOperator (1/1).
+2020-10-22 13:56:38,116 - SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,116 - SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,116 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,116 - SelectCepOperator (1/1) (56d7ac7866b653786892893ade9cebe8) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,116 - Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,116 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,116 - Co-Process-Broadcast (1/1) (f7158f0142069421025a6756392e030d) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,116 - SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,116 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) [DEPLOYING]
+2020-10-22 13:56:38,116 - Loading JAR files for task SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) [DEPLOYING].
+2020-10-22 13:56:38,116 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 13:56:38,116 - Registering task at network: SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) [DEPLOYING].
+2020-10-22 13:56:38,116 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) [DEPLOYING]
+2020-10-22 13:56:38,118 - Loading JAR files for task SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) [DEPLOYING].
+2020-10-22 13:56:38,118 - Registering task at network: SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) [DEPLOYING].
+2020-10-22 13:56:38,118 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,119 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) [DEPLOYING]
+2020-10-22 13:56:38,119 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) [DEPLOYING].
+2020-10-22 13:56:38,118 - SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,119 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,119 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, LinuxProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-10-22 13:56:38,119 - Received task SelectCepOperator (1/1).
+2020-10-22 13:56:38,120 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,120 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 13:56:38,119 - SelectCepOperator (1/1) (c130200bef4adf5b0c5bcd797367b7ce) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,119 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) [DEPLOYING].
+2020-10-22 13:56:38,122 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,122 - SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,122 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 13:56:38,122 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,122 - SelectCepOperator (1/1) (c7421fa30fe92210329664551f442fa3) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,122 - SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,122 - Creating FileSystem stream leak safety net for task SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) [DEPLOYING]
+2020-10-22 13:56:38,122 - Loading JAR files for task SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) [DEPLOYING].
+2020-10-22 13:56:38,122 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,122 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) [DEPLOYING]
+2020-10-22 13:56:38,123 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, WinProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-10-22 13:56:38,123 - Received task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1).
+2020-10-22 13:56:38,123 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, MySqlProcessMapFunction) exceeded the 80 characters length limit and was truncated.
+2020-10-22 13:56:38,123 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,123 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,123 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) [DEPLOYING].
+2020-10-22 13:56:38,124 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (e91f559613cc5cc4bc06c23dc838eb63) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,124 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) [DEPLOYING].
+2020-10-22 13:56:38,124 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,125 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,125 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,125 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,126 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) [DEPLOYING]
+2020-10-22 13:56:38,126 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) [DEPLOYING].
+2020-10-22 13:56:38,125 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,127 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,127 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (4de2c857c1424b0d70f7c21ffcb153eb) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,125 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) switched from CREATED to DEPLOYING.
+2020-10-22 13:56:38,127 - Creating FileSystem stream leak safety net for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) [DEPLOYING]
+2020-10-22 13:56:38,127 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) [DEPLOYING].
+2020-10-22 13:56:38,125 - Registering task at network: SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) [DEPLOYING].
+2020-10-22 13:56:38,127 - Loading JAR files for task Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) [DEPLOYING].
+2020-10-22 13:56:38,127 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,128 - Registering task at network: Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) [DEPLOYING].
+2020-10-22 13:56:38,128 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,128 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,128 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) -> Sink: Print to Std. Out (1/1) (61ca440bbeb4a6e35c7a7209f054b10e) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,128 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,128 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,128 - Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) -> Sink: Print to Std. Out (1/1) (3733a47670944e945decc42f5d18df97) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,129 - SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,129 - SelectCepOperator (1/1) (2de8c5cca7315934a0358f9759212781) switched from DEPLOYING to RUNNING.
+2020-10-22 13:56:38,129 - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-10-22 13:56:38,129 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 13:56:38,130 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 13:56:38,130 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, countAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 13:56:38,130 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,130 - The operator name Window(TumblingProcessingTimeWindows(2000), ProcessingTimeTrigger, timeAlarmConvergence) exceeded the 80 characters length limit and was truncated.
+2020-10-22 13:56:38,131 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,131 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,131 - Initializing heap keyed state backend with stream factory.
+2020-10-22 13:56:38,132 - Initializing heap keyed state backend with stream factory.

@@ -68,7 +68,6 @@ public class StreamToFlinkV3Test {
         DataStream<Map<String, Tuple9<String, String, String, Double, Double, Double, Double, String, String>>> process = alarmMessageMysql.keyBy(0, 5).timeWindow(Time.milliseconds(windowSizeMillis)).process(new MySqlProcessMapFunction());
         alarmDataStream = process.map(new MySQLFunction());
         BroadcastStream<Map<String, String>> broadcast = alarmDataStream.broadcast(ALARM_RULES);
-
         DataStreamSource<SourceEvent> streamSource = env.addSource(new KafkaTestSourceEvent());
 
         /**

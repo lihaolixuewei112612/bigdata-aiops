@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="dtc-flink-zabbix" />
+        <module name="wokrer" />
         <module name="dtc-dd-data" />
         <module name="dtc-flink-log" />
         <module name="dtc-flink-snmp" />
@@ -24,6 +25,7 @@
       <module name="dtc-SC" target="8" />
       <module name="log-analytic" target="1.5" />
       <module name="log.analytics" target="1.5" />
+      <module name="wokrer" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

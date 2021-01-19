@@ -1,0 +1,126 @@
+CREATE  TABLE dm_rat_rslt_dtl(
+  id number DEFAULT NULL ,
+  crop_name varchar(100) DEFAULT NULL ,
+  unif_soci_cred_code varchar(50) DEFAULT NULL ,
+  model_id varchar(20) DEFAULT NULL ,
+  pty_scor FLOAT DEFAULT NULL ,
+  dflt_prod FLOAT DEFAULT NULL ,
+  model_src varchar(20) DEFAULT NULL ,
+  rat_time date DEFAULT NULL,
+  data_year varchar(20) DEFAULT NULL,
+  crop_lev varchar(10) DEFAULT NULL
+)
+
+COMMENT on table dm_rat_rslt_dtl is '评级结果明细';
+COMMENT on column dm_rat_rslt_dtl.id is '记录id（用于明细关联，最好有）,该表主键';
+COMMENT on column dm_rat_rslt_dtl.crop_name is  '主体名称';
+COMMENT on column dm_rat_rslt_dtl.unif_soci_cred_code '统一社会信用码';
+COMMENT on column dm_rat_rslt_dtl.model_id '模型标识';
+COMMENT on column dm_rat_rslt_dtl.pty_scor '主体得分';
+COMMENT on column dm_rat_rslt_dtl.dflt_prod '违约概率';
+COMMENT on column dm_rat_rslt_dtl.model_src '模型来源（德勤/其他）';
+COMMENT on column dm_rat_rslt_dtl.rat_time '评级时间';
+COMMENT on column dm_rat_rslt_dtl.data_year '数据年份';
+COMMENT on column dm_rat_rslt_dtl.crop_lev '评级等级';
+
+
+CREATE TABLE dm_rat_indx_dtl(
+  id number DEFAULT NULL,
+  crop_name varchar(30) DEFAULT NULL,
+  unif_soci_cred_code varchar(50) DEFAULT NULL,
+  model_id varchar(20) DEFAULT NULL,
+  indx_code varchar(30) DEFAULT NULL,
+  indx_name varchar(20) DEFAULT NULL,
+  indx_valu FLOAT DEFAULT NULL,
+  indx_scor FLOAT DEFAULT NULL,
+  indx_wght FLOAT DEFAULT NULL,
+  indx_tot_socr FLOAT DEFAULT NULL,
+  model_src varchar(20) DEFAULT NULL,
+  data_year varchar(20) DEFAULT NULL
+);
+
+COMMENT on table dm_rat_indx_dtl is '评级指标明细表';
+COMMENT  on column dm_rat_indx_dtl.id number is '评级结果明细表h_rat_rslt_dtl的id';
+COMMENT  on column dm_rat_indx_dtl.crop_name is '主体名称';
+COMMENT  on column dm_rat_indx_dtl.unif_soci_cred_code is '统一社会信用码';
+COMMENT  on column dm_rat_indx_dtl.model_id is '模型标识';
+COMMENT  on column dm_rat_indx_dtl.indx_code is '指标编号';
+COMMENT  on column dm_rat_indx_dtl.indx_name is '指标名称';
+COMMENT  on column dm_rat_indx_dtl.indx_valu is '指标值';
+COMMENT  on column dm_rat_indx_dtl.indx_scor is '指标得分';
+COMMENT  on column dm_rat_indx_dtl.indx_wght is '指标权重(0-1的小数形式）';
+COMMENT  on column dm_rat_indx_dtl.indx_tot_socr is '指标总分';
+COMMENT  on column dm_rat_indx_dtl.model_src  is '模型来源（德勤/其他）';
+COMMENT  on column dm_rat_indx_dtl.data_year  is '数据年份';
+
+
+CREATE  TABLE ods_pty_adj(
+  id number NOT NULL,
+  pty_name varchar(255) DEFAULT NULL,
+  credit_code varchar(255) DEFAULT NULL,
+  adj_id number DEFAULT NULL,
+  data_year varchar(255) DEFAULT NULL
+)
+COMMENT on table ods_pty_adj is '基础表-主体调整项默认表';
+COMMENT on column ods_pty_adj.id is '主键';
+COMMENT on column ods_pty_adj.pty_name is '主体名称';
+COMMENT on column ods_pty_adj.credit_code is '统一社会信用码';
+COMMENT on column ods_pty_adj.adj_id is '调整项id';
+COMMENT on column ods_pty_adj.data_year is '数据年份';
+
+
+CREATE  TABLE ods_adj_proj_dtl(
+  adj_proj_id number NOT NULL,
+  adj_proj_clas varchar(255) DEFAULT NULL ,
+  adj_proj_name varchar(255) DEFAULT NULL,
+  "desc" varchar(800) DEFAULT NULL,
+  adj_proj_lvl number DEFAULT NULL,
+  adj_dir varchar(255) DEFAULT NULL,
+  master_id_sets varchar(600) NOT NULL
+)
+COMMENT on table ods_adj_proj_dtl is '基础表-调整项全量表';
+COMMENT on column ods_adj_proj_dtl.adj_proj_id is '调整项id';
+COMMENT on column ods_adj_proj_dtl.adj_proj_clas is '调整项类别';
+COMMENT on column ods_adj_proj_dtl.adj_proj_name is '调整项名称';
+COMMENT on column ods_adj_proj_dtl."desc" is '调整项说明';
+COMMENT on column ods_adj_proj_dtl.adj_proj_lvl is '调整项的影响等级，存在1，2，3级';
+COMMENT on column ods_adj_proj_dtl.adj_dir is '调整的方向，向上调整为plus, 向下调整为minus';
+COMMENT on column ods_adj_proj_dtl.master_id_sets is '行业id的集合';
+
+CREATE  TABLE dm_model_cred(
+  id number DEFAULT NULL,
+  expo_name varchar(30) DEFAULT NULL,
+  crop_low_scor FLOAT DEFAULT NULL,
+  crop_high_scor FLOAT DEFAULT NULL,
+  crop_cred_lev varchar(10) DEFAULT NULL,
+  dflt_medi_prod varchar(10) DEFAULT NULL,
+  dflt_low_prod varchar(10) DEFAULT NULL,
+  dflt_high_prod varchar(10) DEFAULT NULL,
+  master_id varchar(20) DEFAULT NULL
+)
+COMMENT on table dm_model_cred is '模型主体标尺';
+COMMENT on table dm_model_cred.id is 'id';
+COMMENT on table dm_model_cred.expo_name is '模型敞口';
+COMMENT on table dm_model_cred.crop_low_scor is '主体最小得分';
+COMMENT on table dm_model_cred.crop_high_scor is '主体最大得分';
+COMMENT on table dm_model_cred.crop_cred_lev is '主体信用等级';
+COMMENT on table dm_model_cred.dflt_medi_prod is '违约中间概率';
+COMMENT on table dm_model_cred.dflt_low_prod is '违约最小概率';
+COMMENT on table dm_model_cred.dflt_high_prod is '违约最大概率';
+COMMENT on table dm_model_cred.master_id is '模型id';
+
+CREATE  TABLE dm_pty_model_rela(
+  crop_name varchar(30) DEFAULT NULL COMMENT '主体名称',
+  unif_soci_cred_code varchar(50) DEFAULT NULL COMMENT '统一社会信用码',
+  model_id varchar(20) DEFAULT NULL COMMENT '模型标识',
+  model_name varchar(20) DEFAULT NULL COMMENT '模型名称',
+  model_src varchar(20) DEFAULT NULL COMMENT '模型来源（德勤/其他）'
+)
+COMMENT on table dm_pty_model_rela is '主体模型关联表';
+COMMENT on table dm_pty_model_rela.crop_name IS '主体名称';
+COMMENT on table dm_pty_model_rela.unif_soci_cred_code IS '统一社会信用码';
+COMMENT on table dm_pty_model_rela.model_id IS '模型标识';
+COMMENT on table dm_pty_model_rela.model_name IS '模型名称';
+COMMENT on table dm_pty_model_rela.model_src IS '模型来源（德勤/其他）';
+
+
