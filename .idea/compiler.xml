@@ -11,6 +11,7 @@
         <module name="dtc-dd-data" />
         <module name="dtc-flink-log" />
         <module name="dtc-flink-snmp" />
+        <module name="udfs-demo" />
         <module name="dtc-SC" />
         <module name="dtc-dist" />
       </profile>
@@ -25,6 +26,7 @@
       <module name="dtc-SC" target="8" />
       <module name="log-analytic" target="1.5" />
       <module name="log.analytics" target="1.5" />
+      <module name="udfs-demo" target="1.7" />
       <module name="wokrer" target="1.5" />
     </bytecodeTargetLevel>
   </component>

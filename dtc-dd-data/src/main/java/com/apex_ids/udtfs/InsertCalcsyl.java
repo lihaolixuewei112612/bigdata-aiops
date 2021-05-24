@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**使用方法
- * 获得区间收益率
+ * 获得区间收益率聚合函数
  * create function udfs.InsertCalcsyl as 'com.apex.ids.udtfs.InsertCalcsyl' USING JAR 'hdfs://master:8020/user/hive/udfs/udfs-all-1.0.0.jar';
  * select udfs.GetSyl(row,20190501,20190531,20180102) from(select khh,udfs.GroupRow(khh,rq,zzc,zzc_jzjy,zzc_rzrq,zzc_ggqq,zjye,zjye_jzjy,zjye_rzrq,zjye_ggqq,zcjlr,crje,qcje,zrzqsz,zczqsz,yk,yk_jzjy,yk_rzrq,yk_jrcp,yk_ggqq,zqsz,zqsz_jzjy,zqsz_rzrq,zqsz_jrcp,zqsz_ggqq,zfz,zfz_rzrq,zxjz,zxjz_jzjy,zxjz_rzrq,zxjz_ggqq) as row from cust.t_stat_zd_r where rq between 20190501 and 20190531 group by khh)a;
  */

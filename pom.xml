@@ -16,6 +16,7 @@
         <module>dtc-flink-log</module>
         <module>dtc-dist</module>
         <module>wokrer</module>
+        <module>udfs-demo</module>
 
 
     </modules>

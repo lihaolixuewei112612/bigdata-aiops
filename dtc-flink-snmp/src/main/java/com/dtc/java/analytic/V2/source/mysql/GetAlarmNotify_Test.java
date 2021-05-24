@@ -80,7 +80,7 @@ public class GetAlarmNotify_Test extends RichSourceFunction<Tuple7<String, Strin
                 ps.close();
             }
         } catch (Exception e) {
-            log.error("runException:{}", e);
+//            log.error("runException:{}", e);
         }
         isRunning = false;
     }

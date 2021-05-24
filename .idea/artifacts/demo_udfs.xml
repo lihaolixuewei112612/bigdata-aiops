@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="demo-udfs">
+    <output-path>$PROJECT_DIR$/classes/artifacts/demo_udfs</output-path>
+    <root id="archive" name="demo-udfs.jar" />
+  </artifact>
+</component>

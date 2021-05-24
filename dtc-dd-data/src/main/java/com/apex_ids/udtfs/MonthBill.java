@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
-/**使用方法
+/**月账单迭代计算(udfs.f_ids_month_analyze)使用方法
  * create function udfs.monthAnalyze as 'com.apex.ids.udtfs.MonthBill' USING JAR 'hdfs://master:8020/user/hive/udfs/udfs-all-1.0.0.jar';
  * select udfs.monthAnalyze(row,20190501,20190531,20180102) from(select khh,udfs.GroupRow(khh,rq,zzc,zzc_jzjy,zzc_rzrq,zzc_ggqq,zjye,zjye_jzjy,zjye_rzrq,zjye_ggqq,zcjlr,crje,qcje,zrzqsz,zczqsz,yk,yk_jzjy,yk_rzrq,yk_jrcp,yk_ggqq,zqsz,zqsz_jzjy,zqsz_rzrq,zqsz_jrcp,zqsz_ggqq,zfz,zfz_rzrq,zxjz,zxjz_jzjy,zxjz_rzrq,zxjz_ggqq) as row from cust.t_stat_zd_r where rq between 20190501 and 20190531 group by khh)a;
  */
@@ -192,6 +192,7 @@ public class MonthBill extends GenericUDTF {
                             divide(new BigDecimal(bills.get(0).get(DailyBillConf.zxjz.getIndex())+""),
                                     6, BigDecimal.ROUND_HALF_UP)).doubleValue());
         }
+        //集中交易最新净值周转率
         if( new BigDecimal(bills.get(0).get(DailyBillConf.zxjz_jzjy.getIndex())+"").compareTo(BigDecimal.ZERO) == 0){
             monthlyBill.set(MonthlyBillConf.zxjz_zzl_jzjy.getIndex(),0d);
         }else {
@@ -200,6 +201,7 @@ public class MonthBill extends GenericUDTF {
                             divide(new BigDecimal(bills.get(0).get(DailyBillConf.zxjz_jzjy.getIndex())+""),
                                     6, BigDecimal.ROUND_HALF_UP)).doubleValue());
         }
+        //融资融券最新净值周转率
         if( new BigDecimal(bills.get(0).get(DailyBillConf.zxjz_rzrq.getIndex())+"").compareTo(BigDecimal.ZERO) == 0){
             monthlyBill.set(MonthlyBillConf.zxjz_zzl_rzrq.getIndex(),0d);
         }else {
@@ -208,6 +210,7 @@ public class MonthBill extends GenericUDTF {
                             divide(new BigDecimal(bills.get(0).get(DailyBillConf.zxjz_rzrq.getIndex())+""),
                                     6, BigDecimal.ROUND_HALF_UP)).doubleValue());
         }
+        //个股期权最新净值周转率
         if( new BigDecimal(bills.get(0).get(DailyBillConf.zxjz_ggqq.getIndex())+"").compareTo(BigDecimal.ZERO) == 0){
             monthlyBill.set(MonthlyBillConf.zxjz_zzl_ggqq.getIndex(),0d);
         }else {

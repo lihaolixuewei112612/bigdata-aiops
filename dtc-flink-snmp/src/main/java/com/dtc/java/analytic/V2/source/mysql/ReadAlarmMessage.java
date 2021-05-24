@@ -89,7 +89,7 @@ public class ReadAlarmMessage extends RichSourceFunction<Tuple9<String, String, 
                 ps.close();
             }
         } catch (Exception e) {
-            log.error("runException:{}", e);
+            //log.error("runException:{}", e);
         }
         isRunning = false;
     }

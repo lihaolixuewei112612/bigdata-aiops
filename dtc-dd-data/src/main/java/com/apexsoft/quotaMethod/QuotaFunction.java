@@ -650,6 +650,7 @@ public class QuotaFunction {
                     - Double.valueOf(data.get(beginIndex).get("DRYK").toString());
             qmzc = Double.valueOf(data.get(endIndex).get("ZZC").toString())
                     - Double.valueOf(data.get(endIndex).get("ZFZ").toString());
+            //收益率
             return calcZzl(qczc, qmzc);
         }
         double pjjzc = 0d;
